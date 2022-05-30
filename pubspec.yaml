@@ -1,7 +1,7 @@
 name: sm_router
 description: Router
 version: 0.0.1
-homepage:
+homepage: https://github.com/smartwalle/sm_router
 
 environment:
   sdk: ">=2.17.0 <3.0.0"
