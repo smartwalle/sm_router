@@ -7,7 +7,7 @@ RouteNode _defaultUnknownNode = RouteNode(builder: (ctx) {
     backgroundColor: Colors.white,
     body: Center(
       child: Text(
-        "\"${ctx.routeName}\" Not Found.",
+        "\"${ctx.routeName}\" not found.",
         style: const TextStyle(
           color: Colors.black87,
           fontSize: 22,
