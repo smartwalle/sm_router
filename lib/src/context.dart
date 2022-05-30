@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:sm_router/sm_route.dart';
+import 'package:sm_router/sm_router.dart';
 import 'package:sm_router/src/query_param.dart';
 
 abstract class Context {

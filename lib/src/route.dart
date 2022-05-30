@@ -1,11 +1,8 @@
 import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sm_router/sm_route.dart';
-import 'package:sm_router/src/context.dart';
-import 'package:sm_router/src/route_delegate.dart';
-import 'package:sm_router/src/route_node.dart';
+import 'package:sm_router/sm_router.dart';
+import 'package:sm_router/src/router_delegate.dart';
 import 'package:sm_router/src/route_registry.dart';
 
 typedef RouterWidgetBuilder = Widget Function(Context ctx);
