@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sm_router/sm_router.dart';
-import 'package:sm_router/src/route_center.dart';
 
 class Routes {
   Routes._internal();
