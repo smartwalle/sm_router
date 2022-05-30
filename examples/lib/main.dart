@@ -11,6 +11,7 @@ void main() {
   Routes.handle("/page3", (ctx) {
     return const Page3();
   });
+ Routes.setInitialRouteName("/page1");
 
   runApp(const MyApp());
 }
@@ -37,7 +38,7 @@ class Page1 extends StatelessWidget {
       appBar: AppBar(
         title: const Text("page1"),
       ),
-      backgroundColor: Colors.lightGreenAccent,
+      backgroundColor: Colors.lightGreenAccent[100],
       body: Center(
         child: Column(
           children: [
@@ -49,12 +50,6 @@ class Page1 extends StatelessWidget {
                 Routes.push<String>("/page2").then((value) {
                   print("获取返回值: $value");
                 });
-              },
-            ),
-            TextButton(
-              child: const Text('pop'),
-              onPressed: () {
-                Routes.pop();
               },
             ),
             TextButton(
@@ -90,7 +85,7 @@ class Page2 extends StatelessWidget {
       appBar: AppBar(
         title: const Text("page2"),
       ),
-      backgroundColor: Colors.amberAccent,
+      backgroundColor: Colors.amberAccent[100],
       body: Align(
         alignment: Alignment.centerLeft,
         child: Column(
@@ -138,7 +133,7 @@ class Page3 extends StatelessWidget {
       appBar: AppBar(
         title: const Text("page3"),
       ),
-      backgroundColor: Colors.redAccent,
+      backgroundColor: Colors.redAccent[100],
       body: Align(
         alignment: Alignment.centerRight,
         child: Column(
@@ -146,7 +141,7 @@ class Page3 extends StatelessWidget {
             TextButton(
               child: const Text('去 /page1'),
               onPressed: () {
-                Routes.push("/page1");
+                Routes.push("/");
               },
             ),
             TextButton(

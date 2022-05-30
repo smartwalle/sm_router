@@ -118,6 +118,5 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
   }
 }
 
-// TODO initial page
 // TODO replace all
 // TODO pop until

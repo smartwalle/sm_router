@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sm_router/src/context.dart';
 import 'package:sm_router/src/route_node.dart';
@@ -23,26 +24,37 @@ class RouteCenter extends RouteInformationParser<PageContext> {
 
   final _random = Random(DateTime.now().millisecondsSinceEpoch);
 
+  String _initialRouteName = "/";
+
+  /// 设置启动路由.
+  /// App 启动或者从浏览器输入 URL 的 path 为 "/" 时，则会打开本方法所指定的路由.
+  void setInitialRouteName(String routeName) {
+    _initialRouteName = routeName;
+  }
+
+  /// 注册未知路由提示页面.
   void setUnknownBuilder(RouterWidgetBuilder builder) {
     _registry.setUnknownBuilder(builder);
   }
 
+  /// 注册 Page 生成器.
   void setPageBuilder(RouterPageBuilder pageBuilder) {
     _registry.pageBuilder = pageBuilder;
   }
 
+  /// 注册全局拦截器
   void use(RouterInterceptor interceptor) {
     _registry.use(interceptor);
   }
 
   /// 注册路由.
-  RouteNode handle(String name, RouterWidgetBuilder builder, [RouterPageBuilder? pageBuilder]) {
-    return _registry.handle(name, builder, pageBuilder);
+  RouteNode handle(String routeName, RouterWidgetBuilder builder, [RouterPageBuilder? pageBuilder]) {
+    return _registry.handle(routeName, builder, pageBuilder);
   }
 
   /// 移除路由.
-  void remove(String name) {
-    _registry.remove(name);
+  void remove(String routeName) {
+    _registry.remove(routeName);
   }
 
   Future<T?> push<T extends Object?>(String routeName, {Object? arguments}) {
@@ -108,7 +120,10 @@ class RouteCenter extends RouteInformationParser<PageContext> {
   /// 实现 RouteInformationParser
   @override
   Future<PageContext> parseRouteInformation(RouteInformation routeInformation) {
-    String routeName = routeInformation.location ?? "/";
+    String routeName = _initialRouteName;
+    if (routeInformation.location != null && routeInformation.location != "/") {
+      routeName = routeInformation.location!;
+    }
     var ctx = _buildContext(routeName, arguments: routeInformation.state);
     return SynchronousFuture(ctx);
   }

@@ -40,8 +40,8 @@ class Registry {
 
   final Map<String, RouteNode> _nodes = <String, RouteNode>{};
 
-  RouteNode getNode(String name) {
-    return _nodes[name] ?? _unknown;
+  RouteNode getNode(String routeName) {
+    return _nodes[routeName] ?? _unknown;
   }
 
   void setUnknownBuilder(RouterWidgetBuilder builder) {
@@ -52,13 +52,13 @@ class Registry {
     _interceptors.add(interceptor);
   }
 
-  RouteNode handle(String name, RouterWidgetBuilder builder, [RouterPageBuilder? pageBuilder]) {
+  RouteNode handle(String routeName, RouterWidgetBuilder builder, [RouterPageBuilder? pageBuilder]) {
     var node = RouteNode(builder: builder, pageBuilder: pageBuilder);
-    _nodes[name] = node;
+    _nodes[routeName] = node;
     return node;
   }
 
-  void remove(String name) {
-    _nodes.remove(name);
+  void remove(String routeName) {
+    _nodes.remove(routeName);
   }
 }

@@ -9,29 +9,28 @@ class Routes {
 
   static RouteInformationParser<PageContext> get routeInformationParser => RouteCenter.instance;
 
-  /// 注册未知路由提示页面.
+  static void setInitialRouteName(String routeName) {
+    RouteCenter.instance.setInitialRouteName(routeName);
+  }
+
   static void setUnknownBuilder(RouterWidgetBuilder builder) {
     RouteCenter.instance.setUnknownBuilder(builder);
   }
 
-  /// 注册 Page 生成器.
   static void setPageBuilder(RouterPageBuilder pageBuilder) {
     RouteCenter.instance.setPageBuilder(pageBuilder);
   }
 
-  /// 注册全局拦截器
   static void use(RouterInterceptor interceptor) {
     RouteCenter.instance.use(interceptor);
   }
 
-  /// 注册路由.
-  static RouteNode handle(String name, RouterWidgetBuilder builder, [RouterPageBuilder? pageBuilder]) {
-    return RouteCenter.instance.handle(name, builder, pageBuilder);
+  static RouteNode handle(String routeName, RouterWidgetBuilder builder, [RouterPageBuilder? pageBuilder]) {
+    return RouteCenter.instance.handle(routeName, builder, pageBuilder);
   }
 
-  /// 移除路由
-  static void remove(String name) {
-    RouteCenter.instance.remove(name);
+  static void remove(String routeName) {
+    RouteCenter.instance.remove(routeName);
   }
 
   static Future<T?> push<T extends Object?>(String routeName, {Object? arguments}) {
