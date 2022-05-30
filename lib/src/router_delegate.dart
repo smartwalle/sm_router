@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sm_router/sm_router.dart';
 import 'package:sm_router/src/context.dart';
 
 typedef PagePredicate = bool Function(Context ctx);
@@ -82,6 +83,20 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
       ctx.result.complete(result);
     }
     return push(ctx);
+  }
+
+  Future<T?> pushAndRemoveUntil<T extends Object?>(
+    PageContext ctx,
+    PagePredicate predicate, {
+    Object? arguments,
+  }) async {
+    var index = _stack.lastIndexWhere(predicate);
+    if (index != -1) {
+      _stack.removeRange(index + 1, _stack.length);
+    }
+    _stack.add(ctx);
+    _update();
+    return await ctx.result.future;
   }
 
   bool canPop() {

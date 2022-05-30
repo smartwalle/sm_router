@@ -71,6 +71,15 @@ class RouteCenter extends RouteInformationParser<PageContext> {
     return _delegate.pushReplacement(ctx, result: result, arguments: arguments);
   }
 
+  Future<T?> pushAndRemoveUntil<T extends Object?>(
+    String routeName,
+    PagePredicate predicate, {
+    Object? arguments,
+  }) {
+    var ctx = _buildContext(routeName, arguments: arguments);
+    return _delegate.pushAndRemoveUntil(ctx, predicate, arguments: arguments);
+  }
+
   bool canPop() {
     return _delegate.canPop();
   }

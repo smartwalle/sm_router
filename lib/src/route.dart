@@ -45,6 +45,14 @@ class Routes {
     return RouteCenter.instance.pushReplacement(routeName, result: result, arguments: arguments);
   }
 
+  static Future<T?> pushAndRemoveUntil<T extends Object?>(
+    String routeName,
+    PagePredicate predicate, {
+    Object? arguments,
+  }) {
+    return RouteCenter.instance.pushAndRemoveUntil(routeName, predicate, arguments: arguments);
+  }
+
   static bool canPop() {
     return RouteCenter.instance.canPop();
   }

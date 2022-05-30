@@ -11,6 +11,9 @@ void main() {
   Routes.handle("/page3", (ctx) {
     return const Page3();
   });
+  Routes.handle("/page4", (ctx) {
+    return const Page4();
+  });
   Routes.setInitialRouteName("/page1");
 
   runApp(const MyApp());
@@ -83,7 +86,7 @@ class Page2 extends StatelessWidget {
     print("page2 build....");
     return Scaffold(
       appBar: AppBar(
-        title: const Text("page221"),
+        title: const Text("page2"),
       ),
       backgroundColor: Colors.amberAccent[100],
       body: Align(
@@ -144,6 +147,54 @@ class Page3 extends StatelessWidget {
                 Routes.push("/page1");
               },
             ),
+            TextButton(
+              child: const Text('去 /page4'),
+              onPressed: () {
+                Routes.pushAndRemoveUntil("/page4", (ctx) => ctx.requestName == "/page1");
+              },
+            ),
+            TextButton(
+              child: const Text('pop'),
+              onPressed: () {
+                Routes.pop();
+              },
+            ),
+            TextButton(
+              child: const Text("maybePop"),
+              onPressed: () {
+                Routes.maybePop();
+              },
+            ),
+            TextButton(
+              child: const Text('popToRoot'),
+              onPressed: () {
+                // Routes.of(context).pushNamed("/page2");
+                // state.pushNamed("/efg");
+                Routes.popToRoot();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class Page4 extends StatelessWidget {
+  const Page4({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    print("page4 build....");
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("page4"),
+      ),
+      backgroundColor: Colors.redAccent[100],
+      body: Align(
+        alignment: Alignment.centerRight,
+        child: Column(
+          children: [
             TextButton(
               child: const Text('pop'),
               onPressed: () {
