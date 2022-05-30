@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sm_router/src/route_node.dart';
 
-RouteNode _defaultUnknownNode = RouteNode(widgetBuilder: (ctx) {
+RouteNode _defaultUnknownNode = RouteNode(builder: (ctx) {
   return Scaffold(
     appBar: AppBar(),
     backgroundColor: Colors.white,
@@ -34,26 +34,26 @@ class Registry {
 
   List<RouterInterceptor> get interceptors => _interceptors;
 
-  RouteNode _unknownNode = _defaultUnknownNode;
+  RouteNode _unknown = _defaultUnknownNode;
 
   RouterPageBuilder pageBuilder = _defaultPageBuilder;
 
   final Map<String, RouteNode> _nodes = <String, RouteNode>{};
 
-  RouteNode node(String name) {
-    return _nodes[name] ?? _unknownNode;
+  RouteNode getNode(String name) {
+    return _nodes[name] ?? _unknown;
   }
 
-  set unknown(RouterWidgetBuilder widgetBuilder) {
-    _unknownNode = RouteNode(widgetBuilder: widgetBuilder);
+  void setUnknownBuilder(RouterWidgetBuilder builder) {
+    _unknown = RouteNode(builder: builder);
   }
 
   void use(RouterInterceptor interceptor) {
     _interceptors.add(interceptor);
   }
 
-  RouteNode handle(String name, RouterWidgetBuilder handler, [RouterPageBuilder? pageBuilder]) {
-    var node = RouteNode(widgetBuilder: handler, pageBuilder: pageBuilder);
+  RouteNode handle(String name, RouterWidgetBuilder builder, [RouterPageBuilder? pageBuilder]) {
+    var node = RouteNode(builder: builder, pageBuilder: pageBuilder);
     _nodes[name] = node;
     return node;
   }

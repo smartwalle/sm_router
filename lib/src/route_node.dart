@@ -6,15 +6,15 @@ typedef RouterInterceptor = Widget? Function(RouteContext ctx);
 typedef RouterPageBuilder = Page<dynamic> Function(Context ctx, Widget child);
 
 class RouteNode {
-  RouteNode({required RouterWidgetBuilder widgetBuilder, RouterPageBuilder? pageBuilder}) {
-    _widgetBuilder = widgetBuilder;
+  RouteNode({required RouterWidgetBuilder builder, RouterPageBuilder? pageBuilder}) {
+    _builder = builder;
     _pageBuilder = pageBuilder;
   }
 
   // Widget 生成器
-  late final RouterWidgetBuilder _widgetBuilder;
+  late final RouterWidgetBuilder _builder;
 
-  RouterWidgetBuilder get widgetBuilder => _widgetBuilder;
+  RouterWidgetBuilder get builder => _builder;
 
   // 拦截器
   final List<RouterInterceptor> _interceptors = <RouterInterceptor>[];

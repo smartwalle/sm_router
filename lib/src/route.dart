@@ -10,8 +10,8 @@ class Routes {
   static RouteInformationParser<PageContext> get routeInformationParser => RouteCenter.instance;
 
   /// 注册未知路由提示页面.
-  static void setUnknownHandler(RouterWidgetBuilder widgetBuilder) {
-    RouteCenter.instance.setUnknown(widgetBuilder);
+  static void setUnknownBuilder(RouterWidgetBuilder builder) {
+    RouteCenter.instance.setUnknownBuilder(builder);
   }
 
   /// 注册 Page 生成器.
@@ -25,8 +25,8 @@ class Routes {
   }
 
   /// 注册路由.
-  static RouteNode handle(String name, RouterWidgetBuilder widgetBuilder, [RouterPageBuilder? pageBuilder]) {
-    return RouteCenter.instance.handle(name, widgetBuilder, pageBuilder);
+  static RouteNode handle(String name, RouterWidgetBuilder builder, [RouterPageBuilder? pageBuilder]) {
+    return RouteCenter.instance.handle(name, builder, pageBuilder);
   }
 
   /// 移除路由

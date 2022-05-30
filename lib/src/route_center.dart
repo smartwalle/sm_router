@@ -23,8 +23,8 @@ class RouteCenter extends RouteInformationParser<PageContext> {
 
   final _random = Random(DateTime.now().millisecondsSinceEpoch);
 
-  void setUnknown(RouterWidgetBuilder widgetBuilder) {
-    _registry.unknown = widgetBuilder;
+  void setUnknownBuilder(RouterWidgetBuilder builder) {
+    _registry.setUnknownBuilder(builder);
   }
 
   void setPageBuilder(RouterPageBuilder pageBuilder) {
@@ -36,8 +36,8 @@ class RouteCenter extends RouteInformationParser<PageContext> {
   }
 
   /// 注册路由.
-  RouteNode handle(String name, RouterWidgetBuilder widgetBuilder, [RouterPageBuilder? pageBuilder]) {
-    return _registry.handle(name, widgetBuilder, pageBuilder);
+  RouteNode handle(String name, RouterWidgetBuilder builder, [RouterPageBuilder? pageBuilder]) {
+    return _registry.handle(name, builder, pageBuilder);
   }
 
   /// 移除路由.
@@ -67,7 +67,7 @@ class RouteCenter extends RouteInformationParser<PageContext> {
     key ??= ValueKey("$routeName-${_random.nextDouble()}");
     var ctx = PageContext(routeName, key, arguments);
 
-    var node = _registry.node(ctx.routeName);
+    var node = _registry.getNode(ctx.routeName);
 
     Widget? child;
 
@@ -85,7 +85,7 @@ class RouteCenter extends RouteInformationParser<PageContext> {
     }
 
     // 拦截器没有返回 Widget，则需要调用路由处理器获取 Widget。
-    child ??= node.widgetBuilder(ctx);
+    child ??= node.builder(ctx);
 
     var pageBuilder = node.pageBuilder ?? _registry.pageBuilder;
     ctx.page = pageBuilder(ctx, child);
