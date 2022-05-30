@@ -39,15 +39,41 @@ class Page1 extends StatelessWidget {
       ),
       backgroundColor: Colors.lightGreenAccent,
       body: Center(
-        child: TextButton(
-          child: const Text('去 /page2'),
-          onPressed: () {
-            // Routes.of(context).pushNamed("/page2");
-            // state.pushNamed("/efg");
-            Routes.push<String>("/page2").then((value) {
-              print("获取返回值: $value");
-            });
-          },
+        child: Column(
+          children: [
+            TextButton(
+              child: const Text('去 /page2'),
+              onPressed: () {
+                // Routes.of(context).pushNamed("/page2");
+                // state.pushNamed("/efg");
+                Routes.push<String>("/page2").then((value) {
+                  print("获取返回值: $value");
+                });
+              },
+            ),
+            TextButton(
+              child: const Text('pop'),
+              onPressed: () {
+                Routes.pop();
+              },
+            ),
+            TextButton(
+              child: const Text('maybePop'),
+              onPressed: () {
+                // Routes.of(context).pushNamed("/page2");
+                // state.pushNamed("/efg");
+                Routes.maybePop();
+              },
+            ),
+            TextButton(
+              child: const Text('popToRoot'),
+              onPressed: () {
+                // Routes.of(context).pushNamed("/page2");
+                // state.pushNamed("/efg");
+                Routes.popToRoot();
+              },
+            ),
+          ],
         ),
       ),
     );
@@ -72,14 +98,27 @@ class Page2 extends StatelessWidget {
             TextButton(
               child: const Text('去 /page3'),
               onPressed: () {
-                Routes.replace("/page3", result: "replace");
-                ;
+                Routes.push("/page3");
               },
             ),
             TextButton(
               child: const Text('pop'),
               onPressed: () {
                 Routes.pop<String>("pop");
+              },
+            ),
+            TextButton(
+              child: const Text("maybePop"),
+              onPressed: () {
+                Routes.maybePop("maybePop");
+              },
+            ),
+            TextButton(
+              child: const Text('popToRoot'),
+              onPressed: () {
+                // Routes.of(context).pushNamed("/page2");
+                // state.pushNamed("/efg");
+                Routes.popToRoot();
               },
             ),
           ],
@@ -102,11 +141,35 @@ class Page3 extends StatelessWidget {
       backgroundColor: Colors.redAccent,
       body: Align(
         alignment: Alignment.centerRight,
-        child: TextButton(
-          child: const Text('去 /page1'),
-          onPressed: () {
-            Routes.push("/page1");
-          },
+        child: Column(
+          children: [
+            TextButton(
+              child: const Text('去 /page1'),
+              onPressed: () {
+                Routes.push("/page1");
+              },
+            ),
+            TextButton(
+              child: const Text('pop'),
+              onPressed: () {
+                Routes.pop();
+              },
+            ),
+            TextButton(
+              child: const Text("maybePop"),
+              onPressed: () {
+                Routes.maybePop();
+              },
+            ),
+            TextButton(
+              child: const Text('popToRoot'),
+              onPressed: () {
+                // Routes.of(context).pushNamed("/page2");
+                // state.pushNamed("/efg");
+                Routes.popToRoot();
+              },
+            ),
+          ],
         ),
       ),
     );

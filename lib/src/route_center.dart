@@ -59,8 +59,20 @@ class RouteCenter extends RouteInformationParser<PageContext> {
     return _delegate.replace(ctx, result: result, arguments: arguments);
   }
 
+  bool canPop() {
+    return _delegate.canPop();
+  }
+
+  Future<bool> maybePop<T extends Object?>([T? result]) {
+    return _delegate.maybePop(result);
+  }
+
   Future<bool> pop<T extends Object?>([T? result]) {
     return _delegate.pop(result);
+  }
+
+  Future<bool> popToRoot() {
+    return _delegate.popToRoot();
   }
 
   PageContext _buildContext(String routeName, {LocalKey? key, Object? arguments}) {

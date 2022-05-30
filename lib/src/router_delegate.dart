@@ -82,6 +82,17 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
     return push(ctx);
   }
 
+  bool canPop() {
+    return _stack.isNotEmpty;
+  }
+
+  Future<bool> maybePop<T extends Object?>([T? result]) {
+    if (_stack.length <= 1) {
+      return SynchronousFuture(false);
+    }
+    return pop(result);
+  }
+
   // Future<bool> pop<T extends Object?>([T? result]) async {
   //   final NavigatorState? state = navigatorKey.currentState;
   //   if (state == null) {
@@ -90,22 +101,23 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
   //   return state.maybePop(result);
   // }
 
-  Future<bool> pop<T extends Object?>([T? result]) async {
-    if (_stack.isEmpty) {
-      return SynchronousFuture(false);
-    }
+  Future<bool> pop<T extends Object?>([T? result]) {
     var ctx = _stack.removeLast();
     ctx.result.complete(result);
     _update();
     return SynchronousFuture(true);
   }
 
-  bool canPop() {
-    return _stack.isNotEmpty;
+  Future<bool> popToRoot() {
+    if (_stack.isEmpty) {
+      return SynchronousFuture(false);
+    }
+    _stack.removeRange(1, _stack.length);
+    _update();
+    return SynchronousFuture(true);
   }
 }
 
 // TODO initial page
 // TODO replace all
-// TODO pop root
 // TODO pop until

@@ -46,7 +46,19 @@ class Routes {
     return RouteCenter.instance.replace(routeName, result: result, arguments: arguments);
   }
 
+  static bool canPop() {
+    return RouteCenter.instance.canPop();
+  }
+
+  static Future<bool> maybePop<T extends Object?>([T? result]) {
+    return RouteCenter.instance.maybePop(result);
+  }
+
   static Future<bool> pop<T extends Object?>([T? result]) {
     return RouteCenter.instance.pop(result);
+  }
+
+  static Future<bool> popToRoot() {
+    return RouteCenter.instance.popToRoot();
   }
 }
