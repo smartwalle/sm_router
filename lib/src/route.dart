@@ -17,13 +17,13 @@ class Routes {
   static RouteInformationParser<PageContext> get routeInformationParser => RouteCenter._instance;
 
   /// 注册未知路由提示页面.
-  static void unknown(RouterWidgetBuilder widgetBuilder) {
-    RouteCenter._instance.unknown(widgetBuilder);
+  static void setUnknownHandler(RouterWidgetBuilder widgetBuilder) {
+    RouteCenter._instance.setUnknown(widgetBuilder);
   }
 
   /// 注册 Page 生成器.
-  static void pageBuilder(RouterPageBuilder pageBuilder) {
-    RouteCenter._instance.pageBuilder(pageBuilder);
+  static void setPageBuilder(RouterPageBuilder pageBuilder) {
+    RouteCenter._instance.setPageBuilder(pageBuilder);
   }
 
   /// 注册全局拦截器
@@ -74,11 +74,11 @@ class RouteCenter extends RouteInformationParser<PageContext> {
 
   final _random = Random(DateTime.now().millisecondsSinceEpoch);
 
-  void unknown(RouterWidgetBuilder widgetBuilder) {
+  void setUnknown(RouterWidgetBuilder widgetBuilder) {
     _registry.unknown = widgetBuilder;
   }
 
-  void pageBuilder(RouterPageBuilder pageBuilder) {
+  void setPageBuilder(RouterPageBuilder pageBuilder) {
     _registry.pageBuilder = pageBuilder;
   }
 
