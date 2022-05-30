@@ -166,5 +166,3 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
     return SynchronousFuture(true);
   }
 }
-
-// TODO replace all
