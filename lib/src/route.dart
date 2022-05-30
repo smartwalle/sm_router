@@ -57,6 +57,10 @@ class Routes {
     return RouteCenter.instance.pop(result);
   }
 
+  static void popUntil(PagePredicate predicate) {
+    RouteCenter.instance.popUntil(predicate);
+  }
+
   static Future<bool> popToRoot() {
     return RouteCenter.instance.popToRoot();
   }

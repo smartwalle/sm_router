@@ -83,6 +83,10 @@ class RouteCenter extends RouteInformationParser<PageContext> {
     return _delegate.pop(result);
   }
 
+  void popUntil(PagePredicate predicate) {
+    _delegate.popUntil(predicate);
+  }
+
   Future<bool> popToRoot() {
     return _delegate.popToRoot();
   }

@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sm_router/src/context.dart';
 
+typedef PagePredicate = bool Function(Context ctx);
+
 /// RouterDelegate
 class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelegateMixin<PageContext>, ChangeNotifier {
   Delegate();
@@ -108,6 +110,16 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
     return SynchronousFuture(true);
   }
 
+  void popUntil(PagePredicate predicate) {
+    var index = _stack.lastIndexWhere(predicate);
+    if (index == -1) {
+      return;
+    }
+
+    _stack.removeRange(index + 1, _stack.length);
+    _update();
+  }
+
   Future<bool> popToRoot() {
     if (_stack.isEmpty) {
       return SynchronousFuture(false);
@@ -119,4 +131,3 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
 }
 
 // TODO replace all
-// TODO pop until

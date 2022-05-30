@@ -11,7 +11,7 @@ void main() {
   Routes.handle("/page3", (ctx) {
     return const Page3();
   });
- Routes.setInitialRouteName("/page1");
+  Routes.setInitialRouteName("/page1");
 
   runApp(const MyApp());
 }
@@ -83,7 +83,7 @@ class Page2 extends StatelessWidget {
     print("page2 build....");
     return Scaffold(
       appBar: AppBar(
-        title: const Text("page2"),
+        title: const Text("page221"),
       ),
       backgroundColor: Colors.amberAccent[100],
       body: Align(
@@ -141,7 +141,7 @@ class Page3 extends StatelessWidget {
             TextButton(
               child: const Text('去 /page1'),
               onPressed: () {
-                Routes.push("/");
+                Routes.push("/page1");
               },
             ),
             TextButton(
