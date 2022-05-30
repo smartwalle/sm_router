@@ -154,7 +154,6 @@ class RouteCenter extends RouteInformationParser<PageContext> {
   /// 实现 RouteInformationParser
   @override
   Future<PageContext> parseRouteInformation(RouteInformation routeInformation) {
-    print("routeInformation.location");
     String routeName = _initialRouteName;
     if (routeInformation.location != null && routeInformation.location != "/") {
       routeName = routeInformation.location!;
