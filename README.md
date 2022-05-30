@@ -7,20 +7,16 @@ Routes.handle("/", (ctx) => const Home());
 Routes.handle("/view", (ctx) => const YourView());
 ```
 
-#### 设置 MaterialApp 的 navigatorKey 和 onGenerateRoute
+#### 设置 MaterialApp 的 routeInformationParser 和 routerDelegate
 ```dart
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      ...
-      navigatorKey: Routes.navigatorKey,
-      onGenerateRoute: Routes.generateRoute,
-      initialRoute: "/",
-      ...
+    return MaterialApp.router(
+      routeInformationParser: Routes.routeInformationParser,
+      routerDelegate: Routes.routerDelegate,
     );
   }
 }
@@ -28,12 +24,12 @@ class MyApp extends StatelessWidget {
 
 #### 跳转到指定路由
 ```dart
-Routes.pushNamed("/view");
+Routes.push("/view");
 ```
 
 ## Context
 Context 对象主要提供以下信息：
-* **name**：路由名称；
+* **routeName**：路由名称；
 * **arguments**：路由参数，即 pushXXX 系列方法中提供的 arguments 参数；
 * **param**：路由名称参数，来源于 pushXXX 系列方法中的 routeName 参数，让 routeName 像 URL 一样可以指定参数(和 arguments 参数相比，在 web 应用中，param 参数不会因浏览器刷新而丢失)；
 * **data**：自定义数据，可以在路由拦截器之间传递一些信息；
