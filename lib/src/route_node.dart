@@ -1,4 +1,9 @@
-import 'package:sm_router/src/route.dart';
+import 'package:flutter/widgets.dart';
+import 'package:sm_router/src/context.dart';
+
+typedef RouterWidgetBuilder = Widget Function(Context ctx);
+typedef RouterInterceptor = Widget? Function(RouteContext ctx);
+typedef RouterPageBuilder = Page<dynamic> Function(Context ctx, Widget child);
 
 class RouteNode {
   RouteNode({required RouterWidgetBuilder widgetBuilder, RouterPageBuilder? pageBuilder}) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sm_router/src/route_node.dart';
-import 'package:sm_router/src/route.dart';
 
 RouteNode _defaultUnknownNode = RouteNode(widgetBuilder: (ctx) {
   return Scaffold(
