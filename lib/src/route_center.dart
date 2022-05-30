@@ -80,6 +80,14 @@ class RouteCenter extends RouteInformationParser<PageContext> {
     return _delegate.pushAndRemoveUntil(ctx, predicate);
   }
 
+  Future<T?> pushAndRemoveAll<T extends Object?>(
+    String routeName, {
+    Object? arguments,
+  }) {
+    var ctx = _buildContext(routeName, arguments: arguments);
+    return _delegate.pushAndRemoveAll(ctx);
+  }
+
   bool canPop() {
     return _delegate.canPop();
   }
@@ -100,13 +108,13 @@ class RouteCenter extends RouteInformationParser<PageContext> {
     _delegate.popUntil(predicate);
   }
 
-  Future<T?> popAndPushNamed<T extends Object?, TO extends Object?>(
+  Future<T?> popAndPush<T extends Object?, TO extends Object?>(
     String routeName, {
     TO? result,
     Object? arguments,
   }) {
     var ctx = _buildContext(routeName, arguments: arguments);
-    return _delegate.popAndPushNamed(ctx, result);
+    return _delegate.popAndPush(ctx, result);
   }
 
   Future<bool> popToRoot() {
@@ -146,6 +154,7 @@ class RouteCenter extends RouteInformationParser<PageContext> {
   /// 实现 RouteInformationParser
   @override
   Future<PageContext> parseRouteInformation(RouteInformation routeInformation) {
+    print("routeInformation.location");
     String routeName = _initialRouteName;
     if (routeInformation.location != null && routeInformation.location != "/") {
       routeName = routeInformation.location!;

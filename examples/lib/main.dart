@@ -176,7 +176,7 @@ class Page3 extends StatelessWidget {
             TextButton(
               child: const Text('去 /page4'),
               onPressed: () {
-                Routes.popAndPushNamed("/page4");
+                Routes.popAndPush("/page4");
               },
             ),
             TextButton(

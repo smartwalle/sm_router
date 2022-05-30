@@ -53,6 +53,13 @@ class Routes {
     return RouteCenter.instance.pushAndRemoveUntil(routeName, predicate, arguments: arguments);
   }
 
+  static Future<T?> pushAndRemoveAll<T extends Object?>(
+    String routeName, {
+    Object? arguments,
+  }) {
+    return RouteCenter.instance.pushAndRemoveAll(routeName, arguments: arguments);
+  }
+
   static bool canPop() {
     return RouteCenter.instance.canPop();
   }
@@ -73,12 +80,12 @@ class Routes {
     RouteCenter.instance.popUntil(predicate);
   }
 
-  static Future<T?> popAndPushNamed<T extends Object?, TO extends Object?>(
+  static Future<T?> popAndPush<T extends Object?, TO extends Object?>(
     String routeName, {
     TO? result,
     Object? arguments,
   }) async {
-    return RouteCenter.instance.popAndPushNamed(routeName, result: result, arguments: arguments);
+    return RouteCenter.instance.popAndPush(routeName, result: result, arguments: arguments);
   }
 
   static Future<bool> popToRoot() {

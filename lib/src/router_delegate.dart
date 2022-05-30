@@ -94,6 +94,13 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
     return await ctx.result.future;
   }
 
+  Future<T?> pushAndRemoveAll<T extends Object?>(PageContext ctx) async {
+    _stack.removeRange(0, _stack.length);
+    _stack.add(ctx);
+    _update();
+    return await ctx.result.future;
+  }
+
   bool canPop() {
     return _stack.isNotEmpty;
   }
@@ -142,7 +149,7 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
     _update();
   }
 
-  Future<T?> popAndPushNamed<T extends Object?, TO extends Object?>(PageContext ctx, [TO? result]) async {
+  Future<T?> popAndPush<T extends Object?, TO extends Object?>(PageContext ctx, [TO? result]) async {
     final NavigatorState? state = navigatorKey.currentState;
     if (state != null) {
       await state.maybePop(result);
