@@ -7,6 +7,8 @@ void main() {
   });
   Routes.handle("/page2", (ctx) {
     return const Page2();
+  }, (ctx, child) {
+    return TransitionPage(key: ctx.key, child: child, name: ctx.requestName, arguments: ctx.arguments);
   });
   Routes.handle("/page3", (ctx) {
     return const Page3();
@@ -17,6 +19,30 @@ void main() {
   Routes.setInitialRouteName("/page1");
 
   runApp(const MyApp());
+}
+
+class TransitionPage<T> extends Page<T> {
+  final Widget child;
+
+  const TransitionPage({
+    required LocalKey key,
+    required this.child,
+    String? name,
+    Object? arguments,
+  }) : super(key: key, name: name, arguments: arguments);
+
+  @override
+  Route<T> createRoute(BuildContext context) {
+    return PageRouteBuilder(
+      settings: this,
+      pageBuilder: (BuildContext context, Animation<double> animation, Animation<double> secondaryAnimation) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
