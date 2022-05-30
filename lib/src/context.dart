@@ -35,7 +35,7 @@ abstract class Context {
 
   QueryParam get param => _param;
 
-  // 路由参数
+  // 路由参数，建议只在在非 web 应用中使用
   late Object? _arguments;
 
   Object? get arguments => _arguments;

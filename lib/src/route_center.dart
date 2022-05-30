@@ -158,12 +158,12 @@ class RouteCenter extends RouteInformationParser<PageContext> {
     if (routeInformation.location != null && routeInformation.location != "/") {
       routeName = routeInformation.location!;
     }
-    var ctx = _buildContext(routeName, arguments: routeInformation.state);
+    var ctx = _buildContext(routeName);
     return SynchronousFuture(ctx);
   }
 
   @override
   RouteInformation restoreRouteInformation(PageContext configuration) {
-    return RouteInformation(location: configuration.requestName, state: configuration.arguments);
+    return RouteInformation(location: configuration.requestName);
   }
 }
