@@ -37,12 +37,12 @@ class Routes {
     return RouteCenter.instance.push(routeName, arguments: arguments);
   }
 
-  static Future<T?> replace<T extends Object?, TO extends Object?>(
+  static Future<T?> pushReplacement<T extends Object?, TO extends Object?>(
     String routeName, {
     TO? result,
     Object? arguments,
   }) {
-    return RouteCenter.instance.replace(routeName, result: result, arguments: arguments);
+    return RouteCenter.instance.pushReplacement(routeName, result: result, arguments: arguments);
   }
 
   static bool canPop() {

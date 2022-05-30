@@ -70,7 +70,7 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
     return await ctx.result.future;
   }
 
-  Future<T?> replace<T extends Object?, TO extends Object?>(
+  Future<T?> pushReplacement<T extends Object?, TO extends Object?>(
     PageContext ctx, {
     TO? result,
     Object? arguments,
