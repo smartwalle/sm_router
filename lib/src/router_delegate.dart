@@ -54,12 +54,16 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
 
   bool _onPopPage(Route<dynamic> route, dynamic result) {
     if (route.didPop(result)) {
-      var ctx = _stack.removeLast();
-      ctx.result.complete(result);
+      _pop(result);
       _update();
       return true;
     }
     return false;
+  }
+
+  void _pop(dynamic result) {
+    var ctx = _stack.removeLast();
+    ctx.result.complete(result);
   }
 
   void _update() {
@@ -75,8 +79,7 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
 
   Future<T?> pushReplacement<T extends Object?, TO extends Object?>(PageContext ctx, [TO? result]) {
     if (_stack.isNotEmpty) {
-      var ctx = _stack.removeLast();
-      ctx.result.complete(result);
+      _pop(result);
     }
     return push(ctx);
   }
@@ -111,8 +114,7 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
   // }
 
   Future<bool> pop<T extends Object?>([T? result]) {
-    var ctx = _stack.removeLast();
-    ctx.result.complete(result);
+    _pop(result);
     _update();
     return SynchronousFuture(true);
   }
