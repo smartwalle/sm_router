@@ -224,7 +224,7 @@ class Page4 extends StatelessWidget {
             TextButton(
               child: const Text('pop'),
               onPressed: () {
-                Routes.pop();
+                Routes.popMatched((ctx) => ctx.routeName == "/page4");
               },
             ),
             TextButton(

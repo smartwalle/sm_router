@@ -117,6 +117,19 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
     return SynchronousFuture(true);
   }
 
+  Future<bool> popMatched<T extends Object?>(PagePredicate predicate, [T? result]) {
+    if (_stack.isEmpty) {
+      return SynchronousFuture(false);
+    }
+
+    var ctx = _stack.last;
+    if (predicate(ctx) == false) {
+      return SynchronousFuture(false);
+    }
+
+    return pop(result);
+  }
+
   void popUntil(PagePredicate predicate) {
     var index = _stack.lastIndexWhere(predicate);
     if (index == -1) {

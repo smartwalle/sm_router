@@ -65,6 +65,10 @@ class Routes {
     return RouteCenter.instance.pop(result);
   }
 
+  static Future<bool> popMatched<T extends Object?>(PagePredicate predicate, [T? result]) {
+    return RouteCenter.instance.popMatched(predicate, result);
+  }
+
   static void popUntil(PagePredicate predicate) {
     RouteCenter.instance.popUntil(predicate);
   }

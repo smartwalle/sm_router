@@ -4,7 +4,7 @@ Flutter Navigator 2.0 路由管理。
 #### 注册路由
 ```dart
 Routes.handle("/", (ctx) => const Home());
-Routes.handle("/view", (ctx) => const YourView());
+Routes.handle("/test", (ctx) => const TestView());
 ```
 
 #### 设置 MaterialApp 的 routeInformationParser 和 routerDelegate
@@ -24,14 +24,15 @@ class MyApp extends StatelessWidget {
 
 #### 跳转到指定路由
 ```dart
-Routes.push("/view");
+Routes.push("/test?a=10");
 ```
 
 ## Context
 Context 对象主要提供以下信息：
-* **routeName**：路由名称；
+* **routeName**：路由名称。例如: /test；
+* **requestName**：请求名称，包含路由名称参数。例如: /test?a=10；
 * **arguments**：路由参数，即 pushXXX 系列方法中提供的 arguments 参数；
-* **param**：路由名称参数，来源于 pushXXX 系列方法中的 routeName 参数，让 routeName 像 URL 一样可以指定参数(和 arguments 参数相比，在 web 应用中，param 参数不会因浏览器刷新而丢失)；
+* **param**：路由名称参数，来源于 pushXXX 系列方法中的 routeName 参数，让 routeName 像 URL 一样可以指定参数(和 arguments 参数相比，在 web 应用中，param 参数不会因浏览器刷新而丢失)。例如: ctx.param.get("a")；
 * **data**：自定义数据，可以在路由拦截器之间传递一些信息；
 
 ## 拦截器
