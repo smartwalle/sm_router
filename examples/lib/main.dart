@@ -150,7 +150,7 @@ class Page3 extends StatelessWidget {
             TextButton(
               child: const Text('去 /page4'),
               onPressed: () {
-                Routes.pushAndRemoveUntil("/page4", (ctx) => ctx.requestName == "/page1");
+                Routes.popAndPushNamed("/page4");
               },
             ),
             TextButton(
@@ -190,7 +190,7 @@ class Page4 extends StatelessWidget {
       appBar: AppBar(
         title: const Text("page4"),
       ),
-      backgroundColor: Colors.redAccent[100],
+      backgroundColor: Colors.blue[100],
       body: Align(
         alignment: Alignment.centerRight,
         child: Column(

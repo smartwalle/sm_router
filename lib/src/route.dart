@@ -69,6 +69,14 @@ class Routes {
     RouteCenter.instance.popUntil(predicate);
   }
 
+  static Future<T?> popAndPushNamed<T extends Object?, TO extends Object?>(
+    String routeName, {
+    TO? result,
+    Object? arguments,
+  }) async {
+    return RouteCenter.instance.popAndPushNamed(routeName, result: result, arguments: arguments);
+  }
+
   static Future<bool> popToRoot() {
     return RouteCenter.instance.popToRoot();
   }

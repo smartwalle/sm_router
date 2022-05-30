@@ -73,11 +73,7 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
     return await ctx.result.future;
   }
 
-  Future<T?> pushReplacement<T extends Object?, TO extends Object?>(
-    PageContext ctx, {
-    TO? result,
-    Object? arguments,
-  }) {
+  Future<T?> pushReplacement<T extends Object?, TO extends Object?>(PageContext ctx, [TO? result]) {
     if (_stack.isNotEmpty) {
       var ctx = _stack.removeLast();
       ctx.result.complete(result);
@@ -85,11 +81,7 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
     return push(ctx);
   }
 
-  Future<T?> pushAndRemoveUntil<T extends Object?>(
-    PageContext ctx,
-    PagePredicate predicate, {
-    Object? arguments,
-  }) async {
+  Future<T?> pushAndRemoveUntil<T extends Object?>(PageContext ctx, PagePredicate predicate) async {
     var index = _stack.lastIndexWhere(predicate);
     if (index != -1) {
       _stack.removeRange(index + 1, _stack.length);
@@ -133,6 +125,14 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
 
     _stack.removeRange(index + 1, _stack.length);
     _update();
+  }
+
+  Future<T?> popAndPushNamed<T extends Object?, TO extends Object?>(PageContext ctx, [TO? result]) async {
+    final NavigatorState? state = navigatorKey.currentState;
+    if (state != null) {
+      await state.maybePop(result);
+    }
+    return push(ctx);
   }
 
   Future<bool> popToRoot() {

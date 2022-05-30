@@ -68,7 +68,7 @@ class RouteCenter extends RouteInformationParser<PageContext> {
     Object? arguments,
   }) {
     var ctx = _buildContext(routeName, arguments: arguments);
-    return _delegate.pushReplacement(ctx, result: result, arguments: arguments);
+    return _delegate.pushReplacement(ctx, result);
   }
 
   Future<T?> pushAndRemoveUntil<T extends Object?>(
@@ -77,7 +77,7 @@ class RouteCenter extends RouteInformationParser<PageContext> {
     Object? arguments,
   }) {
     var ctx = _buildContext(routeName, arguments: arguments);
-    return _delegate.pushAndRemoveUntil(ctx, predicate, arguments: arguments);
+    return _delegate.pushAndRemoveUntil(ctx, predicate);
   }
 
   bool canPop() {
@@ -94,6 +94,15 @@ class RouteCenter extends RouteInformationParser<PageContext> {
 
   void popUntil(PagePredicate predicate) {
     _delegate.popUntil(predicate);
+  }
+
+  Future<T?> popAndPushNamed<T extends Object?, TO extends Object?>(
+    String routeName, {
+    TO? result,
+    Object? arguments,
+  }) {
+    var ctx = _buildContext(routeName, arguments: arguments);
+    return _delegate.popAndPushNamed(ctx, result);
   }
 
   Future<bool> popToRoot() {
