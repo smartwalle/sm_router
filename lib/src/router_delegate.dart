@@ -52,8 +52,8 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
   bool _onPopPage(Route<dynamic> route, dynamic result) {
     if (route.didPop(result)) {
       var ctx = _stack.removeLast();
-      _update();
       ctx.result.complete(result);
+      _update();
       return true;
     }
     return false;
@@ -82,15 +82,29 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
     return push(ctx);
   }
 
+  // Future<bool> pop<T extends Object?>([T? result]) async {
+  //   final NavigatorState? state = navigatorKey.currentState;
+  //   if (state == null) {
+  //     return SynchronousFuture<bool>(false);
+  //   }
+  //   return state.maybePop(result);
+  // }
+
   Future<bool> pop<T extends Object?>([T? result]) async {
-    final NavigatorState? state = navigatorKey.currentState;
-    if (state == null) {
-      return SynchronousFuture<bool>(false);
+    if (_stack.isEmpty) {
+      return SynchronousFuture(false);
     }
-    return state.maybePop(result);
+    var ctx = _stack.removeLast();
+    ctx.result.complete(result);
+    _update();
+    return SynchronousFuture(true);
   }
 
   bool canPop() {
-    return _stack.length > 1;
+    return _stack.isNotEmpty;
   }
 }
+
+// TODO replace all
+// TODO pop root
+// TODO pop until
