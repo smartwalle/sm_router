@@ -8,7 +8,7 @@ abstract class Context {
   Context(String routeName, LocalKey key, Object? arguments) {
     _uri = Uri.parse(routeName);
     _requestName = _uri.toString();
-    _param = QueryParam(_uri.queryParametersAll);
+    _queryParam = QueryParam(_uri.queryParametersAll);
     _key = key;
     _arguments = arguments;
   }
@@ -31,9 +31,9 @@ abstract class Context {
   String get requestName => _requestName;
 
   // 路由名称参数
-  late QueryParam _param;
+  late QueryParam _queryParam;
 
-  QueryParam get param => _param;
+  QueryParam get queryParam => _queryParam;
 
   // 路由参数，建议只在在非 web 应用中使用
   late Object? _arguments;
@@ -53,7 +53,7 @@ abstract class Context {
     _data[key] = value;
   }
 
-  del(String key) {
+  remove(String key) {
     _data.remove(key);
   }
 }

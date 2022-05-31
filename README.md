@@ -31,9 +31,9 @@ Routes.push("/test?a=10");
 Context 对象主要提供以下信息：
 * **routeName**：路由名称。例如: /test；
 * **requestName**：请求名称，包含路由名称参数。例如: /test?a=10；
-* **arguments**：路由参数，即 pushXXX 系列方法中提供的 arguments 参数；
-* **param**：路由名称参数，来源于 pushXXX 系列方法中的 routeName 参数，让 routeName 像 URL 一样可以指定参数(和 arguments 参数相比，在 web 应用中，param 参数不会因浏览器刷新而丢失)。例如: ctx.param.get("a")；
-* **data**：自定义数据，可以在路由拦截器之间传递一些信息；
+* **arguments**：路由参数，即 pushXXX 系列方法中提供的 arguments 参数（建议只在在非 web 应用中使用）；
+* **queryParam**：路由名称参数，来源于 pushXXX 系列方法中的 routeName 参数，让 routeName 像 URL 一样可以指定参数(和 arguments 参数相比，在 web 应用中，param 参数不会因浏览器刷新而丢失)。例如: ctx.param.get("a")；
+* **data**：自定义数据，可以从路由拦截器传递一些信息到路由处理器；
 
 ## 拦截器
 注册路由方法会返回一个路由节点对象，可以调用该路由节点对象的 use 方法为该路由添加路由拦截器。

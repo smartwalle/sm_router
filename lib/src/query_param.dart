@@ -1,37 +1,50 @@
 class QueryParam {
-  QueryParam(Map<String, List<String>> params) {
-    _params = params;
+  QueryParam([Map<String, List<String>>? data]) {
+    _data = data ?? <String, List<String>>{};
   }
 
-  late final Map<String, List<String>> _params;
+  late final Map<String, List<String>> _data;
+
+  Map<String, List<String>> all() {
+    return _data;
+  }
 
   String? get(String key) {
-    var values = _params[key];
+    var values = _data[key];
     if (values != null && values.isNotEmpty) {
       return values[0];
     }
     return null;
   }
 
-  QueryParam set(String key, value) {
-    var values = _params[key];
-    if (values == null) {
-      values = <String>[];
-      _params[key] = values;
+  List<String>? values(String key) {
+    return _data[key];
+  }
+
+  QueryParam add(String key, String value) {
+    return addAll(key, [value]);
+  }
+
+  QueryParam addAll(String key, List<String> values) {
+    var nValues = _data[key];
+    if (nValues == null) {
+      _data[key] = values;
+    } else {
+      nValues.addAll(values);
     }
-    values.add(value);
     return this;
   }
 
-  del(String key) {
-    _params.remove(key);
+  QueryParam set(String key, String value) {
+    return setAll(key, [value]);
   }
 
-  List<String>? values(String key) {
-    return _params[key];
+  QueryParam setAll(String key, List<String> values) {
+    _data[key] = values;
+    return this;
   }
 
-  Map<String, List<String>> all() {
-    return Map<String, List<String>>.unmodifiable(_params);
+  remove(String key) {
+    _data.remove(key);
   }
 }
