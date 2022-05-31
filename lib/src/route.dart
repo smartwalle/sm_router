@@ -8,10 +8,6 @@ class Routes {
 
   static RouteInformationParser<PageContext> get routeInformationParser => RouteCenter.instance;
 
-  static void setInitialRouteName(String routeName) {
-    RouteCenter.instance.setInitialRouteName(routeName);
-  }
-
   static void setUnknownBuilder(RouterWidgetBuilder builder) {
     RouteCenter.instance.setUnknownBuilder(builder);
   }

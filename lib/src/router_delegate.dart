@@ -31,13 +31,6 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
 
   @override
   Future<void> setNewRoutePath(PageContext configuration) {
-    if (_stack.isNotEmpty) {
-      final page = _stack.last;
-      if (configuration.requestName == page.requestName) {
-        return SynchronousFuture(null);
-      }
-    }
-
     _stack.clear();
     _stack.add(configuration);
     _update();

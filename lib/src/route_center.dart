@@ -24,14 +24,6 @@ class RouteCenter extends RouteInformationParser<PageContext> {
 
   final _random = Random(DateTime.now().millisecondsSinceEpoch);
 
-  String _initialRouteName = "/";
-
-  /// 设置启动路由.
-  /// App 启动或者从浏览器输入 URL 的 path 为 "/" 时，则会打开本方法所指定的路由.
-  void setInitialRouteName(String routeName) {
-    _initialRouteName = routeName;
-  }
-
   /// 注册未知路由提示页面.
   void setUnknownBuilder(RouterWidgetBuilder builder) {
     _registry.setUnknownBuilder(builder);
@@ -125,8 +117,12 @@ class RouteCenter extends RouteInformationParser<PageContext> {
     return _delegate.popToRoot();
   }
 
-  PageContext _buildContext(String routeName, {LocalKey? key, Object? arguments}) {
-    key ??= ValueKey("$routeName-${_random.nextDouble()}");
+  PageContext _buildContext(String routeName, {Object? arguments}) {
+    var key = ValueKey("$routeName-${_random.nextDouble()}");
+    return __buildContext(routeName, key: key, arguments: arguments);
+  }
+
+  PageContext __buildContext(String routeName, {LocalKey? key, Object? arguments}) {
     var ctx = PageContext(routeName, key, arguments);
 
     var node = _registry.getNode(ctx.routeName);
@@ -158,11 +154,8 @@ class RouteCenter extends RouteInformationParser<PageContext> {
   /// 实现 RouteInformationParser
   @override
   Future<PageContext> parseRouteInformation(RouteInformation routeInformation) {
-    String routeName = _initialRouteName;
-    if (routeInformation.location != null && routeInformation.location != "/") {
-      routeName = routeInformation.location!;
-    }
-    var ctx = _buildContext(routeName);
+    String routeName = routeInformation.location ?? "/";
+    var ctx = __buildContext(routeName);
     return SynchronousFuture(ctx);
   }
 

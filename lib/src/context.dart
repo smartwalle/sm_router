@@ -5,7 +5,7 @@ import 'package:sm_router/sm_router.dart';
 import 'package:sm_router/src/query_param.dart';
 
 abstract class Context {
-  Context(String routeName, LocalKey key, Object? arguments) {
+  Context(String routeName, LocalKey? key, Object? arguments) {
     _uri = Uri.parse(routeName);
     _requestName = _uri.toString();
     _queryParam = QueryParam(_uri.queryParametersAll);
@@ -13,9 +13,9 @@ abstract class Context {
     _arguments = arguments;
   }
 
-  late LocalKey _key;
+  late LocalKey? _key;
 
-  LocalKey get key => _key;
+  LocalKey? get key => _key;
 
   late Uri _uri;
 
