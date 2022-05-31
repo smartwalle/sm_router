@@ -57,6 +57,10 @@ class RouteCenter extends RouteInformationParser<PageContext> {
     _registry.remove(routeName);
   }
 
+  void setRouterNeglect(bool value) {
+    _delegate.routerNeglect = value;
+  }
+
   Future<T?> push<T extends Object?>(String routeName, {Object? arguments}) {
     var ctx = _buildContext(routeName, arguments: arguments);
     return _delegate.push(ctx);

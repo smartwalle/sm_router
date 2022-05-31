@@ -11,6 +11,8 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
 
   final List<PageContext> _stack = [];
 
+  bool routerNeglect = false;
+
   bool _disposed = false;
 
   @override
@@ -45,9 +47,20 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
   @override
   Widget build(BuildContext context) {
     assert(!_disposed);
+
+    List<Page<dynamic>> pages = [];
+
+    if (routerNeglect) {
+      Router.neglect(context, () {
+        pages = [for (var ctx in _stack) ctx.page];
+      });
+    } else {
+      pages = [for (var ctx in _stack) ctx.page];
+    }
+
     return Navigator(
       key: navigatorKey,
-      pages: [for (var ctx in _stack) ctx.page],
+      pages: pages,
       onPopPage: _onPopPage,
     );
   }

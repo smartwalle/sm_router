@@ -32,6 +32,10 @@ class Routes {
     RouteCenter.instance.remove(routeName);
   }
 
+  static void setRouterNeglect(bool value) {
+    RouteCenter.instance.setRouterNeglect(value);
+  }
+
   static Future<T?> push<T extends Object?>(String routeName, {Object? arguments}) {
     return RouteCenter.instance.push(routeName, arguments: arguments);
   }
