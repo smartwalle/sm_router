@@ -119,10 +119,7 @@ class RouteCenter extends RouteInformationParser<PageContext> {
 
   PageContext _buildContext(String routeName, {Object? arguments}) {
     var key = ValueKey("$routeName-${_random.nextDouble()}");
-    return __buildContext(routeName, key: key, arguments: arguments);
-  }
 
-  PageContext __buildContext(String routeName, {LocalKey? key, Object? arguments}) {
     var ctx = PageContext(routeName, key, arguments);
 
     var node = _registry.getNode(ctx.routeName);
@@ -155,7 +152,7 @@ class RouteCenter extends RouteInformationParser<PageContext> {
   @override
   Future<PageContext> parseRouteInformation(RouteInformation routeInformation) {
     String routeName = routeInformation.location ?? "/";
-    var ctx = __buildContext(routeName);
+    var ctx = _buildContext(routeName);
     return SynchronousFuture(ctx);
   }
 
