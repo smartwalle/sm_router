@@ -5,7 +5,7 @@ import 'package:sm_router/src/context.dart';
 
 typedef PagePredicate = bool Function(Context ctx);
 
-typedef NavigatorWrapper = Widget Function(BuildContext context, Context ctx, Navigator navigator);
+typedef NavigatorWrapper = Widget Function(BuildContext context, Context route, Navigator navigator);
 
 NavigatorWrapper _defaultNavigatorWrapper = (context, ctx, navigator) {
   return navigator;
