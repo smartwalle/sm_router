@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:sm_router/sm_router.dart';
 
-final _m1Route = RouteCenter();
+/// 简单 push 和 pop
+void main() {
+  Routes.handle("/", (ctx) => const M1View1());
+  Routes.handle("/m1/view2", (ctx) => const M1View2());
 
-class M1Home extends StatelessWidget {
-  M1Home({Key? key}) : super(key: key) {
-    _m1Route.handle("/", (ctx) => const M1View1());
-    _m1Route.handle("/m1/view2", (ctx) => const M1View2());
-  }
+  runApp(const MainApp());
+}
+
+class MainApp extends StatelessWidget {
+  const MainApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: _m1Route.routeInformationParser,
-      routerDelegate: _m1Route.routerDelegate,
+      routeInformationParser: Routes.routeInformationParser,
+      routerDelegate: Routes.routerDelegate,
     );
   }
 }
@@ -25,12 +28,6 @@ class M1View1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Routes.pop();
-          },
-        ),
         title: const Text("M1 View1"),
       ),
       body: Center(
@@ -39,7 +36,7 @@ class M1View1 extends StatelessWidget {
             TextButton(
               child: const Text("进入 /m1/view2"),
               onPressed: () {
-                _m1Route.push("/m1/view2");
+                Routes.push("/m1/view2");
               },
             ),
           ],
@@ -64,7 +61,7 @@ class M1View2 extends StatelessWidget {
             TextButton(
               child: const Text("返回 /m1/view1"),
               onPressed: () {
-                _m1Route.pop();
+                Routes.pop();
               },
             ),
           ],

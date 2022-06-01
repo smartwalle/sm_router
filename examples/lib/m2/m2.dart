@@ -1,19 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:sm_router/sm_router.dart';
 
-final _m2Route = RouteCenter();
+/// 带有返回值的 pop
+void main() {
+  Routes.handle("/", (ctx) => const M2View1());
+  Routes.handle("/m2/view2", (ctx) => const M2View2());
 
-class M2Home extends StatelessWidget {
-  M2Home({Key? key}) : super(key: key) {
-    _m2Route.handle("/", (ctx) => const M2View1());
-    _m2Route.handle("/m2/view2", (ctx) => const M2View2());
-  }
+  runApp(const MainApp());
+}
+
+class MainApp extends StatelessWidget {
+  const MainApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: _m2Route.routeInformationParser,
-      routerDelegate: _m2Route.routerDelegate,
+      routeInformationParser: Routes.routeInformationParser,
+      routerDelegate: Routes.routerDelegate,
     );
   }
 }
@@ -27,17 +30,12 @@ class M2View1 extends StatefulWidget {
 
 class _M2View1State extends State<M2View1> {
   String? message;
+  bool _pop = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Routes.pop();
-          },
-        ),
         title: const Text("M2 View1"),
       ),
       body: Center(
@@ -46,19 +44,19 @@ class _M2View1State extends State<M2View1> {
             TextButton(
               child: const Text("进入 /m2/view2"),
               onPressed: () {
-                _m2Route.push<String>("/m2/view2").then((value) {
+                Routes.push<String>("/m2/view2").then((value) {
                   setState(() {
                     message = value;
+                    _pop = true;
                   });
                 });
               },
             ),
-            message != null ? Text("有返回值: $message") : const Text("没有返回值"),
+            if (_pop) message != null ? Text("有返回值: $message") : const Text("没有返回值"),
           ],
         ),
       ),
     );
-    ;
   }
 }
 
@@ -77,13 +75,13 @@ class M2View2 extends StatelessWidget {
             TextButton(
               child: const Text("返回 /m2/view1 (有返回值)"),
               onPressed: () {
-                _m2Route.pop<String>("这是来自 /m2/view2 的消息");
+                Routes.maybePop<String>("这是来自 /m2/view2 的消息");
               },
             ),
             TextButton(
               child: const Text("返回 /m2/view1 (没有返回值)"),
               onPressed: () {
-                _m2Route.pop();
+                Routes.maybePop();
               },
             ),
           ],

@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:sm_router/sm_router.dart';
 
-final _m4Route = RouteCenter();
+/// 自定义动画
+void main() {
+  Routes.setPageBuilder((ctx, child) => TransitionPage(
+        child,
+        key: ctx.key,
+        name: ctx.requestName,
+        arguments: ctx.arguments,
+      ));
 
-class M4Home extends StatelessWidget {
-  M4Home({Key? key}) : super(key: key) {
-    _m4Route.setPageBuilder((ctx, child) => TransitionPage(
-          child,
-          key: ctx.key,
-          name: ctx.requestName,
-          arguments: ctx.arguments,
-        ));
+  Routes.handle("/", (ctx) => const M4View1());
+  Routes.handle("/m4/view2", (ctx) => const M4View2());
+  runApp(const MainApp());
+}
 
-    _m4Route.handle("/", (ctx) => const M4View1());
-    _m4Route.handle("/m4/view2", (ctx) => const M4View2());
-  }
+class MainApp extends StatelessWidget {
+  const MainApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: _m4Route.routeInformationParser,
-      routerDelegate: _m4Route.routerDelegate,
+      routeInformationParser: Routes.routeInformationParser,
+      routerDelegate: Routes.routerDelegate,
     );
   }
 }
@@ -33,12 +35,6 @@ class M4View1 extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.lightGreen[100],
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back_ios),
-          onPressed: () {
-            Routes.pop();
-          },
-        ),
         title: const Text("M4 View1"),
       ),
       body: Center(
@@ -47,7 +43,7 @@ class M4View1 extends StatelessWidget {
             TextButton(
               child: const Text("进入 /m4/view2"),
               onPressed: () {
-                _m4Route.push("/m4/view2");
+                Routes.push("/m4/view2");
               },
             ),
           ],
@@ -74,7 +70,7 @@ class M4View2 extends StatelessWidget {
             TextButton(
               child: const Text("返回 /m4/view1"),
               onPressed: () {
-                _m4Route.pop();
+                Routes.maybePop();
               },
             ),
           ],
