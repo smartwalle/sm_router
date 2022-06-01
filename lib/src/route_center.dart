@@ -34,7 +34,7 @@ class RouteCenter extends RouteInformationParser<PageContext> {
     _registry.pageBuilder = pageBuilder;
   }
 
-  /// 注册全局拦截器
+  /// 注册全局拦截器.
   void use(RouterInterceptor interceptor) {
     _registry.use(interceptor);
   }
