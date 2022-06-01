@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sm_router/sm_router.dart';
 
-/// pushAndRemoveAll
+/// pushAndRemoveAll 和 pushAndRemoveUntil
 void main() {
   Routes.handle("/", (ctx) => const M5View1());
   Routes.handle("/m5/view2", (ctx) => const M5View2());
