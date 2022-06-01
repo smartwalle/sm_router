@@ -10,11 +10,17 @@ import 'package:sm_router/src/router_delegate.dart';
 
 /// RouteCenter
 class RouteCenter extends RouteInformationParser<PageContext> {
-  RouteCenter();
+  RouteCenter() {
+    _delegate = Delegate(
+      navigatorWrapper: (context, route, navigator) {
+        return navigator;
+      },
+    );
+  }
 
   static final RouteCenter instance = RouteCenter();
 
-  final _delegate = Delegate();
+  late Delegate _delegate;
 
   RouterDelegate<PageContext> get routerDelegate => _delegate;
 

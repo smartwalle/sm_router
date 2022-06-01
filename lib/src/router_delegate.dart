@@ -7,15 +7,13 @@ typedef PagePredicate = bool Function(Context ctx);
 
 typedef NavigatorWrapper = Widget Function(BuildContext context, Context route, Navigator navigator);
 
-NavigatorWrapper _defaultNavigatorWrapper = (context, ctx, navigator) {
-  return navigator;
-};
-
 /// RouterDelegate
 class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelegateMixin<PageContext>, ChangeNotifier {
-  Delegate();
+  Delegate({
+    required this.navigatorWrapper,
+  });
 
-  NavigatorWrapper navigatorWrapper = _defaultNavigatorWrapper;
+  NavigatorWrapper navigatorWrapper;
 
   final List<PageContext> _stack = [];
 
