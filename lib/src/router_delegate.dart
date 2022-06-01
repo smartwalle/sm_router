@@ -108,7 +108,7 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
   }
 
   bool canPop() {
-    return _stack.isNotEmpty;
+    return _stack.length > 1;
   }
 
   Future<bool> maybePop<T extends Object?>([T? result]) {
