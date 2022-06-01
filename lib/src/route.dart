@@ -32,6 +32,10 @@ class Routes {
     RouteCenter.instance.setRouterNeglect(value);
   }
 
+  static void setNavigatorWrapper(NavigatorWrapper wrapper) {
+    RouteCenter.instance.setNavigatorWrapper(wrapper);
+  }
+
   static Future<T?> push<T extends Object?>(String routeName, {Object? arguments}) {
     return RouteCenter.instance.push(routeName, arguments: arguments);
   }

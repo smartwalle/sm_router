@@ -53,6 +53,10 @@ class RouteCenter extends RouteInformationParser<PageContext> {
     _delegate.routerNeglect = value;
   }
 
+  void setNavigatorWrapper(NavigatorWrapper wrapper) {
+    _delegate.navigatorWrapper = wrapper;
+  }
+
   Future<T?> push<T extends Object?>(String routeName, {Object? arguments}) {
     var ctx = _buildContext(routeName, arguments: arguments);
     return _delegate.push(ctx);

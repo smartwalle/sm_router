@@ -5,9 +5,17 @@ import 'package:sm_router/src/context.dart';
 
 typedef PagePredicate = bool Function(Context ctx);
 
+typedef NavigatorWrapper = Widget Function(BuildContext context, Context ctx, Navigator navigator);
+
+NavigatorWrapper _defaultNavigatorWrapper = (context, ctx, navigator) {
+  return navigator;
+};
+
 /// RouterDelegate
 class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelegateMixin<PageContext>, ChangeNotifier {
   Delegate();
+
+  NavigatorWrapper navigatorWrapper = _defaultNavigatorWrapper;
 
   final List<PageContext> _stack = [];
 
@@ -40,6 +48,7 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
   @override
   Widget build(BuildContext context) {
     assert(!_disposed);
+    assert(_stack.isNotEmpty, "Router stack must not be empty");
 
     List<Page<dynamic>> pages = [];
 
@@ -51,11 +60,13 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
       pages = [for (var ctx in _stack) ctx.page];
     }
 
-    return Navigator(
+    var navigator = Navigator(
       key: navigatorKey,
       pages: pages,
       onPopPage: _onPopPage,
     );
+
+    return navigatorWrapper(context, _stack.last, navigator);
   }
 
   bool _onPopPage(Route<dynamic> route, dynamic result) {
