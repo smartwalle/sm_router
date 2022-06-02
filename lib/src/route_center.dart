@@ -40,27 +40,34 @@ class RouteCenter {
     return RouteState.instance.push(routeName, arguments: arguments);
   }
 
-  static Future<T?> pushReplacement<T extends Object?, TO extends Object?>(
-    String routeName, {
-    TO? result,
-    Object? arguments,
-  }) {
+  static void pushRoutes(List<RouteName> routeNames) {
+    return RouteState.instance.pushRoutes(routeNames);
+  }
+
+  static Future<T?> pushReplacement<T extends Object?, TO extends Object?>(String routeName,
+      {TO? result, Object? arguments}) {
     return RouteState.instance.pushReplacement(routeName, result: result, arguments: arguments);
   }
 
-  static Future<T?> pushAndRemoveUntil<T extends Object?>(
-    String routeName,
-    PagePredicate predicate, {
-    Object? arguments,
-  }) {
+  static void pushRoutesReplacement<T extends Object?>(List<RouteName> routeNames, {T? result}) {
+    return RouteState.instance.pushRoutesReplacement(routeNames, result: result);
+  }
+
+  static Future<T?> pushAndRemoveUntil<T extends Object?>(String routeName, PagePredicate predicate,
+      {Object? arguments}) {
     return RouteState.instance.pushAndRemoveUntil(routeName, predicate, arguments: arguments);
   }
 
-  static Future<T?> pushAndRemoveAll<T extends Object?>(
-    String routeName, {
-    Object? arguments,
-  }) {
+  static void pushRoutesAndRemoveUntil<T extends Object?>(List<RouteName> routeNames, PagePredicate predicate) {
+    return RouteState.instance.pushRoutesAndRemoveUntil(routeNames, predicate);
+  }
+
+  static Future<T?> pushAndRemoveAll<T extends Object?>(String routeName, {Object? arguments}) {
     return RouteState.instance.pushAndRemoveAll(routeName, arguments: arguments);
+  }
+
+  static void pushRoutesAndRemoveAll<T extends Object?>(List<RouteName> routeNames) {
+    return RouteState.instance.pushRoutesAndRemoveAll(routeNames);
   }
 
   static bool canPop() {
@@ -83,19 +90,20 @@ class RouteCenter {
     RouteState.instance.popUntil(predicate);
   }
 
-  static Future<T?> popAndPush<T extends Object?, TO extends Object?>(
-    String routeName, {
-    TO? result,
-    Object? arguments,
-  }) async {
+  static Future<T?> popAndPush<T extends Object?, TO extends Object?>(String routeName,
+      {TO? result, Object? arguments}) async {
     return RouteState.instance.popAndPush(routeName, result: result, arguments: arguments);
+  }
+
+  static void popAndPushRoutes<T extends Object?>(List<RouteName> routeNames, [T? result]) {
+    return RouteState.instance.popAndPushRoutes(routeNames, result);
   }
 
   static Future<bool> popToRoot() {
     return RouteState.instance.popToRoot();
   }
 
-  // static RouteState of(BuildContext context) {
-  //   return RouteState.of(context);
-  // }
+// static RouteState of(BuildContext context) {
+//   return RouteState.of(context);
+// }
 }

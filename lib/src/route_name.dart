@@ -1,7 +1,7 @@
 import 'package:sm_router/src/query_param.dart';
 
 class RouteName {
-  RouteName(this.name) {
+  RouteName(this.name, [this.arguments]) {
     _param = QueryParam();
   }
 
@@ -16,6 +16,8 @@ class RouteName {
   }
 
   late String name;
+
+  Object? arguments;
 
   late QueryParam _param;
 

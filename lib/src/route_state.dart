@@ -7,6 +7,7 @@ import 'package:sm_router/src/context.dart';
 import 'package:sm_router/src/route_node.dart';
 import 'package:sm_router/src/route_registry.dart';
 import 'package:sm_router/src/router_delegate.dart';
+import 'package:sm_router/src/route_name.dart';
 
 /// RouteState
 class RouteState extends RouteInformationParser<PageContext> {
@@ -86,30 +87,43 @@ class RouteState extends RouteInformationParser<PageContext> {
     return _delegate.push(ctx);
   }
 
-  Future<T?> pushReplacement<T extends Object?, TO extends Object?>(
-    String routeName, {
-    TO? result,
-    Object? arguments,
-  }) {
+  void pushRoutes(List<RouteName> routeNames) {
+    assert(routeNames.isNotEmpty, "pushRoutes: routeNames must not be empty");
+    var routes = [for (var name in routeNames) _buildContext(name.name, arguments: name.arguments)];
+    return _delegate.pushRoutes(routes);
+  }
+
+  Future<T?> pushReplacement<T extends Object?, TO extends Object?>(String routeName, {TO? result, Object? arguments}) {
     var ctx = _buildContext(routeName, arguments: arguments);
     return _delegate.pushReplacement(ctx, result);
   }
 
-  Future<T?> pushAndRemoveUntil<T extends Object?>(
-    String routeName,
-    PagePredicate predicate, {
-    Object? arguments,
-  }) {
+  void pushRoutesReplacement<T extends Object?>(List<RouteName> routeNames, {T? result}) {
+    assert(routeNames.isNotEmpty, "pushRoutesReplacement: routeNames must not be empty");
+    var routes = [for (var name in routeNames) _buildContext(name.name, arguments: name.arguments)];
+    return _delegate.pushRoutesReplacement(routes, result);
+  }
+
+  Future<T?> pushAndRemoveUntil<T extends Object?>(String routeName, PagePredicate predicate, {Object? arguments}) {
     var ctx = _buildContext(routeName, arguments: arguments);
     return _delegate.pushAndRemoveUntil(ctx, predicate);
   }
 
-  Future<T?> pushAndRemoveAll<T extends Object?>(
-    String routeName, {
-    Object? arguments,
-  }) {
+  void pushRoutesAndRemoveUntil<T extends Object?>(List<RouteName> routeNames, PagePredicate predicate) {
+    assert(routeNames.isNotEmpty, "pushRoutesAndRemoveUntil: routeNames must not be empty");
+    var routes = [for (var name in routeNames) _buildContext(name.name, arguments: name.arguments)];
+    return _delegate.pushRoutesAndRemoveUntil(routes, predicate);
+  }
+
+  Future<T?> pushAndRemoveAll<T extends Object?>(String routeName, {Object? arguments}) {
     var ctx = _buildContext(routeName, arguments: arguments);
     return _delegate.pushAndRemoveAll(ctx);
+  }
+
+  void pushRoutesAndRemoveAll<T extends Object?>(List<RouteName> routeNames) {
+    assert(routeNames.isNotEmpty, "pushRoutesAndRemoveAll: routeNames must not be empty");
+    var routes = [for (var name in routeNames) _buildContext(name.name, arguments: name.arguments)];
+    return _delegate.pushRoutesAndRemoveAll(routes);
   }
 
   bool canPop() {
@@ -132,13 +146,15 @@ class RouteState extends RouteInformationParser<PageContext> {
     _delegate.popUntil(predicate);
   }
 
-  Future<T?> popAndPush<T extends Object?, TO extends Object?>(
-    String routeName, {
-    TO? result,
-    Object? arguments,
-  }) {
+  Future<T?> popAndPush<T extends Object?, TO extends Object?>(String routeName, {TO? result, Object? arguments}) {
     var ctx = _buildContext(routeName, arguments: arguments);
     return _delegate.popAndPush(ctx, result);
+  }
+
+  void popAndPushRoutes<T extends Object?>(List<RouteName> routeNames, [T? result]) {
+    assert(routeNames.isNotEmpty, "popAndPushRoutes: routeNames must not be empty");
+    var routes = [for (var name in routeNames) _buildContext(name.name, arguments: name.arguments)];
+    return _delegate.popAndPushRoutes(routes, result);
   }
 
   Future<bool> popToRoot() {
