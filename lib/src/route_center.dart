@@ -58,7 +58,7 @@ class RouteCenter {
     return RouteState.instance.pushAndRemoveUntil(routeName, predicate, arguments: arguments);
   }
 
-  static void pushRoutesAndRemoveUntil<T extends Object?>(List<RouteName> routeNames, PagePredicate predicate) {
+  static void pushRoutesAndRemoveUntil(List<RouteName> routeNames, PagePredicate predicate) {
     return RouteState.instance.pushRoutesAndRemoveUntil(routeNames, predicate);
   }
 
@@ -66,8 +66,16 @@ class RouteCenter {
     return RouteState.instance.pushAndRemoveAll(routeName, arguments: arguments);
   }
 
-  static void pushRoutesAndRemoveAll<T extends Object?>(List<RouteName> routeNames) {
+  static void pushRoutesAndRemoveAll(List<RouteName> routeNames) {
     return RouteState.instance.pushRoutesAndRemoveAll(routeNames);
+  }
+
+  static void show(String routeName, {Object? arguments}) {
+    return RouteState.instance.show(routeName, arguments: arguments);
+  }
+
+  static void showRoutes(List<RouteName> routeNames) {
+    return RouteState.instance.showRoutes(routeNames);
   }
 
   static bool canPop() {

@@ -109,7 +109,7 @@ class RouteState extends RouteInformationParser<PageContext> {
     return _delegate.pushAndRemoveUntil(ctx, predicate);
   }
 
-  void pushRoutesAndRemoveUntil<T extends Object?>(List<RouteName> routeNames, PagePredicate predicate) {
+  void pushRoutesAndRemoveUntil(List<RouteName> routeNames, PagePredicate predicate) {
     assert(routeNames.isNotEmpty, "pushRoutesAndRemoveUntil: routeNames must not be empty");
     var routes = [for (var name in routeNames) _buildContext(name.name, arguments: name.arguments)];
     return _delegate.pushRoutesAndRemoveUntil(routes, predicate);
@@ -120,8 +120,18 @@ class RouteState extends RouteInformationParser<PageContext> {
     return _delegate.pushAndRemoveAll(ctx);
   }
 
-  void pushRoutesAndRemoveAll<T extends Object?>(List<RouteName> routeNames) {
+  void pushRoutesAndRemoveAll(List<RouteName> routeNames) {
     assert(routeNames.isNotEmpty, "pushRoutesAndRemoveAll: routeNames must not be empty");
+    var routes = [for (var name in routeNames) _buildContext(name.name, arguments: name.arguments)];
+    return _delegate.pushRoutesAndRemoveAll(routes);
+  }
+
+  void show(String routeName, {Object? arguments}) {
+    return showRoutes([RouteName(routeName, arguments)]);
+  }
+
+  void showRoutes(List<RouteName> routeNames) {
+    assert(routeNames.isNotEmpty, "showRoutes: routeNames must not be empty");
     var routes = [for (var name in routeNames) _buildContext(name.name, arguments: name.arguments)];
     return _delegate.pushRoutesAndRemoveAll(routes);
   }
