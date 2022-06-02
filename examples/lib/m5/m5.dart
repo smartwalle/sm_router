@@ -3,10 +3,10 @@ import 'package:sm_router/sm_router.dart';
 
 /// pushAndRemoveAll 和 pushAndRemoveUntil
 void main() {
-  Routes.handle("/", (ctx) => const M5View1());
-  Routes.handle("/m5/view2", (ctx) => const M5View2());
-  Routes.handle("/m5/view3", (ctx) => const M5View3());
-  Routes.handle("/m5/view4", (ctx) => const M5View4());
+  RouteCenter.handle("/", (ctx) => const M5View1());
+  RouteCenter.handle("/m5/view2", (ctx) => const M5View2());
+  RouteCenter.handle("/m5/view3", (ctx) => const M5View3());
+  RouteCenter.handle("/m5/view4", (ctx) => const M5View4());
 
   runApp(const MainApp());
 }
@@ -17,8 +17,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: Routes.routeInformationParser,
-      routerDelegate: Routes.routerDelegate,
+      routeInformationParser: RouteCenter.routeInformationParser,
+      routerDelegate: RouteCenter.routerDelegate,
     );
   }
 }
@@ -39,7 +39,7 @@ class M5View1 extends StatelessWidget {
             TextButton(
               child: const Text("进入 /m5/view2"),
               onPressed: () {
-                Routes.push("/m5/view2");
+                RouteCenter.push("/m5/view2");
               },
             ),
           ],
@@ -66,7 +66,7 @@ class M5View2 extends StatelessWidget {
             TextButton(
               child: const Text("进入 /m5/view3"),
               onPressed: () {
-                Routes.push("/m5/view3");
+                RouteCenter.push("/m5/view3");
               },
             ),
           ],
@@ -92,13 +92,13 @@ class M5View3 extends StatelessWidget {
             TextButton(
               child: const Text("进入 /m5/view4 (无法返回)"),
               onPressed: () {
-                Routes.pushAndRemoveAll("/m5/view4");
+                RouteCenter.pushAndRemoveAll("/m5/view4");
               },
             ),
             TextButton(
               child: const Text("进入 /m5/view4 (会返回到 /m5/view2)"),
               onPressed: () {
-                Routes.pushAndRemoveUntil("/m5/view4", (ctx) => ctx.routeName == "/m5/view2");
+                RouteCenter.pushAndRemoveUntil("/m5/view4", (ctx) => ctx.routeName == "/m5/view2");
               },
             ),
           ],
@@ -122,9 +122,9 @@ class M5View4 extends StatelessWidget {
         child: Column(
           children: [
             TextButton(
-              child: Routes.canPop() ? const Text("返回") : const Text("无法返回"),
+              child: RouteCenter.canPop() ? const Text("返回") : const Text("无法返回"),
               onPressed: () {
-                Routes.maybePop().then((value) {});
+                RouteCenter.maybePop().then((value) {});
               },
             ),
           ],

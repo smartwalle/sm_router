@@ -3,8 +3,8 @@ Flutter Navigator 2.0 路由管理。
 ## 快速使用
 #### 注册路由
 ```dart
-Routes.handle("/", (ctx) => const Home());
-Routes.handle("/test", (ctx) => const TestView());
+RouteCenter.handle("/", (ctx) => const Home());
+RouteCenter.handle("/test", (ctx) => const TestView());
 ```
 
 #### 设置 MaterialApp 的 routeInformationParser 和 routerDelegate
@@ -15,8 +15,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: Routes.routeInformationParser,
-      routerDelegate: Routes.routerDelegate,
+      routeInformationParser: RouteCenter.routeInformationParser,
+      routerDelegate: RouteCenter.routerDelegate,
     );
   }
 }
@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
 
 #### 跳转到指定路由
 ```dart
-Routes.push("/test?a=10");
+RouteCenter.push("/test?a=10");
 ```
 
 ## Context
@@ -45,7 +45,7 @@ Context 对象主要提供以下信息：
 拦截器返回 null 对象，表示本次访问通过该拦截器的验证。
 
 ```dart 
-Routes.handle("/profile", (ctx) => const YourView()).use((ctx) {
+RouteCenter.handle("/profile", (ctx) => const YourView()).use((ctx) {
     if (isLogin) {
         // 已登录，不需要拦截
         return null;
@@ -57,7 +57,7 @@ Routes.handle("/profile", (ctx) => const YourView()).use((ctx) {
 
 ### 全局拦截器
 
-可以调用 Routes.use() 方法添加全局拦截器，全局拦截器作用于所有的路由。
+可以调用 RouteCenter.use() 方法添加全局拦截器，全局拦截器作用于所有的路由。
 
 访问一个路由的时候，将先执行全局拦截器，然后再执行路由的拦截器。
 

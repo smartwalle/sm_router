@@ -3,8 +3,8 @@ import 'package:sm_router/sm_router.dart';
 
 /// 带有返回值的 pop
 void main() {
-  Routes.handle("/", (ctx) => const M2View1());
-  Routes.handle("/m2/view2", (ctx) => const M2View2());
+  RouteCenter.handle("/", (ctx) => const M2View1());
+  RouteCenter.handle("/m2/view2", (ctx) => const M2View2());
 
   runApp(const MainApp());
 }
@@ -15,8 +15,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: Routes.routeInformationParser,
-      routerDelegate: Routes.routerDelegate,
+      routeInformationParser: RouteCenter.routeInformationParser,
+      routerDelegate: RouteCenter.routerDelegate,
     );
   }
 }
@@ -44,7 +44,7 @@ class _M2View1State extends State<M2View1> {
             TextButton(
               child: const Text("进入 /m2/view2"),
               onPressed: () {
-                Routes.push<String>("/m2/view2").then((value) {
+                RouteCenter.push<String>("/m2/view2").then((value) {
                   setState(() {
                     message = value;
                     _pop = true;
@@ -75,13 +75,13 @@ class M2View2 extends StatelessWidget {
             TextButton(
               child: const Text("返回 /m2/view1 (有返回值)"),
               onPressed: () {
-                Routes.maybePop<String>("这是来自 /m2/view2 的消息");
+                RouteCenter.maybePop<String>("这是来自 /m2/view2 的消息");
               },
             ),
             TextButton(
               child: const Text("返回 /m2/view1 (没有返回值)"),
               onPressed: () {
-                Routes.maybePop();
+                RouteCenter.maybePop();
               },
             ),
           ],

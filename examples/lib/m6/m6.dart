@@ -3,11 +3,11 @@ import 'package:sm_router/sm_router.dart';
 
 /// NavigatorWrapper
 void main() {
-  Routes.handle("/", (ctx) => const M6View1());
-  Routes.handle("/m6/view2", (ctx) => const M6View2());
-  Routes.handle("/m6/view3", (ctx) => const M6View3());
+  RouteCenter.handle("/", (ctx) => const M6View1());
+  RouteCenter.handle("/m6/view2", (ctx) => const M6View2());
+  RouteCenter.handle("/m6/view3", (ctx) => const M6View3());
 
-  Routes.setNavigatorWrapper((context, route, navigator) {
+  RouteCenter.setNavigatorWrapper((context, route, navigator) {
     return MainWrapper(
       child: navigator,
     );
@@ -22,8 +22,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: Routes.routeInformationParser,
-      routerDelegate: Routes.routerDelegate,
+      routeInformationParser: RouteCenter.routeInformationParser,
+      routerDelegate: RouteCenter.routerDelegate,
     );
   }
 }
@@ -64,7 +64,7 @@ class _MainWrapperState extends State<MainWrapper> {
                   ),
                 ),
                 onPressed: () {
-                  Routes.pushReplacement("/");
+                  RouteCenter.pushReplacement("/");
                 },
               ),
               TextButton(
@@ -75,7 +75,7 @@ class _MainWrapperState extends State<MainWrapper> {
                   ),
                 ),
                 onPressed: () {
-                  Routes.pushReplacement("/m6/view2");
+                  RouteCenter.pushReplacement("/m6/view2");
                 },
               ),
               TextButton(
@@ -86,7 +86,7 @@ class _MainWrapperState extends State<MainWrapper> {
                   ),
                 ),
                 onPressed: () {
-                  Routes.pushReplacement("/m6/view3");
+                  RouteCenter.pushReplacement("/m6/view3");
                 },
               ),
             ],
