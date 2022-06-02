@@ -94,4 +94,8 @@ class RouteCenter {
   static Future<bool> popToRoot() {
     return RouteState.instance.popToRoot();
   }
+
+  // static RouteState of(BuildContext context) {
+  //   return RouteState.of(context);
+  // }
 }

@@ -15,8 +15,20 @@ class RouteState extends RouteInformationParser<PageContext> {
       navigatorWrapper: (context, route, navigator) {
         return navigator;
       },
+      // navigatorWrapper: (context, route, navigator) {
+      //   return _InheritedRouteState(
+      //     routeState: this,
+      //     child: navigator,
+      //   );
+      // },
     );
   }
+
+  // static RouteState of(BuildContext context) {
+  //   final _InheritedRouteState? widget = context.dependOnInheritedWidgetOfExactType<_InheritedRouteState>();
+  //   assert(widget != null, 'RouteState not found in context');
+  //   return widget!.routeState;
+  // }
 
   static final RouteState instance = RouteState();
 
@@ -61,6 +73,12 @@ class RouteState extends RouteInformationParser<PageContext> {
 
   void setNavigatorWrapper(NavigatorWrapper wrapper) {
     _delegate.navigatorWrapper = wrapper;
+    // _delegate.navigatorWrapper = (context, route, navigator) {
+    //   return _InheritedRouteState(
+    //     routeState: this,
+    //     child: wrapper(context, route, navigator),
+    //   );
+    // };
   }
 
   Future<T?> push<T extends Object?>(String routeName, {Object? arguments}) {
@@ -171,3 +189,18 @@ class RouteState extends RouteInformationParser<PageContext> {
     return RouteInformation(location: configuration.requestName);
   }
 }
+
+// class _InheritedRouteState extends InheritedWidget {
+//   const _InheritedRouteState({
+//     Key? key,
+//     required this.routeState,
+//     required super.child,
+//   }) : super(key: key);
+//
+//   final RouteState routeState;
+//
+//   @override
+//   bool updateShouldNotify(covariant _InheritedRouteState oldWidget) {
+//     return oldWidget.routeState != routeState;
+//   }
+// }
