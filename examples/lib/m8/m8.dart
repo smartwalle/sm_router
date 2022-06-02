@@ -42,12 +42,6 @@ class M8View1 extends StatelessWidget {
                 RouteCenter.push("/m8/view2");
               },
             ),
-            TextButton(
-              child: const Text("进入 /m8/view3 (pushRoutesAndRemoveAll)"),
-              onPressed: () {
-                RouteCenter.push("/m8/view3");
-              },
-            ),
           ],
         ),
       ),
@@ -109,9 +103,14 @@ class M8View21 extends StatelessWidget {
   }
 }
 
-class M8View22 extends StatelessWidget {
+class M8View22 extends StatefulWidget {
   const M8View22({Key? key}) : super(key: key);
 
+  @override
+  State<M8View22> createState() => _M8View22State();
+}
+
+class _M8View22State extends State<M8View22> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
