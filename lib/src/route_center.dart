@@ -62,7 +62,7 @@ class RouteCenter {
     return RouteState.instance.pushRoutesAndRemoveUntil(routeNames, predicate);
   }
 
-  static Future<T?> pushAndRemoveAll<T extends Object?>(String routeName, {Object? arguments}) {
+  static void pushAndRemoveAll<T extends Object?>(String routeName, {Object? arguments}) {
     return RouteState.instance.pushAndRemoveAll(routeName, arguments: arguments);
   }
 
@@ -70,7 +70,7 @@ class RouteCenter {
     return RouteState.instance.pushRoutesAndRemoveAll(routeNames);
   }
 
-  static void show(String routeName, {Object? arguments}) {
+  static void show<T extends Object?>(String routeName, {Object? arguments}) {
     return RouteState.instance.show(routeName, arguments: arguments);
   }
 

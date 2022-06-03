@@ -127,9 +127,9 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
     return pushRoutes(routes);
   }
 
-  Future<T?> pushAndRemoveAll<T extends Object?>(PageContext route) {
+  void pushAndRemoveAll<T extends Object?>(PageContext route) {
     _stack.removeRange(0, _stack.length);
-    return push(route);
+    push(route);
   }
 
   void pushRoutesAndRemoveAll(List<PageContext> routes) {

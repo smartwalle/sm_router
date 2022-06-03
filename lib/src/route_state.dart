@@ -115,7 +115,7 @@ class RouteState extends RouteInformationParser<PageContext> {
     return _delegate.pushRoutesAndRemoveUntil(routes, predicate);
   }
 
-  Future<T?> pushAndRemoveAll<T extends Object?>(String routeName, {Object? arguments}) {
+  void pushAndRemoveAll<T extends Object?>(String routeName, {Object? arguments}) {
     var ctx = _buildContext(routeName, arguments: arguments);
     return _delegate.pushAndRemoveAll(ctx);
   }
@@ -126,8 +126,8 @@ class RouteState extends RouteInformationParser<PageContext> {
     return _delegate.pushRoutesAndRemoveAll(routes);
   }
 
-  void show(String routeName, {Object? arguments}) {
-    return showRoutes([RouteName(routeName, arguments)]);
+  void show<T extends Object?>(String routeName, {Object? arguments}) {
+    return pushAndRemoveAll(routeName, arguments: arguments);
   }
 
   void showRoutes(List<RouteName> routeNames) {

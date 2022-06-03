@@ -9,6 +9,11 @@ void main() {
   RouteCenter.handle("/m8/view22", (ctx) => const M8View22());
   RouteCenter.handle("/m8/view23", (ctx) => const M8View23());
 
+  RouteCenter.handle("/m8/view3", (ctx) => const M8View3());
+  RouteCenter.handle("/m8/view31", (ctx) => const M8View31());
+  RouteCenter.handle("/m8/view32", (ctx) => const M8View32());
+  RouteCenter.handle("/m8/view33", (ctx) => const M8View33());
+
   runApp(const MainApp());
 }
 
@@ -40,6 +45,12 @@ class M8View1 extends StatelessWidget {
               child: const Text("进入 /m8/view2 (pushRoutesAndRemoveUntil)"),
               onPressed: () {
                 RouteCenter.push("/m8/view2");
+              },
+            ),
+            TextButton(
+              child: const Text("进入 /m8/view2 (pushRoutesAndRemoveAll)"),
+              onPressed: () {
+                RouteCenter.push("/m8/view3");
               },
             ),
           ],
@@ -147,6 +158,110 @@ class M8View23 extends StatelessWidget {
           children: [
             TextButton(
               child: const Text("返回 M8 View2-2"),
+              onPressed: () {
+                RouteCenter.pop();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class M8View3 extends StatelessWidget {
+  const M8View3({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("M8 View3"),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            TextButton(
+              child: const Text("下一页面"),
+              onPressed: () {
+                RouteCenter.push("/m8/view31");
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class M8View31 extends StatelessWidget {
+  const M8View31({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("M8 View3-1"),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            TextButton(
+              child: const Text("下一页面"),
+              onPressed: () {
+                var routes = [
+                  RouteName("/m8/view32"),
+                  RouteName("/m8/view33"),
+                ];
+                RouteCenter.pushRoutesAndRemoveAll(routes);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class M8View32 extends StatelessWidget {
+  const M8View32({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("M8 View3-2"),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            TextButton(
+              child: const Text("无法返回"),
+              onPressed: () {
+                RouteCenter.maybePop();
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class M8View33 extends StatelessWidget {
+  const M8View33({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("M8 View3-3"),
+      ),
+      body: Center(
+        child: Column(
+          children: [
+            TextButton(
+              child: const Text("返回 M8 View3-2"),
               onPressed: () {
                 RouteCenter.pop();
               },
