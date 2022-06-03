@@ -53,12 +53,12 @@ class RouteCenter {
     return RouteState.instance.pushRoutesReplacement(routeNames, result: result);
   }
 
-  static Future<T?> pushAndRemoveUntil<T extends Object?>(String routeName, PagePredicate predicate,
+  static Future<T?> pushAndRemoveUntil<T extends Object?>(String routeName, Predicate predicate,
       {Object? arguments}) {
     return RouteState.instance.pushAndRemoveUntil(routeName, predicate, arguments: arguments);
   }
 
-  static void pushRoutesAndRemoveUntil(List<RouteName> routeNames, PagePredicate predicate) {
+  static void pushRoutesAndRemoveUntil(List<RouteName> routeNames, Predicate predicate) {
     return RouteState.instance.pushRoutesAndRemoveUntil(routeNames, predicate);
   }
 
@@ -90,11 +90,11 @@ class RouteCenter {
     return RouteState.instance.pop(result);
   }
 
-  static Future<bool> popMatched<T extends Object?>(PagePredicate predicate, [T? result]) {
+  static Future<bool> popMatched<T extends Object?>(Predicate predicate, [T? result]) {
     return RouteState.instance.popMatched(predicate, result);
   }
 
-  static void popUntil(PagePredicate predicate) {
+  static void popUntil(Predicate predicate) {
     RouteState.instance.popUntil(predicate);
   }
 

@@ -104,12 +104,12 @@ class RouteState extends RouteInformationParser<PageContext> {
     return _delegate.pushRoutesReplacement(routes, result);
   }
 
-  Future<T?> pushAndRemoveUntil<T extends Object?>(String routeName, PagePredicate predicate, {Object? arguments}) {
+  Future<T?> pushAndRemoveUntil<T extends Object?>(String routeName, Predicate predicate, {Object? arguments}) {
     var ctx = _buildContext(routeName, arguments: arguments);
     return _delegate.pushAndRemoveUntil(ctx, predicate);
   }
 
-  void pushRoutesAndRemoveUntil(List<RouteName> routeNames, PagePredicate predicate) {
+  void pushRoutesAndRemoveUntil(List<RouteName> routeNames, Predicate predicate) {
     assert(routeNames.isNotEmpty, "pushRoutesAndRemoveUntil: routeNames must not be empty");
     var routes = [for (var name in routeNames) _buildContext(name.name, arguments: name.arguments)];
     return _delegate.pushRoutesAndRemoveUntil(routes, predicate);
@@ -148,11 +148,11 @@ class RouteState extends RouteInformationParser<PageContext> {
     return _delegate.pop(result);
   }
 
-  Future<bool> popMatched<T extends Object?>(PagePredicate predicate, [T? result]) {
+  Future<bool> popMatched<T extends Object?>(Predicate predicate, [T? result]) {
     return _delegate.popMatched(predicate, result);
   }
 
-  void popUntil(PagePredicate predicate) {
+  void popUntil(Predicate predicate) {
     _delegate.popUntil(predicate);
   }
 

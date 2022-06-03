@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:sm_router/sm_router.dart';
 import 'package:sm_router/src/context.dart';
 
-typedef PagePredicate = bool Function(Context ctx);
+typedef Predicate = bool Function(Context ctx);
 
 typedef NavigatorWrapper = Widget Function(BuildContext context, Context route, Navigator navigator);
 
@@ -111,7 +111,7 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
     return pushRoutes(routes);
   }
 
-  Future<T?> pushAndRemoveUntil<T extends Object?>(PageContext route, PagePredicate predicate) {
+  Future<T?> pushAndRemoveUntil<T extends Object?>(PageContext route, Predicate predicate) {
     var index = _stack.lastIndexWhere(predicate);
     if (index != -1) {
       _stack.removeRange(index + 1, _stack.length);
@@ -119,7 +119,7 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
     return push(route);
   }
 
-  void pushRoutesAndRemoveUntil(List<PageContext> routes, PagePredicate predicate) {
+  void pushRoutesAndRemoveUntil(List<PageContext> routes, Predicate predicate) {
     var index = _stack.lastIndexWhere(predicate);
     if (index != -1) {
       _stack.removeRange(index + 1, _stack.length);
@@ -162,7 +162,7 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
     return SynchronousFuture(true);
   }
 
-  Future<bool> popMatched<T extends Object?>(PagePredicate predicate, [T? result]) {
+  Future<bool> popMatched<T extends Object?>(Predicate predicate, [T? result]) {
     if (_stack.isEmpty) {
       return SynchronousFuture(false);
     }
@@ -175,7 +175,7 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
     return pop(result);
   }
 
-  void popUntil(PagePredicate predicate) {
+  void popUntil(Predicate predicate) {
     var index = _stack.lastIndexWhere(predicate);
     if (index == -1) {
       return;
