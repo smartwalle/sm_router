@@ -9,6 +9,7 @@ void main() {
 
   RouteCenter.setNavigatorWrapper((ctx, navigator) {
     return MainWrapper(
+      routeName: ctx.routeName,
       child: navigator,
     );
   });
@@ -29,9 +30,14 @@ class MainApp extends StatelessWidget {
 }
 
 class MainWrapper extends StatefulWidget {
-  const MainWrapper({Key? key, required this.child}) : super(key: key);
+  const MainWrapper({
+    Key? key,
+    required this.routeName,
+    required this.child,
+  }) : super(key: key);
 
   final Widget child;
+  final String routeName;
 
   @override
   State<MainWrapper> createState() {
@@ -57,37 +63,43 @@ class _MainWrapperState extends State<MainWrapper> {
           child: Row(
             children: [
               TextButton(
+                onPressed: widget.routeName == "/"
+                    ? null
+                    : () {
+                        RouteCenter.pushReplacement("/");
+                      },
                 child: const Text(
                   "进入 /m6/view1",
                   style: TextStyle(
                     color: Colors.white,
                   ),
                 ),
-                onPressed: () {
-                  RouteCenter.pushReplacement("/");
-                },
               ),
               TextButton(
+                onPressed: widget.routeName == "/m6/view2"
+                    ? null
+                    : () {
+                        RouteCenter.pushReplacement("/m6/view2");
+                      },
                 child: const Text(
                   "进入 /m6/view2",
                   style: TextStyle(
                     color: Colors.white,
                   ),
                 ),
-                onPressed: () {
-                  RouteCenter.pushReplacement("/m6/view2");
-                },
               ),
               TextButton(
+                onPressed: widget.routeName == "/m6/view3"
+                    ? null
+                    : () {
+                        RouteCenter.pushReplacement("/m6/view3");
+                      },
                 child: const Text(
                   "进入 /m6/view3",
                   style: TextStyle(
                     color: Colors.white,
                   ),
                 ),
-                onPressed: () {
-                  RouteCenter.pushReplacement("/m6/view3");
-                },
               ),
             ],
           ),
