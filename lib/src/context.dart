@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:sm_router/sm_router.dart';
-import 'package:sm_router/src/query_param.dart';
 
 abstract class Context {
   Context(String routeName, LocalKey? key, Object? arguments) {
@@ -59,17 +58,9 @@ abstract class Context {
 }
 
 class RouteContext extends Context {
-  RouteContext(super.routeName, super.key, super.arguments);
+  RouteContext(super.routeName, super.key, super.arguments, this.node) : result = Completer();
 
-  redirect(String routeName, {Object? arguments}) {
-    throw RouteSettings(name: routeName, arguments: arguments);
-  }
-}
-
-class PageContext extends RouteContext {
-  PageContext(super.routeName, super.key, super.arguments) : result = Completer();
-
-  late Page<dynamic> page;
+  RouteNode node;
 
   final Completer result;
 }

@@ -28,7 +28,7 @@ RouteCenter.push("/test?a=10");
 ```
 
 ## Context
-Context 对象主要提供以下信息：
+RouteContext 对象主要提供以下信息：
 * **routeName**：路由名称。例如: /test；
 * **requestName**：请求名称，包含路由查询参数。例如: /test?a=10；
 * **arguments**：路由参数，即 pushXXX 系列方法中提供的 arguments 参数（建议只在在非 web 应用中使用）；
@@ -40,7 +40,7 @@ Context 对象主要提供以下信息：
 
 一个路由可以添加多个拦截器，访问该路由时，其拦截器将被依次被调用，所有拦截器都通过之后才会执行路由处理器。
 
-拦截器如果返回一个有效的 Widget，则表示本次访问被拦截，用户的屏幕将显示该 Widget，该路由后续的拦截器和处理器将不会被执行。
+拦截器如果返回一个有效的 Redirect 对象，则表示本次访问被拦截，将显示该 Redirect 相关的页面，该路由后续的拦截器和处理器将不会被执行。
 
 拦截器返回 null 对象，表示本次访问通过该拦截器的验证。
 
@@ -48,10 +48,10 @@ Context 对象主要提供以下信息：
 RouteCenter.handle("/profile", (ctx) => const YourView()).use((ctx) {
     if (isLogin) {
         // 已登录，不需要拦截
-        return null;
+        return ;
     }
     // 未登录，需要显示登录页面
-    return LoginView();
+    return Redirect("/login");
 });
 ```
 
@@ -60,11 +60,3 @@ RouteCenter.handle("/profile", (ctx) => const YourView()).use((ctx) {
 可以调用 RouteCenter.use() 方法添加全局拦截器，全局拦截器作用于所有的路由。
 
 访问一个路由的时候，将先执行全局拦截器，然后再执行路由的拦截器。
-
-## 重定向
-
-在路由拦截器中，可以调用 ctx.redirect() 方法将本次访问重定向到指定路由。
-
-## 注意事项
-* 在路由处理器中无法进行重定向；
-* 不能在拦截器以外的区域调用重定向方法，比如拦截器的 Widget 中；

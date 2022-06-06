@@ -1,21 +1,27 @@
+import 'dart:math';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sm_router/sm_router.dart';
-import 'package:sm_router/src/context.dart';
+import 'package:sm_router/src/route_registry.dart';
 
 typedef Predicate = bool Function(Context ctx);
 
-typedef NavigatorWrapper = Widget Function(BuildContext context, Context route, Navigator navigator);
+typedef NavigatorWrapper = Widget Function(Context ctx, Navigator navigator);
 
 /// RouterDelegate
-class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelegateMixin<PageContext>, ChangeNotifier {
+class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMixin<String>, ChangeNotifier {
   Delegate({
     required this.navigatorWrapper,
   });
 
   NavigatorWrapper navigatorWrapper;
 
-  final List<PageContext> _stack = [];
+  final registry = Registry();
+
+  final _random = Random(DateTime.now().millisecondsSinceEpoch);
+
+  final List<RouteContext> _stack = [];
 
   bool routerNeglect = false;
 
@@ -31,14 +37,15 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
   GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
-  PageContext? get currentConfiguration {
-    return _stack.isNotEmpty ? _stack.last : null;
+  String? get currentConfiguration {
+    return _stack.isNotEmpty ? _stack.last.requestName : null;
   }
 
   @override
-  Future<void> setNewRoutePath(PageContext configuration) {
+  Future<void> setNewRoutePath(String configuration) {
+    var route = _buildRouteContext(configuration);
     _stack.clear();
-    _stack.add(configuration);
+    _stack.add(route);
     _update();
     return SynchronousFuture(null);
   }
@@ -52,10 +59,10 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
 
     if (routerNeglect) {
       Router.neglect(context, () {
-        pages = [for (var route in _stack) route.page];
+        pages = [for (var route in _stack) _buildPage(route)];
       });
     } else {
-      pages = [for (var route in _stack) route.page];
+      pages = [for (var route in _stack) _buildPage(route)];
     }
 
     var navigator = Navigator(
@@ -64,7 +71,7 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
       onPopPage: _onPopPage,
     );
 
-    return navigatorWrapper(context, _stack.last, navigator);
+    return navigatorWrapper(_stack.last, navigator);
   }
 
   bool _onPopPage(Route<dynamic> route, dynamic result) {
@@ -77,8 +84,8 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
   }
 
   void _pop(dynamic result) {
-    var ctx = _stack.removeLast();
-    ctx.result.complete(result);
+    var route = _stack.removeLast();
+    route.result.complete(result);
   }
 
   void _update() {
@@ -86,55 +93,97 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
     notifyListeners();
   }
 
-  Future<T?> push<T extends Object?>(PageContext route) async {
+  RouteContext _buildRouteContext(String routeName, {Object? arguments}) {
+    var key = ValueKey("$routeName-${_random.nextDouble()}");
+    var node = registry.getNode(routeName);
+    var route = RouteContext(routeName, key, arguments, node);
+
+    for (var interceptor in [...registry.interceptors, ...node.interceptors]) {
+      var redirect = interceptor(route);
+      if (redirect != null) {
+        return _buildRouteContext(redirect.name!, arguments: redirect.arguments);
+      }
+    }
+
+    return route;
+  }
+
+  Page<dynamic> _buildPage(RouteContext route) {
+    var node = route.node;
+    var child = node.builder(route);
+    var pageBuilder = node.pageBuilder ?? registry.pageBuilder;
+    return pageBuilder(route, child);
+  }
+
+  Future<T?> push<T extends Object?>(String routeName, {Object? arguments}) async {
+    var route = _buildRouteContext(routeName, arguments: arguments);
     _stack.add(route);
     _update();
     return await route.result.future;
   }
 
-  void pushRoutes(List<PageContext> routes) {
+  void _pushRoutes(List<RouteName> routeNames) {
+    var routes = [for (var name in routeNames) _buildRouteContext(name.name, arguments: name.arguments)];
     _stack.addAll(routes);
     _update();
   }
 
-  Future<T?> pushReplacement<T extends Object?, TO extends Object?>(PageContext route, [TO? result]) {
+  void pushRoutes(List<RouteName> routeNames) {
+    assert(routeNames.isNotEmpty, "pushRoutes: routeNames must not be empty");
+    return _pushRoutes(routeNames);
+  }
+
+  Future<T?> pushReplacement<T extends Object?, TO extends Object?>(String routeName, {TO? result, Object? arguments}) {
     if (_stack.isNotEmpty) {
       _pop(result);
     }
-    return push(route);
+    return push(routeName, arguments: arguments);
   }
 
-  void pushRoutesReplacement<T extends Object?>(List<PageContext> routes, [T? result]) {
+  void pushRoutesReplacement<T extends Object?>(List<RouteName> routeNames, {T? result}) {
+    assert(routeNames.isNotEmpty, "pushRoutesReplacement: routeNames must not be empty");
     if (_stack.isNotEmpty) {
       _pop(result);
     }
-    return pushRoutes(routes);
+    return _pushRoutes(routeNames);
   }
 
-  Future<T?> pushAndRemoveUntil<T extends Object?>(PageContext route, Predicate predicate) {
+  Future<T?> pushAndRemoveUntil<T extends Object?>(String routeName, Predicate predicate, {Object? arguments}) {
     var index = _stack.lastIndexWhere(predicate);
     if (index != -1) {
       _stack.removeRange(index + 1, _stack.length);
     }
-    return push(route);
+    return push(routeName, arguments: arguments);
   }
 
-  void pushRoutesAndRemoveUntil(List<PageContext> routes, Predicate predicate) {
+  void pushRoutesAndRemoveUntil(List<RouteName> routeNames, Predicate predicate) {
+    assert(routeNames.isNotEmpty, "pushRoutesAndRemoveUntil: routeNames must not be empty");
     var index = _stack.lastIndexWhere(predicate);
     if (index != -1) {
       _stack.removeRange(index + 1, _stack.length);
     }
-    return pushRoutes(routes);
+    return _pushRoutes(routeNames);
   }
 
-  void pushAndRemoveAll<T extends Object?>(PageContext route) {
+  void pushAndRemoveAll<T extends Object?>(String routeName, {Object? arguments}) {
     _stack.removeRange(0, _stack.length);
-    push(route);
+    push(routeName, arguments: arguments);
   }
 
-  void pushRoutesAndRemoveAll(List<PageContext> routes) {
+  void pushRoutesAndRemoveAll(List<RouteName> routeNames) {
+    assert(routeNames.isNotEmpty, "pushRoutesAndRemoveAll: routeNames must not be empty");
     _stack.removeRange(0, _stack.length);
-    return pushRoutes(routes);
+    return pushRoutes(routeNames);
+  }
+
+  void show<T extends Object?>(String routeName, {Object? arguments}) {
+    return pushAndRemoveAll(routeName, arguments: arguments);
+  }
+
+  void showRoutes(List<RouteName> routeNames) {
+    assert(routeNames.isNotEmpty, "showRoutes: routeNames must not be empty");
+    _stack.removeRange(0, _stack.length);
+    return pushRoutes(routeNames);
   }
 
   bool canPop() {
@@ -167,8 +216,8 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
       return SynchronousFuture(false);
     }
 
-    var ctx = _stack.last;
-    if (predicate(ctx) == false) {
+    var route = _stack.last;
+    if (predicate(route) == false) {
       return SynchronousFuture(false);
     }
 
@@ -185,20 +234,22 @@ class Delegate extends RouterDelegate<PageContext> with PopNavigatorRouterDelega
     _update();
   }
 
-  Future<T?> popAndPush<T extends Object?, TO extends Object?>(PageContext route, [TO? result]) async {
+  Future<T?> popAndPush<T extends Object?, TO extends Object?>(String routeName,
+      {TO? result, Object? arguments}) async {
     final NavigatorState? state = navigatorKey.currentState;
     if (state != null) {
       await state.maybePop(result);
     }
-    return push(route);
+    return push(routeName, arguments: arguments);
   }
 
-  void popAndPushRoutes<T extends Object?>(List<PageContext> routes, [T? result]) async {
+  void popAndPushRoutes<T extends Object?>(List<RouteName> routeNames, [T? result]) async {
+    assert(routeNames.isNotEmpty, "popAndPushRoutes: routeNames must not be empty");
     final NavigatorState? state = navigatorKey.currentState;
     if (state != null) {
       await state.maybePop(result);
     }
-    return pushRoutes(routes);
+    return pushRoutes(routeNames);
   }
 
   Future<bool> popToRoot() {

@@ -4,9 +4,9 @@ import 'package:sm_router/sm_router.dart';
 class RouteCenter {
   RouteCenter._internal();
 
-  static RouterDelegate<PageContext> get routerDelegate => RouteState.instance.routerDelegate;
+  static RouterDelegate<String> get routerDelegate => RouteState.instance.routerDelegate;
 
-  static RouteInformationParser<PageContext> get routeInformationParser => RouteState.instance;
+  static RouteInformationParser<String> get routeInformationParser => RouteState.instance.routeInformationParser;
 
   static void setUnknownBuilder(RouterWidgetBuilder builder) {
     RouteState.instance.setUnknownBuilder(builder);

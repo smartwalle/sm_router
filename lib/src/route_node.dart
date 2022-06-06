@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:sm_router/src/context.dart';
 
 typedef RouterWidgetBuilder = Widget Function(Context ctx);
-typedef RouterInterceptor = Widget? Function(RouteContext ctx);
+typedef RouterInterceptor = Redirect? Function(Context ctx);
 typedef RouterPageBuilder = Page<dynamic> Function(Context ctx, Widget child);
 
 class RouteNode {
@@ -30,4 +30,11 @@ class RouteNode {
   RouterPageBuilder? _pageBuilder;
 
   RouterPageBuilder? get pageBuilder => _pageBuilder;
+}
+
+class Redirect extends RouteSettings {
+  const Redirect(
+    String name, {
+    Object? arguments,
+  }) : super(name: name, arguments: arguments);
 }

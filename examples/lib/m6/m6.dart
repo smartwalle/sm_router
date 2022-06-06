@@ -7,7 +7,7 @@ void main() {
   RouteCenter.handle("/m6/view2", (ctx) => const M6View2());
   RouteCenter.handle("/m6/view3", (ctx) => const M6View3());
 
-  RouteCenter.setNavigatorWrapper((context, route, navigator) {
+  RouteCenter.setNavigatorWrapper((ctx, navigator) {
     return MainWrapper(
       child: navigator,
     );
