@@ -4,11 +4,17 @@ import 'package:sm_router/src/context.dart';
 typedef RouterWidgetBuilder = Widget Function(Context ctx);
 typedef RouterInterceptor = Redirect? Function(Context ctx);
 typedef RouterPageBuilder = Page<dynamic> Function(Context ctx, Widget child);
+typedef NavigatorWrapper = Widget Function(Context ctx, Navigator navigator);
 
 class RouteNode {
-  RouteNode({required RouterWidgetBuilder builder, RouterPageBuilder? pageBuilder}) {
+  RouteNode({
+    required RouterWidgetBuilder builder,
+    RouterPageBuilder? pageBuilder,
+    NavigatorWrapper? navigatorWrapper,
+  }) {
     _builder = builder;
     _pageBuilder = pageBuilder;
+    _navigatorWrapper = navigatorWrapper;
   }
 
   // Widget 生成器
@@ -30,6 +36,21 @@ class RouteNode {
   RouterPageBuilder? _pageBuilder;
 
   RouterPageBuilder? get pageBuilder => _pageBuilder;
+
+  RouteNode setPageBuilder(RouterPageBuilder builder) {
+    _pageBuilder = builder;
+    return this;
+  }
+
+  // Navigator Wrapper
+  NavigatorWrapper? _navigatorWrapper;
+
+  NavigatorWrapper? get navigatorWrapper => _navigatorWrapper;
+
+// RouteNode setNavigatorWrapper(NavigatorWrapper wrapper) {
+//   _navigatorWrapper = wrapper;
+//   return this;
+// }
 }
 
 class Redirect extends RouteSettings {

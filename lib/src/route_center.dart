@@ -20,8 +20,13 @@ class RouteCenter {
     RouteState.instance.use(interceptor);
   }
 
-  static RouteNode handle(String routeName, RouterWidgetBuilder builder, [RouterPageBuilder? pageBuilder]) {
-    return RouteState.instance.handle(routeName, builder, pageBuilder);
+  static RouteNode handle(
+    String routeName,
+    RouterWidgetBuilder builder, {
+    RouterPageBuilder? pageBuilder,
+    NavigatorWrapper? navigatorWrapper,
+  }) {
+    return RouteState.instance.handle(routeName, builder, pageBuilder: pageBuilder, navigatorWrapper: navigatorWrapper);
   }
 
   static void remove(String routeName) {

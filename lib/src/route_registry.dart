@@ -52,8 +52,13 @@ class Registry {
     _interceptors.add(interceptor);
   }
 
-  RouteNode handle(String routeName, RouterWidgetBuilder builder, [RouterPageBuilder? pageBuilder]) {
-    var node = RouteNode(builder: builder, pageBuilder: pageBuilder);
+  RouteNode handle(
+    String routeName,
+    RouterWidgetBuilder builder, {
+    RouterPageBuilder? pageBuilder,
+    NavigatorWrapper? navigatorWrapper,
+  }) {
+    var node = RouteNode(builder: builder, pageBuilder: pageBuilder, navigatorWrapper: navigatorWrapper);
     _nodes[routeName] = node;
     return node;
   }

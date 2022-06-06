@@ -7,8 +7,6 @@ import 'package:sm_router/src/route_registry.dart';
 
 typedef Predicate = bool Function(Context ctx);
 
-typedef NavigatorWrapper = Widget Function(Context ctx, Navigator navigator);
-
 /// RouterDelegate
 class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMixin<String>, ChangeNotifier {
   Delegate({
@@ -73,7 +71,9 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
       onPopPage: _onPopPage,
     );
 
-    return navigatorWrapper(_stack.last, navigator);
+    var route = _stack.last;
+    var wrapper = route.node.navigatorWrapper ?? navigatorWrapper;
+    return wrapper(route, navigator);
   }
 
   bool _onPopPage(Route<dynamic> route, dynamic result) {
@@ -106,7 +106,6 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
         return _buildRouteContext(redirect.name!, redirect.arguments);
       }
     }
-
     return route;
   }
 

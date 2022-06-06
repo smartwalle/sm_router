@@ -53,8 +53,22 @@ class RouteState {
   }
 
   /// 注册路由.
-  RouteNode handle(String routeName, RouterWidgetBuilder builder, [RouterPageBuilder? pageBuilder]) {
-    return _delegate.registry.handle(routeName, builder, pageBuilder);
+  RouteNode handle(
+    String routeName,
+    RouterWidgetBuilder builder, {
+    RouterPageBuilder? pageBuilder,
+    NavigatorWrapper? navigatorWrapper,
+  }) {
+    NavigatorWrapper? nWrapper = navigatorWrapper;
+    // if (navigatorWrapper != null) {
+    //   nWrapper = (ctx, navigator) {
+    //     return _InheritedRouteState(
+    //       routeState: this,
+    //       child: navigatorWrapper(ctx, navigator),
+    //     );
+    //   };
+    // }
+    return _delegate.registry.handle(routeName, builder, pageBuilder: pageBuilder, navigatorWrapper: nWrapper);
   }
 
   /// 移除路由.
