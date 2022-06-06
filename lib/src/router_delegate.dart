@@ -17,7 +17,9 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
 
   NavigatorWrapper navigatorWrapper;
 
-  final registry = Registry();
+  final _registry = Registry();
+
+  Registry get registry => _registry;
 
   final _random = Random(DateTime.now().millisecondsSinceEpoch);
 
@@ -95,10 +97,10 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
 
   RouteContext _buildRouteContext(String routeName, {Object? arguments}) {
     var key = ValueKey("$routeName-${_random.nextDouble()}");
-    var node = registry.getNode(routeName);
+    var node = _registry.getNode(routeName);
     var route = RouteContext(routeName, key, arguments, node);
 
-    for (var interceptor in [...registry.interceptors, ...node.interceptors]) {
+    for (var interceptor in [..._registry.interceptors, ...node.interceptors]) {
       var redirect = interceptor(route);
       if (redirect != null) {
         return _buildRouteContext(redirect.name!, arguments: redirect.arguments);
@@ -111,7 +113,7 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
   Page<dynamic> _buildPage(RouteContext route) {
     var node = route.node;
     var child = node.builder(route);
-    var pageBuilder = node.pageBuilder ?? registry.pageBuilder;
+    var pageBuilder = node.pageBuilder ?? _registry.pageBuilder;
     return pageBuilder(route, child);
   }
 
