@@ -77,7 +77,7 @@ class RouteState {
   }
 
   Future<T?> push<T extends Object?>(String routeName, {Object? arguments}) {
-    return _delegate.push(routeName, arguments: arguments);
+    return _delegate.push(routeName, arguments);
   }
 
   void pushRoutes(List<RouteName> routeNames) {
@@ -85,15 +85,15 @@ class RouteState {
   }
 
   Future<T?> pushReplacement<T extends Object?, TO extends Object?>(String routeName, {TO? result, Object? arguments}) {
-    return _delegate.pushReplacement(routeName, result: result, arguments: arguments);
+    return _delegate.pushReplacement(routeName, result, arguments);
   }
 
   void pushRoutesReplacement<T extends Object?>(List<RouteName> routeNames, {T? result}) {
-    return _delegate.pushRoutesReplacement(routeNames, result: result);
+    return _delegate.pushRoutesReplacement(routeNames, result);
   }
 
   Future<T?> pushAndRemoveUntil<T extends Object?>(String routeName, Predicate predicate, {Object? arguments}) {
-    return _delegate.pushAndRemoveUntil(routeName, predicate, arguments: arguments);
+    return _delegate.pushAndRemoveUntil(routeName, predicate, arguments);
   }
 
   void pushRoutesAndRemoveUntil(List<RouteName> routeNames, Predicate predicate) {
@@ -101,7 +101,7 @@ class RouteState {
   }
 
   void pushAndRemoveAll<T extends Object?>(String routeName, {Object? arguments}) {
-    return _delegate.pushAndRemoveAll(routeName, arguments: arguments);
+    return _delegate.pushAndRemoveAll(routeName, arguments);
   }
 
   void pushRoutesAndRemoveAll(List<RouteName> routeNames) {
@@ -109,7 +109,7 @@ class RouteState {
   }
 
   void show<T extends Object?>(String routeName, {Object? arguments}) {
-    return _delegate.show(routeName, arguments: arguments);
+    return _delegate.show(routeName, arguments);
   }
 
   void showRoutes(List<RouteName> routeNames) {
@@ -137,7 +137,7 @@ class RouteState {
   }
 
   Future<T?> popAndPush<T extends Object?, TO extends Object?>(String routeName, {TO? result, Object? arguments}) {
-    return _delegate.popAndPush(routeName, result: result, arguments: arguments);
+    return _delegate.popAndPush(routeName, result, arguments);
   }
 
   void popAndPushRoutes<T extends Object?>(List<RouteName> routeNames, [T? result]) {

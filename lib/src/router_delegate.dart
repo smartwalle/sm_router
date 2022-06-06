@@ -45,7 +45,7 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
 
   @override
   Future<void> setNewRoutePath(String configuration) {
-    var route = _buildRouteContext(configuration);
+    var route = _buildRouteContext(configuration, null);
     _stack.clear();
     _stack.add(route);
     _update();
@@ -95,7 +95,7 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     notifyListeners();
   }
 
-  RouteContext _buildRouteContext(String routeName, {Object? arguments}) {
+  RouteContext _buildRouteContext(String routeName, Object? arguments) {
     var key = ValueKey("$routeName-${_random.nextDouble()}");
     var node = _registry.getNode(routeName);
     var route = RouteContext(routeName, key, arguments, node);
@@ -103,7 +103,7 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     for (var interceptor in [..._registry.interceptors, ...node.interceptors]) {
       var redirect = interceptor(route);
       if (redirect != null) {
-        return _buildRouteContext(redirect.name!, arguments: redirect.arguments);
+        return _buildRouteContext(redirect.name!, redirect.arguments);
       }
     }
 
@@ -117,15 +117,15 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     return pageBuilder(route, child);
   }
 
-  Future<T?> push<T extends Object?>(String routeName, {Object? arguments}) async {
-    var route = _buildRouteContext(routeName, arguments: arguments);
+  Future<T?> push<T extends Object?>(String routeName, Object? arguments) async {
+    var route = _buildRouteContext(routeName, arguments);
     _stack.add(route);
     _update();
     return await route.result.future;
   }
 
   void _pushRoutes(List<RouteName> routeNames) {
-    var routes = [for (var name in routeNames) _buildRouteContext(name.name, arguments: name.arguments)];
+    var routes = [for (var name in routeNames) _buildRouteContext(name.name, name.arguments)];
     _stack.addAll(routes);
     _update();
   }
@@ -135,14 +135,14 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     return _pushRoutes(routeNames);
   }
 
-  Future<T?> pushReplacement<T extends Object?, TO extends Object?>(String routeName, {TO? result, Object? arguments}) {
+  Future<T?> pushReplacement<T extends Object?, TO extends Object?>(String routeName, TO? result, Object? arguments) {
     if (_stack.isNotEmpty) {
       _pop(result);
     }
-    return push(routeName, arguments: arguments);
+    return push(routeName, arguments);
   }
 
-  void pushRoutesReplacement<T extends Object?>(List<RouteName> routeNames, {T? result}) {
+  void pushRoutesReplacement<T extends Object?>(List<RouteName> routeNames, T? result) {
     assert(routeNames.isNotEmpty, "pushRoutesReplacement: routeNames must not be empty");
     if (_stack.isNotEmpty) {
       _pop(result);
@@ -150,12 +150,12 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     return _pushRoutes(routeNames);
   }
 
-  Future<T?> pushAndRemoveUntil<T extends Object?>(String routeName, Predicate predicate, {Object? arguments}) {
+  Future<T?> pushAndRemoveUntil<T extends Object?>(String routeName, Predicate predicate, Object? arguments) {
     var index = _stack.lastIndexWhere(predicate);
     if (index != -1) {
       _stack.removeRange(index + 1, _stack.length);
     }
-    return push(routeName, arguments: arguments);
+    return push(routeName, arguments);
   }
 
   void pushRoutesAndRemoveUntil(List<RouteName> routeNames, Predicate predicate) {
@@ -167,9 +167,9 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     return _pushRoutes(routeNames);
   }
 
-  void pushAndRemoveAll<T extends Object?>(String routeName, {Object? arguments}) {
+  void pushAndRemoveAll<T extends Object?>(String routeName, Object? arguments) {
     _stack.removeRange(0, _stack.length);
-    push(routeName, arguments: arguments);
+    push(routeName, arguments);
   }
 
   void pushRoutesAndRemoveAll(List<RouteName> routeNames) {
@@ -178,8 +178,8 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     return pushRoutes(routeNames);
   }
 
-  void show<T extends Object?>(String routeName, {Object? arguments}) {
-    return pushAndRemoveAll(routeName, arguments: arguments);
+  void show<T extends Object?>(String routeName, Object? arguments) {
+    return pushAndRemoveAll(routeName, arguments);
   }
 
   void showRoutes(List<RouteName> routeNames) {
@@ -192,7 +192,7 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     return _stack.length > 1;
   }
 
-  Future<bool> maybePop<T extends Object?>([T? result]) {
+  Future<bool> maybePop<T extends Object?>(T? result) {
     if (_stack.length <= 1) {
       return SynchronousFuture(false);
     }
@@ -207,13 +207,13 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
   //   return state.maybePop(result);
   // }
 
-  Future<bool> pop<T extends Object?>([T? result]) {
+  Future<bool> pop<T extends Object?>(T? result) {
     _pop(result);
     _update();
     return SynchronousFuture(true);
   }
 
-  Future<bool> popMatched<T extends Object?>(Predicate predicate, [T? result]) {
+  Future<bool> popMatched<T extends Object?>(Predicate predicate, T? result) {
     if (_stack.isEmpty) {
       return SynchronousFuture(false);
     }
@@ -236,16 +236,15 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     _update();
   }
 
-  Future<T?> popAndPush<T extends Object?, TO extends Object?>(String routeName,
-      {TO? result, Object? arguments}) async {
+  Future<T?> popAndPush<T extends Object?, TO extends Object?>(String routeName, TO? result, Object? arguments) async {
     final NavigatorState? state = navigatorKey.currentState;
     if (state != null) {
       await state.maybePop(result);
     }
-    return push(routeName, arguments: arguments);
+    return push(routeName, arguments);
   }
 
-  void popAndPushRoutes<T extends Object?>(List<RouteName> routeNames, [T? result]) async {
+  void popAndPushRoutes<T extends Object?>(List<RouteName> routeNames, T? result) async {
     assert(routeNames.isNotEmpty, "popAndPushRoutes: routeNames must not be empty");
     final NavigatorState? state = navigatorKey.currentState;
     if (state != null) {
