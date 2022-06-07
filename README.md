@@ -28,7 +28,7 @@ RouteCenter.push("/test?a=10");
 ```
 
 ## Context
-RouteContext 对象主要提供以下信息：
+Context 对象主要提供以下信息：
 * **routeName**：路由名称。例如: /test；
 * **requestName**：请求名称，包含路由查询参数。例如: /test?a=10；
 * **arguments**：路由参数，即 pushXXX 系列方法中提供的 arguments 参数（建议只在在非 web 应用中使用）；

@@ -7,13 +7,15 @@ import 'package:sm_router/src/route_registry.dart';
 
 typedef Predicate = bool Function(Context ctx);
 
+NavigatorWrapper _defaultNavigatorWrapper = (ctx, navigator) {
+  return navigator;
+};
+
 /// RouterDelegate
 class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMixin<String>, ChangeNotifier {
-  Delegate({
-    required this.navigatorWrapper,
-  });
+  Delegate();
 
-  NavigatorWrapper navigatorWrapper;
+  NavigatorWrapper navigatorWrapper = _defaultNavigatorWrapper;
 
   final _registry = Registry();
 
@@ -96,9 +98,11 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
   }
 
   RouteContext _buildRouteContext(String routeName, Object? arguments) {
-    var node = _registry.getNode(routeName);
+    var uri = Uri.parse(routeName);
+
+    var node = _registry.getNode(uri.path);
     var key = node.key ?? ValueKey("$routeName-${_random.nextDouble()}");
-    var route = RouteContext(routeName, key, arguments, node);
+    var route = RouteContext(uri, key, arguments, node);
 
     for (var interceptor in [..._registry.interceptors, ...node.interceptors]) {
       var redirect = interceptor(route);

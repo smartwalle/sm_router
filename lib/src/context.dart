@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:sm_router/sm_router.dart';
 
 abstract class Context {
-  Context(String routeName, LocalKey? key, Object? arguments) {
-    _uri = Uri.parse(routeName);
+  Context(Uri uri, LocalKey? key, Object? arguments) {
+    _uri = uri;
     _requestName = _uri.toString();
     _queryParam = QueryParam(_uri.queryParametersAll);
     _key = key;
@@ -58,7 +58,7 @@ abstract class Context {
 }
 
 class RouteContext extends Context {
-  RouteContext(super.routeName, super.key, super.arguments, this.node) : result = Completer();
+  RouteContext(super.uri, super.key, super.arguments, this.node) : result = Completer();
 
   RouteNode node;
 

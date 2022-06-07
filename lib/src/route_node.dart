@@ -60,10 +60,10 @@ class RouteNode {
 
   NavigatorWrapper? get navigatorWrapper => _navigatorWrapper;
 
-// RouteNode setNavigatorWrapper(NavigatorWrapper wrapper) {
-//   _navigatorWrapper = wrapper;
-//   return this;
-// }
+  RouteNode setNavigatorWrapper(NavigatorWrapper wrapper) {
+    _navigatorWrapper = wrapper;
+    return this;
+  }
 }
 
 class Redirect extends RouteSettings {
