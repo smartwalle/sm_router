@@ -4,9 +4,27 @@ import 'package:sm_router/sm_router.dart';
 // setKey 和 show
 void main() {
   RouteCenter.handle("/", (ctx) => const Text("Redirect")).use((ctx) => const Redirect("/m12/view1"));
-  RouteCenter.handle("/m12/view1", (ctx) => Home(key: ctx.key, ctx: ctx, child: const M12View(title: "title", color: Colors.red),)).setKey(const ValueKey("home"));
-  RouteCenter.handle("/m12/view2", (ctx) => Home(key: ctx.key, ctx: ctx, child: const M12View(title: "title", color: Colors.green),)).setKey(const ValueKey("home"));
-  RouteCenter.handle("/m12/view3", (ctx) => Home(key: ctx.key, ctx: ctx, child: const M12View(title: "title", color: Colors.purple),)).setKey(const ValueKey("home"));
+  RouteCenter.handle(
+      "/m12/view1",
+      (ctx) => Home(
+            key: ctx.key,
+            ctx: ctx,
+            child: const M12View(title: "title", color: Colors.red),
+          )).setKey(const ValueKey("home"));
+  RouteCenter.handle(
+      "/m12/view2",
+      (ctx) => Home(
+            key: ctx.key,
+            ctx: ctx,
+            child: const M12View(title: "title", color: Colors.green),
+          )).setKey(const ValueKey("home"));
+  RouteCenter.handle(
+      "/m12/view3",
+      (ctx) => Home(
+            key: ctx.key,
+            ctx: ctx,
+            child: const M12View(title: "title", color: Colors.purple),
+          )).setKey(const ValueKey("home"));
   RouteCenter.handle("/m12/view4", (ctx) => const M12View4());
 
   runApp(const MainApp());
@@ -89,8 +107,8 @@ class MenuButton extends StatelessWidget {
       onPressed: ctx.routeName == routeName
           ? null
           : () {
-        RouteCenter.show(routeName);
-      },
+              RouteCenter.show(routeName);
+            },
       child: Text(
         title,
         style: TextStyle(
@@ -136,7 +154,6 @@ class _M12ViewState extends State<M12View> {
     );
   }
 }
-
 
 class M12View4 extends StatelessWidget {
   const M12View4({Key? key}) : super(key: key);

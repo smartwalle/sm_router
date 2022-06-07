@@ -6,11 +6,8 @@ void main() {
   RouteCenter.handle("/", (ctx) => const M10View(title: "M10 View1", color: Colors.red));
   RouteCenter.handle("/m10/view2", (ctx) => const M10View(title: "M10 View2", color: Colors.yellow));
   RouteCenter.handle("/m10/view3", (ctx) => const M10View(title: "M10 View3", color: Colors.green));
-  RouteCenter.handle(
-    "/m10/view4",
-    (ctx) => const M10View(title: "M10 View4", color: Colors.purpleAccent),
-    navigatorWrapper: (ctx, navigator) => NavWrapper2(child: navigator),
-  );
+  RouteCenter.handle("/m10/view4", (ctx) => const M10View(title: "M10 View4", color: Colors.purpleAccent))
+      .setNavigatorWrapper((ctx, navigator) => NavWrapper2(child: navigator));
 
   RouteCenter.setNavigatorWrapper((ctx, navigator) {
     return NavWrapper1(

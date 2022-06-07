@@ -26,6 +26,10 @@ RouterPageBuilder _defaultPageBuilder = (ctx, child) {
   );
 };
 
+NavigatorWrapper _defaultNavigatorWrapper = (ctx, navigator) {
+  return navigator;
+};
+
 /// RouteRegistry
 class Registry {
   Registry();
@@ -37,6 +41,8 @@ class Registry {
   RouteNode _unknown = _defaultUnknownNode;
 
   RouterPageBuilder pageBuilder = _defaultPageBuilder;
+
+  NavigatorWrapper navigatorWrapper = _defaultNavigatorWrapper;
 
   final Map<String, RouteNode> _nodes = <String, RouteNode>{};
 

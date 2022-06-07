@@ -43,12 +43,12 @@ class RouteCenter {
     _delegate.registry.remove(routeName);
   }
 
-  static void setRouterNeglect(bool value) {
-    _delegate.routerNeglect = value;
+  static void setNavigatorWrapper(NavigatorWrapper wrapper) {
+    _delegate.registry.navigatorWrapper = wrapper;
   }
 
-  static void setNavigatorWrapper(NavigatorWrapper wrapper) {
-    _delegate.navigatorWrapper = wrapper;
+  static void setRouterNeglect(bool value) {
+    _delegate.routerNeglect = value;
   }
 
   static Future<T?> push<T extends Object?>(String routeName, {Object? arguments}) {
