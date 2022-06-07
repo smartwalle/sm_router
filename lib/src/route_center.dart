@@ -124,4 +124,10 @@ class RouteCenter {
   static Future<bool> popToRoot() {
     return _delegate.popToRoot();
   }
+
+  static bool contains(Predicate predicate) {
+    return _delegate.contains(predicate);
+  }
+
+  static Context? get top => _delegate.top;
 }

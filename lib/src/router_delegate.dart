@@ -258,4 +258,11 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     _update();
     return SynchronousFuture(true);
   }
+
+  bool contains(Predicate predicate) {
+    var index = _stack.lastIndexWhere(predicate);
+    return index != -1;
+  }
+
+  Context? get top => _stack.last;
 }
