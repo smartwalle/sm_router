@@ -96,8 +96,8 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
   }
 
   RouteContext _buildRouteContext(String routeName, Object? arguments) {
-    var key = ValueKey("$routeName-${_random.nextDouble()}");
     var node = _registry.getNode(routeName);
+    var key = node.key ?? ValueKey("$routeName-${_random.nextDouble()}");
     var route = RouteContext(routeName, key, arguments, node);
 
     for (var interceptor in [..._registry.interceptors, ...node.interceptors]) {

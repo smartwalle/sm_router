@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:sm_router/sm_router.dart';
 import 'package:sm_router/src/context.dart';
 
 typedef RouterWidgetBuilder = Widget Function(Context ctx);
@@ -8,13 +9,25 @@ typedef NavigatorWrapper = Widget Function(Context ctx, Navigator navigator);
 
 class RouteNode {
   RouteNode({
+    LocalKey? key,
     required RouterWidgetBuilder builder,
     RouterPageBuilder? pageBuilder,
     NavigatorWrapper? navigatorWrapper,
   }) {
+    _key = key;
     _builder = builder;
     _pageBuilder = pageBuilder;
     _navigatorWrapper = navigatorWrapper;
+  }
+
+  // key
+  LocalKey? _key;
+
+  LocalKey? get key => _key;
+
+  RouteNode setKey(LocalKey key) {
+    _key = key;
+    return this;
   }
 
   // Widget 生成器
