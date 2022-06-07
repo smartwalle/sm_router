@@ -6,28 +6,22 @@ typedef RouterWidgetBuilder = Widget Function(Context ctx);
 typedef RouterInterceptor = Redirect? Function(Context ctx);
 typedef RouterPageBuilder = Page<dynamic> Function(Context ctx, Widget child);
 typedef NavigatorWrapper = Widget Function(Context ctx, Navigator navigator);
+typedef KeyBuilder = LocalKey Function(Context ctx);
+
+KeyBuilder _defaultKeyBuilder = (ctx) {
+  return UniqueKey();
+};
 
 class RouteNode {
   RouteNode({
-    LocalKey? key,
     required RouterWidgetBuilder builder,
     RouterPageBuilder? pageBuilder,
     NavigatorWrapper? navigatorWrapper,
   }) {
-    _key = key;
     _builder = builder;
     _pageBuilder = pageBuilder;
     _navigatorWrapper = navigatorWrapper;
-  }
-
-  // key
-  LocalKey? _key;
-
-  LocalKey? get key => _key;
-
-  RouteNode setKey(LocalKey key) {
-    _key = key;
-    return this;
+    _keyBuilder = _defaultKeyBuilder;
   }
 
   // Widget 生成器
@@ -62,6 +56,16 @@ class RouteNode {
 
   RouteNode setNavigatorWrapper(NavigatorWrapper wrapper) {
     _navigatorWrapper = wrapper;
+    return this;
+  }
+
+  // key 生成器
+  late KeyBuilder _keyBuilder;
+
+  KeyBuilder get keyBuilder => _keyBuilder;
+
+  RouteNode setKeyBuilder(KeyBuilder builder) {
+    _keyBuilder = builder;
     return this;
   }
 }

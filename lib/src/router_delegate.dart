@@ -91,16 +91,18 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     var uri = Uri.parse(routeName);
 
     var node = _registry.getNode(uri.path);
-    var key = node.key ?? UniqueKey();
-    var route = RouteContext(key, uri, arguments, node);
+    var ctx = RouteContext(uri, arguments, node);
+
+    var key = node.keyBuilder(ctx);
+    ctx.setKey(key);
 
     for (var interceptor in [..._registry.interceptors, ...node.interceptors]) {
-      var redirect = interceptor(route);
+      var redirect = interceptor(ctx);
       if (redirect != null) {
         return _buildRouteContext(redirect.name!, redirect.arguments);
       }
     }
-    return route;
+    return ctx;
   }
 
   Page<dynamic> _buildPage(RouteContext route) {

@@ -4,15 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:sm_router/sm_router.dart';
 
 abstract class Context {
-  Context(LocalKey? key, Uri uri, Object? arguments) {
-    _key = key;
+  Context(Uri uri, Object? arguments) {
     _uri = uri;
     _requestName = _uri.toString();
     _queryParam = QueryParam(_uri.queryParametersAll);
     _arguments = arguments;
   }
 
-  late final LocalKey? _key;
+  LocalKey? _key;
 
   LocalKey? get key => _key;
 
@@ -58,9 +57,13 @@ abstract class Context {
 }
 
 class RouteContext extends Context {
-  RouteContext(super.key, super.uri, super.arguments, this.node) : result = Completer();
+  RouteContext(super.uri, super.arguments, this.node) : result = Completer();
 
   final RouteNode node;
 
   final Completer result;
+
+  void setKey(LocalKey key) {
+    _key = key;
+  }
 }
