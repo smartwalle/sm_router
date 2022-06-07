@@ -47,6 +47,10 @@ class RouteCenter {
     _delegate.registry.navigatorWrapper = wrapper;
   }
 
+  static void setKeyBuilder(KeyBuilder builder) {
+    _delegate.registry.keyBuilder = builder;
+  }
+
   static void setRouterNeglect(bool value) {
     _delegate.routerNeglect = value;
   }

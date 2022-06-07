@@ -30,6 +30,10 @@ NavigatorWrapper _defaultNavigatorWrapper = (ctx, navigator) {
   return navigator;
 };
 
+KeyBuilder _defaultKeyBuilder = (ctx) {
+  return UniqueKey();
+};
+
 /// RouteRegistry
 class Registry {
   Registry();
@@ -43,6 +47,8 @@ class Registry {
   RouterPageBuilder pageBuilder = _defaultPageBuilder;
 
   NavigatorWrapper navigatorWrapper = _defaultNavigatorWrapper;
+
+  KeyBuilder keyBuilder = _defaultKeyBuilder;
 
   final Map<String, RouteNode> _nodes = <String, RouteNode>{};
 

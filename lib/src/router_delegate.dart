@@ -93,8 +93,8 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     var node = _registry.getNode(uri.path);
     var ctx = RouteContext(uri, arguments, node);
 
-    var key = node.keyBuilder(ctx);
-    ctx.setKey(key);
+    var keyBuilder = node.keyBuilder ?? _registry.keyBuilder;
+    ctx.setKey(keyBuilder(ctx));
 
     for (var interceptor in [..._registry.interceptors, ...node.interceptors]) {
       var redirect = interceptor(ctx);
