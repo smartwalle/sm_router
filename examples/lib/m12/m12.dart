@@ -29,9 +29,10 @@ class MainApp extends StatelessWidget {
 
 class Home extends StatefulWidget {
   Home({
+    Key? key,
     required this.ctx,
     required this.child,
-  }) : super(key: ctx.key);
+  }) : super(key: key);
 
   final Widget child;
   final Context ctx;

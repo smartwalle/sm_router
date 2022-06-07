@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sm_router/sm_router.dart';
@@ -14,8 +12,6 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
   final _registry = Registry();
 
   Registry get registry => _registry;
-
-  final _random = Random(DateTime.now().millisecondsSinceEpoch);
 
   final List<RouteContext> _stack = [];
 
@@ -95,7 +91,7 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     var uri = Uri.parse(routeName);
 
     var node = _registry.getNode(uri.path);
-    var key = node.key ?? ValueKey("$routeName-${_random.nextDouble()}");
+    var key = node.key ?? UniqueKey();
     var route = RouteContext(key, uri, arguments, node);
 
     for (var interceptor in [..._registry.interceptors, ...node.interceptors]) {
