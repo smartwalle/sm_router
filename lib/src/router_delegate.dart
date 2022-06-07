@@ -174,7 +174,7 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
   void pushRoutesAndRemoveAll(List<RouteName> routeNames) {
     assert(routeNames.isNotEmpty, "pushRoutesAndRemoveAll: routeNames must not be empty");
     _stack.removeRange(0, _stack.length);
-    return pushRoutes(routeNames);
+    return _pushRoutes(routeNames);
   }
 
   void show<T extends Object?>(String routeName, Object? arguments) {
@@ -184,7 +184,7 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
   void showRoutes(List<RouteName> routeNames) {
     assert(routeNames.isNotEmpty, "showRoutes: routeNames must not be empty");
     _stack.removeRange(0, _stack.length);
-    return pushRoutes(routeNames);
+    return _pushRoutes(routeNames);
   }
 
   bool canPop() {
@@ -249,7 +249,7 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     if (state != null) {
       await state.maybePop(result);
     }
-    return pushRoutes(routeNames);
+    return _pushRoutes(routeNames);
   }
 
   Future<bool> popToRoot() {
