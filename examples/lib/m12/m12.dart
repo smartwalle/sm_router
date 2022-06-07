@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sm_router/sm_router.dart';
 
-// setKey 和 show
+// setKeyBuilder 和 show
 void main() {
   RouteCenter.handle("/", (ctx) => const Text("Redirect")).use((ctx) => const Redirect("/m12/view1"));
   RouteCenter.handle("/m12/view1", (ctx) => Home(ctx: ctx, child: const M12View(title: "title", color: Colors.red)))
