@@ -6,7 +6,7 @@ typedef RouterWidgetBuilder = Widget Function(Context ctx);
 typedef RouterInterceptor = Redirect? Function(Context ctx);
 typedef RouterPageBuilder = Page<dynamic> Function(Context ctx, Widget child);
 typedef NavigatorWrapper = Widget Function(Context ctx, Navigator navigator);
-typedef KeyBuilder = LocalKey Function(Context ctx);
+typedef KeyBuilder = LocalKey? Function(Context ctx);
 
 class RouteNode {
   RouteNode({

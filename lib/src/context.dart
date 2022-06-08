@@ -63,7 +63,7 @@ class RouteContext extends Context {
 
   final Completer result;
 
-  void setKey(LocalKey key) {
+  void setKey(LocalKey? key) {
     _key = key;
   }
 }
