@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:sm_router/sm_router.dart';
 
-/// 简单 push 和 pop
+// setKeyBuilder 和 PageView
 void main() {
   RouteCenter.handle("/", (ctx) => const Text("")).use((ctx) => const Redirect("/m13/view1"));
 
