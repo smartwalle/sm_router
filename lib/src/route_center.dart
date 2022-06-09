@@ -117,7 +117,7 @@ class RouteCenter {
   }
 
   static Future<T?> popAndPush<T extends Object?, TO extends Object?>(String routeName,
-      {TO? result, Object? arguments}) async {
+      {TO? result, Object? arguments}) {
     return _delegate.popAndPush(routeName, result, arguments);
   }
 
