@@ -57,13 +57,15 @@ abstract class Context {
 }
 
 class RouteContext extends Context {
-  RouteContext(super.uri, super.arguments, this.node) : result = Completer();
+  RouteContext(super.uri, super.arguments) : result = Completer();
 
-  final RouteNode node;
+  late final Page<dynamic> page;
+
+  late final NavigatorWrapper navigatorWrapper;
 
   final Completer result;
 
-  void setKey(LocalKey? key) {
+  set key(LocalKey? key) {
     _key = key;
   }
 }

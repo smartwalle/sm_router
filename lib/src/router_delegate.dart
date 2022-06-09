@@ -35,7 +35,7 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
 
   @override
   Future<void> setNewRoutePath(String configuration) {
-    var route = _buildRouteContext(configuration, null);
+    var route = _buildContext(configuration, null);
     _stack.clear();
     _stack.add(route);
     _update();
@@ -51,10 +51,10 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
 
     if (routerNeglect) {
       Router.neglect(context, () {
-        pages = [for (var route in _stack) _buildPage(route)];
+        pages = [for (var ctx in _stack) ctx.page];
       });
     } else {
-      pages = [for (var route in _stack) _buildPage(route)];
+      pages = [for (var route in _stack) route.page];
     }
 
     var navigator = Navigator(
@@ -63,9 +63,8 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
       onPopPage: _onPopPage,
     );
 
-    var route = _stack.last;
-    var wrapper = route.node.navigatorWrapper ?? _registry.navigatorWrapper;
-    return wrapper(route, navigator);
+    var ctx = _stack.last;
+    return ctx.navigatorWrapper(ctx, navigator);
   }
 
   bool _onPopPage(Route<dynamic> route, dynamic result) {
@@ -87,40 +86,55 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     notifyListeners();
   }
 
-  RouteContext _buildRouteContext(String routeName, Object? arguments) {
+  RouteContext _buildContext(String routeName, Object? arguments) {
     var uri = Uri.parse(routeName);
 
     var node = _registry.getNode(uri.path);
-    var ctx = RouteContext(uri, arguments, node);
+    return __buildContext(
+      uri,
+      arguments,
+      [..._registry.interceptors, ...node.interceptors],
+      node.builder,
+      node.keyBuilder ?? _registry.keyBuilder,
+      node.pageBuilder ?? _registry.pageBuilder,
+      node.navigatorWrapper ?? _registry.navigatorWrapper,
+    );
+  }
 
-    var keyBuilder = node.keyBuilder ?? _registry.keyBuilder;
-    ctx.setKey(keyBuilder(ctx));
+  RouteContext __buildContext(
+    Uri uri,
+    Object? arguments,
+    List<RouterInterceptor> interceptors,
+    RouterWidgetBuilder builder,
+    KeyBuilder keyBuilder,
+    RouterPageBuilder pageBuilder,
+    NavigatorWrapper navigatorWrapper,
+  ) {
+    var ctx = RouteContext(uri, arguments);
+    ctx.key = keyBuilder(ctx);
+    ctx.navigatorWrapper = navigatorWrapper;
 
-    for (var interceptor in [..._registry.interceptors, ...node.interceptors]) {
+    for (var interceptor in interceptors) {
       var redirect = interceptor(ctx);
       if (redirect != null) {
-        return _buildRouteContext(redirect.name!, redirect.arguments);
+        return _buildContext(redirect.name!, redirect.arguments);
       }
     }
+
+    var child = builder(ctx);
+    ctx.page = pageBuilder(ctx, child);
     return ctx;
   }
 
-  Page<dynamic> _buildPage(RouteContext route) {
-    var node = route.node;
-    var child = node.builder(route);
-    var pageBuilder = node.pageBuilder ?? _registry.pageBuilder;
-    return pageBuilder(route, child);
-  }
-
   Future<T?> push<T extends Object?>(String routeName, Object? arguments) async {
-    var route = _buildRouteContext(routeName, arguments);
+    var route = _buildContext(routeName, arguments);
     _stack.add(route);
     _update();
     return await route.result.future;
   }
 
   void _pushRoutes(List<RouteName> routeNames) {
-    var routes = [for (var name in routeNames) _buildRouteContext(name.name, name.arguments)];
+    var routes = [for (var name in routeNames) _buildContext(name.name, name.arguments)];
     _stack.addAll(routes);
     _update();
   }
