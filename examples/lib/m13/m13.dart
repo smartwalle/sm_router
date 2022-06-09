@@ -4,26 +4,34 @@ import 'package:sm_router/sm_router.dart';
 
 // setKeyBuilder 和 PageView
 void main() {
-  RouteCenter.handle("/", (ctx) => const Text("")).use((ctx) => const Redirect("/m13/view1"));
+  RouteCenter.handle("/", (ctx) => const Text(""))
+      .use((ctx) => const Redirect("/m13/view1"));
 
-  RouteCenter.handle("/m13/view1", (ctx) => const Home(initialPage: 0)).setKeyBuilder(
+  RouteCenter.handle("/m13/view1", (ctx) => const Home(initialPage: 0))
+      .setKeyBuilder(
     (ctx) => const ValueKey("home"),
   );
-  RouteCenter.handle("/m13/view2", (ctx) => const Home(initialPage: 1)).setKeyBuilder(
+  RouteCenter.handle("/m13/view2", (ctx) => const Home(initialPage: 1))
+      .setKeyBuilder(
     (ctx) => const ValueKey("home"),
   );
-  RouteCenter.handle("/m13/view3", (ctx) => const Home(initialPage: 2)).setKeyBuilder(
+  RouteCenter.handle("/m13/view3", (ctx) => const Home(initialPage: 2))
+      .setKeyBuilder(
     (ctx) => const ValueKey("home"),
   );
 
-  RouteCenter.handle("/m13/view4", (ctx) => const Text("")).use((ctx) => const Redirect("/m13/view41"));
-  RouteCenter.handle("/m13/view41", (ctx) => const M13View4(initialPage: 0)).setKeyBuilder(
+  RouteCenter.handle("/m13/view4", (ctx) => const Text(""))
+      .use((ctx) => const Redirect("/m13/view41"));
+  RouteCenter.handle("/m13/view41", (ctx) => const M13View4(initialPage: 0))
+      .setKeyBuilder(
     (ctx) => const ValueKey("m13view4"),
   );
-  RouteCenter.handle("/m13/view42", (ctx) => const M13View4(initialPage: 1)).setKeyBuilder(
+  RouteCenter.handle("/m13/view42", (ctx) => const M13View4(initialPage: 1))
+      .setKeyBuilder(
     (ctx) => const ValueKey("m13view4"),
   );
-  RouteCenter.handle("/m13/view43", (ctx) => const M13View4(initialPage: 2)).setKeyBuilder(
+  RouteCenter.handle("/m13/view43", (ctx) => const M13View4(initialPage: 2))
+      .setKeyBuilder(
     (ctx) => const ValueKey("m13view4"),
   );
 
@@ -87,7 +95,8 @@ class _HomeState extends State<Home> {
 }
 
 class M13View extends StatelessWidget {
-  const M13View({Key? key, required this.title, required this.color}) : super(key: key);
+  const M13View({Key? key, required this.title, required this.color})
+      : super(key: key);
 
   final String title;
   final Color color;
@@ -161,7 +170,8 @@ class _M13View4State extends State<M13View4> {
 }
 
 class M13View41 extends StatelessWidget {
-  const M13View41({Key? key, required this.title, required this.color}) : super(key: key);
+  const M13View41({Key? key, required this.title, required this.color})
+      : super(key: key);
 
   final String title;
   final Color color;

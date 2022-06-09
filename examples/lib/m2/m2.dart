@@ -52,7 +52,8 @@ class _M2View1State extends State<M2View1> {
                 });
               },
             ),
-            if (_pop) message != null ? Text("有返回值: $message") : const Text("没有返回值"),
+            if (_pop)
+              message != null ? Text("有返回值: $message") : const Text("没有返回值"),
           ],
         ),
       ),

@@ -3,10 +3,16 @@ import 'package:sm_router/sm_router.dart';
 
 /// NavigatorWrapper
 void main() {
-  RouteCenter.handle("/", (ctx) => const M10View(title: "M10 View1", color: Colors.red));
-  RouteCenter.handle("/m10/view2", (ctx) => const M10View(title: "M10 View2", color: Colors.yellow));
-  RouteCenter.handle("/m10/view3", (ctx) => const M10View(title: "M10 View3", color: Colors.green));
-  RouteCenter.handle("/m10/view4", (ctx) => const M10View(title: "M10 View4", color: Colors.purpleAccent))
+  RouteCenter.handle(
+      "/", (ctx) => const M10View(title: "M10 View1", color: Colors.red));
+  RouteCenter.handle("/m10/view2",
+      (ctx) => const M10View(title: "M10 View2", color: Colors.yellow));
+  RouteCenter.handle("/m10/view3",
+      (ctx) => const M10View(title: "M10 View3", color: Colors.green));
+  RouteCenter.handle(
+          "/m10/view4",
+          (ctx) =>
+              const M10View(title: "M10 View4", color: Colors.purpleAccent))
       .setNavigatorWrapper((ctx, navigator) => NavWrapper2(child: navigator));
 
   RouteCenter.setNavigatorWrapper((ctx, navigator) {
@@ -69,10 +75,20 @@ class _NavWrapper1State extends State<NavWrapper1> {
               color: Colors.deepPurpleAccent,
               child: Column(
                 children: [
-                  MenuButton(ctx: widget.ctx, routeName: "/", title: "进入 /m10/view1"),
-                  MenuButton(ctx: widget.ctx, routeName: "/m10/view2", title: "进入 /m10/view2"),
-                  MenuButton(ctx: widget.ctx, routeName: "/m10/view3", title: "进入 /m10/view3"),
-                  MenuButton(ctx: widget.ctx, routeName: "/m10/view4", title: "进入 /m10/view4"),
+                  MenuButton(
+                      ctx: widget.ctx, routeName: "/", title: "进入 /m10/view1"),
+                  MenuButton(
+                      ctx: widget.ctx,
+                      routeName: "/m10/view2",
+                      title: "进入 /m10/view2"),
+                  MenuButton(
+                      ctx: widget.ctx,
+                      routeName: "/m10/view3",
+                      title: "进入 /m10/view3"),
+                  MenuButton(
+                      ctx: widget.ctx,
+                      routeName: "/m10/view4",
+                      title: "进入 /m10/view4"),
                 ],
               ),
             ),
@@ -119,7 +135,8 @@ class MenuButton extends StatelessWidget {
 }
 
 class M10View extends StatelessWidget {
-  const M10View({Key? key, required this.title, required this.color}) : super(key: key);
+  const M10View({Key? key, required this.title, required this.color})
+      : super(key: key);
 
   final String title;
   final Color color;

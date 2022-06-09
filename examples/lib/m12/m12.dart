@@ -3,12 +3,25 @@ import 'package:sm_router/sm_router.dart';
 
 // setKeyBuilder 和 show
 void main() {
-  RouteCenter.handle("/", (ctx) => const Text("Redirect")).use((ctx) => const Redirect("/m12/view1"));
-  RouteCenter.handle("/m12/view1", (ctx) => Home(ctx: ctx, child: const M12View(title: "title", color: Colors.red)))
+  RouteCenter.handle("/", (ctx) => const Text("Redirect"))
+      .use((ctx) => const Redirect("/m12/view1"));
+  RouteCenter.handle(
+          "/m12/view1",
+          (ctx) => Home(
+              ctx: ctx,
+              child: const M12View(title: "title", color: Colors.red)))
       .setKeyBuilder((ctx) => const ValueKey("home"));
-  RouteCenter.handle("/m12/view2", (ctx) => Home(ctx: ctx, child: const M12View(title: "title", color: Colors.green)))
+  RouteCenter.handle(
+          "/m12/view2",
+          (ctx) => Home(
+              ctx: ctx,
+              child: const M12View(title: "title", color: Colors.green)))
       .setKeyBuilder((ctx) => const ValueKey("home"));
-  RouteCenter.handle("/m12/view3", (ctx) => Home(ctx: ctx, child: const M12View(title: "title", color: Colors.purple)))
+  RouteCenter.handle(
+          "/m12/view3",
+          (ctx) => Home(
+              ctx: ctx,
+              child: const M12View(title: "title", color: Colors.purple)))
       .setKeyBuilder((ctx) => const ValueKey("home"));
   RouteCenter.handle("/m12/view4", (ctx) => const M12View4());
 
@@ -56,9 +69,18 @@ class _HomeState extends State<Home> {
               color: Colors.deepPurpleAccent,
               child: Column(
                 children: [
-                  MenuButton(ctx: widget.ctx, routeName: "/m12/view1", title: "进入 /m12/view1"),
-                  MenuButton(ctx: widget.ctx, routeName: "/m12/view2", title: "进入 /m12/view2"),
-                  MenuButton(ctx: widget.ctx, routeName: "/m12/view3", title: "进入 /m12/view3"),
+                  MenuButton(
+                      ctx: widget.ctx,
+                      routeName: "/m12/view1",
+                      title: "进入 /m12/view1"),
+                  MenuButton(
+                      ctx: widget.ctx,
+                      routeName: "/m12/view2",
+                      title: "进入 /m12/view2"),
+                  MenuButton(
+                      ctx: widget.ctx,
+                      routeName: "/m12/view3",
+                      title: "进入 /m12/view3"),
                 ],
               ),
             ),
@@ -105,7 +127,8 @@ class MenuButton extends StatelessWidget {
 }
 
 class M12View extends StatefulWidget {
-  const M12View({Key? key, required, required this.title, required this.color}) : super(key: key);
+  const M12View({Key? key, required, required this.title, required this.color})
+      : super(key: key);
 
   final String title;
   final Color color;

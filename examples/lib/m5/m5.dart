@@ -98,7 +98,8 @@ class M5View3 extends StatelessWidget {
             TextButton(
               child: const Text("进入 /m5/view4 (会返回到 /m5/view2)"),
               onPressed: () {
-                RouteCenter.pushAndRemoveUntil("/m5/view4", (ctx) => ctx.routeName == "/m5/view2");
+                RouteCenter.pushAndRemoveUntil(
+                    "/m5/view4", (ctx) => ctx.routeName == "/m5/view2");
               },
             ),
           ],
@@ -122,7 +123,8 @@ class M5View4 extends StatelessWidget {
         child: Column(
           children: [
             TextButton(
-              child: RouteCenter.canPop() ? const Text("返回") : const Text("无法返回"),
+              child:
+                  RouteCenter.canPop() ? const Text("返回") : const Text("无法返回"),
               onPressed: () {
                 RouteCenter.maybePop().then((value) {});
               },

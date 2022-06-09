@@ -70,7 +70,10 @@ class Registry {
     RouterPageBuilder? pageBuilder,
     NavigatorWrapper? navigatorWrapper,
   }) {
-    var node = RouteNode(builder: builder, pageBuilder: pageBuilder, navigatorWrapper: navigatorWrapper);
+    var node = RouteNode(
+        builder: builder,
+        pageBuilder: pageBuilder,
+        navigatorWrapper: navigatorWrapper);
     _nodes[routeName] = node;
     return node;
   }

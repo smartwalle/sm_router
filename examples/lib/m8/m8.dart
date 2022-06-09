@@ -104,7 +104,8 @@ class M8View21 extends StatelessWidget {
                   RouteName("/m8/view22"),
                   RouteName("/m8/view23"),
                 ];
-                RouteCenter.pushRoutesAndRemoveUntil(routes, (ctx) => ctx.requestName == "/m8/view2");
+                RouteCenter.pushRoutesAndRemoveUntil(
+                    routes, (ctx) => ctx.requestName == "/m8/view2");
               },
             ),
           ],

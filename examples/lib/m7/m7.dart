@@ -48,7 +48,8 @@ class M7View1 extends StatelessWidget {
               },
             ),
             TextButton(
-              child: const Text("pushRoutesReplacement: /m7/view2、/m7/view3、/m7/view4"),
+              child: const Text(
+                  "pushRoutesReplacement: /m7/view2、/m7/view3、/m7/view4"),
               onPressed: () {
                 var routes = [
                   RouteName("/m7/view2"),
