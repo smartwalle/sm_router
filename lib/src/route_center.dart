@@ -88,6 +88,10 @@ class RouteCenter {
     return _delegate.pushRoutesAndRemoveAll(routeNames);
   }
 
+  static Future<T?> replace<T extends Object?, TO extends Object?>(String routeName, {TO? result, Object? arguments}) {
+    return _delegate.pushReplacement(routeName, result, arguments);
+  }
+
   static void show<T extends Object?>(String routeName, {Object? arguments}) {
     return _delegate.show(routeName, arguments);
   }
