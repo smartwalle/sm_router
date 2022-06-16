@@ -3,9 +3,11 @@ import 'package:sm_router/sm_router.dart';
 
 // Hero
 void main() {
-  RouteCenter.handle("/", (ctx) => const Text("Redirect")).use((ctx) => const Redirect("/m14/view1"));
+  RouteCenter.handle("/", (ctx) => const Text("Redirect"))
+      .use((ctx) => const Redirect("/m14/view1"));
   RouteCenter.handle("/m14/view1", (ctx) => const M14View1());
-  RouteCenter.handle("/m14/view2", (ctx) => M14View2(tag: ctx.queryParam.get("tag")!))
+  RouteCenter.handle(
+          "/m14/view2", (ctx) => M14View2(tag: ctx.queryParam.get("tag")!))
       .setPageBuilder((ctx, child) => TransitionPage(
             child,
             key: ctx.key,

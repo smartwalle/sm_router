@@ -3,16 +3,59 @@ import 'package:sm_router/src/route_node.dart';
 
 RouteNode _defaultUnknownNode = RouteNode(builder: (ctx) {
   return Scaffold(
-    appBar: AppBar(),
+    appBar: AppBar(
+      title: const Text("Page Not Found"),
+    ),
     backgroundColor: Colors.white,
     body: Center(
-      child: Text(
+      child: SelectableText(
         "\"${ctx.routeName}\" not found.",
         style: const TextStyle(
           color: Colors.black87,
-          fontSize: 22,
+          fontSize: 18,
         ),
       ),
+    ),
+  );
+});
+
+RouteNode _defaultErrorNode = RouteNode(builder: (ctx) {
+  return Scaffold(
+    appBar: AppBar(
+      title: const Text("Error"),
+    ),
+    backgroundColor: Colors.white,
+    body: Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: SelectableText(
+            ctx.error!.error.toString(),
+            style: const TextStyle(
+              color: Colors.black87,
+              fontSize: 22,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+        ),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+              child: SizedBox(
+                width: double.infinity,
+                child: SelectableText(
+                  ctx.error!.stack.toString(),
+                  style: const TextStyle(
+                    color: Colors.black87,
+                    fontSize: 18,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        )
+      ],
     ),
   );
 });
@@ -44,21 +87,29 @@ class Registry {
 
   RouteNode _unknown = _defaultUnknownNode;
 
+  RouteNode _error = _defaultErrorNode;
+
   RouterPageBuilder pageBuilder = _defaultPageBuilder;
 
   NavigatorWrapper navigatorWrapper = _defaultNavigatorWrapper;
 
   KeyBuilder keyBuilder = _defaultKeyBuilder;
 
-  final Map<String, RouteNode> _nodes = <String, RouteNode>{};
+  final Map<String, RouteNode> _routes = <String, RouteNode>{};
 
-  RouteNode getNode(String routeName) {
-    return _nodes[routeName] ?? _unknown;
+  RouteNode route(String routeName) {
+    return _routes[routeName] ?? _unknown;
   }
 
   void setUnknownBuilder(RouterWidgetBuilder builder) {
     _unknown = RouteNode(builder: builder);
   }
+
+  void setErrorBuilder(RouterWidgetBuilder builder) {
+    _error = RouteNode(builder: builder);
+  }
+
+  RouteNode get errorRoute => _error;
 
   void use(RouterInterceptor interceptor) {
     _interceptors.add(interceptor);
@@ -70,15 +121,15 @@ class Registry {
     RouterPageBuilder? pageBuilder,
     NavigatorWrapper? navigatorWrapper,
   }) {
-    var node = RouteNode(
+    var route = RouteNode(
         builder: builder,
         pageBuilder: pageBuilder,
         navigatorWrapper: navigatorWrapper);
-    _nodes[routeName] = node;
-    return node;
+    _routes[routeName] = route;
+    return route;
   }
 
   void remove(String routeName) {
-    _nodes.remove(routeName);
+    _routes.remove(routeName);
   }
 }

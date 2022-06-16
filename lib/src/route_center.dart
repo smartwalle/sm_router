@@ -19,6 +19,11 @@ class RouteCenter {
     _delegate.registry.setUnknownBuilder(builder);
   }
 
+  /// 注册错误提示页面.
+  static void setErrorBuilder(RouterWidgetBuilder builder) {
+    _delegate.registry.setErrorBuilder(builder);
+  }
+
   /// 注册 Page 生成器.
   static void setPageBuilder(RouterPageBuilder pageBuilder) {
     _delegate.registry.pageBuilder = pageBuilder;

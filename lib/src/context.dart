@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:sm_router/sm_router.dart';
 
 abstract class Context {
-  Context(Uri uri, Object? arguments) {
+  Context(Uri uri, Object? arguments, RouteError? error) {
     _uri = uri;
     _requestName = _uri.toString();
     _queryParam = QueryParam(_uri.queryParametersAll);
     _arguments = arguments;
+    _error = error;
   }
 
   LocalKey? _key;
@@ -54,10 +55,15 @@ abstract class Context {
   remove(String key) {
     _data.remove(key);
   }
+
+  // 错误信息
+  RouteError? _error;
+
+  RouteError? get error => _error;
 }
 
 class RouteContext extends Context {
-  RouteContext(super.uri, super.arguments) : result = Completer();
+  RouteContext(super.uri, super.arguments, super.error) : result = Completer();
 
   late final Page<dynamic> page;
 
@@ -68,4 +74,12 @@ class RouteContext extends Context {
   set key(LocalKey? key) {
     _key = key;
   }
+}
+
+class RouteError {
+  RouteError(this.error, this.stack);
+
+  // 错误信息
+  final Object error;
+  final StackTrace stack;
 }

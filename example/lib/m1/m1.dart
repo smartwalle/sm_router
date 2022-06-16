@@ -5,7 +5,7 @@ import 'package:sm_router/sm_router.dart';
 void main() {
   RouteCenter.handle("/", (ctx) => const M1View1());
   RouteCenter.handle("/m1/view2", (ctx) => const M1View2());
-  RouteCenter.handle("/m1/view3", (ctx) => const M1View3());
+  RouteCenter.handle("/m1/view31", (ctx) => const M1View3());
 
   runApp(const MainApp());
 }

@@ -90,40 +90,56 @@ class Delegate extends RouterDelegate<String>
   RouteContext _buildContext(String routeName, Object? arguments) {
     var uri = Uri.parse(routeName);
 
-    var node = _registry.getNode(uri.path);
+    var route = _registry.route(uri.path);
     return __buildContext(
       uri,
       arguments,
-      [..._registry.interceptors, ...node.interceptors],
-      node.builder,
-      node.keyBuilder ?? _registry.keyBuilder,
-      node.pageBuilder ?? _registry.pageBuilder,
-      node.navigatorWrapper ?? _registry.navigatorWrapper,
+      null,
+      [..._registry.interceptors, ...route.interceptors],
+      route.builder,
+      route.keyBuilder ?? _registry.keyBuilder,
+      route.pageBuilder ?? _registry.pageBuilder,
+      route.navigatorWrapper ?? _registry.navigatorWrapper,
     );
   }
 
   RouteContext __buildContext(
     Uri uri,
     Object? arguments,
+    RouteError? error,
     List<RouterInterceptor> interceptors,
     RouterWidgetBuilder builder,
     KeyBuilder keyBuilder,
     RouterPageBuilder pageBuilder,
     NavigatorWrapper navigatorWrapper,
   ) {
-    var ctx = RouteContext(uri, arguments);
-    ctx.key = keyBuilder(ctx);
-    ctx.navigatorWrapper = navigatorWrapper;
+    var ctx = RouteContext(uri, arguments, error);
 
-    for (var interceptor in interceptors) {
-      var redirect = interceptor(ctx);
-      if (redirect != null) {
-        return _buildContext(redirect.name!, redirect.arguments);
+    try {
+      ctx.key = keyBuilder(ctx);
+      ctx.navigatorWrapper = navigatorWrapper;
+
+      for (var interceptor in interceptors) {
+        var redirect = interceptor(ctx);
+        if (redirect != null) {
+          return _buildContext(redirect.name!, redirect.arguments);
+        }
       }
+
+      ctx.page = pageBuilder(ctx, builder(ctx));
+    } catch (error, stack) {
+      return __buildContext(
+        uri,
+        arguments,
+        RouteError(error, stack),
+        _registry.interceptors,
+        _registry.errorRoute.builder,
+        _registry.errorRoute.keyBuilder ?? _registry.keyBuilder,
+        _registry.errorRoute.pageBuilder ?? _registry.pageBuilder,
+        _registry.errorRoute.navigatorWrapper ?? _registry.navigatorWrapper,
+      );
     }
 
-    var child = builder(ctx);
-    ctx.page = pageBuilder(ctx, child);
     return ctx;
   }
 
@@ -235,7 +251,7 @@ class Delegate extends RouterDelegate<String>
   }
 
   Future<bool> popMatched<T extends Object?>(Predicate predicate, T? result) {
-    if (_stack.isEmpty) {
+    if (_stack.length <= 1) {
       return SynchronousFuture(false);
     }
 
