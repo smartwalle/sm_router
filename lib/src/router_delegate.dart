@@ -77,8 +77,10 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
   }
 
   void _pop(dynamic result) {
-    var route = _stack.removeLast();
-    route.result.complete(result);
+    if (_stack.isNotEmpty) {
+      var route = _stack.removeLast();
+      route.result.complete(result);
+    }
   }
 
   void _update() {
@@ -161,17 +163,13 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
   }
 
   Future<T?> pushReplacement<T extends Object?, TO extends Object?>(String routeName, TO? result, Object? arguments) {
-    if (_stack.isNotEmpty) {
-      _pop(result);
-    }
+    _pop(result);
     return push(routeName, arguments);
   }
 
   void pushRoutesReplacement<T extends Object?>(List<RouteName> routeNames, T? result) {
     assert(routeNames.isNotEmpty, "pushRoutesReplacement: routeNames must not be empty");
-    if (_stack.isNotEmpty) {
-      _pop(result);
-    }
+    _pop(result);
     return _pushRoutes(routeNames);
   }
 
