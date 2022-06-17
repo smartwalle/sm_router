@@ -239,7 +239,7 @@ class M8View32 extends StatelessWidget {
             TextButton(
               child: const Text("无法返回"),
               onPressed: () {
-                RouteCenter.maybePop();
+                RouteCenter.pop();
               },
             ),
           ],

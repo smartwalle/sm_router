@@ -76,13 +76,13 @@ class M2View2 extends StatelessWidget {
             TextButton(
               child: const Text("返回 /m2/view1 (有返回值)"),
               onPressed: () {
-                RouteCenter.maybePop<String>("这是来自 /m2/view2 的消息");
+                RouteCenter.pop<String>("这是来自 /m2/view2 的消息");
               },
             ),
             TextButton(
               child: const Text("返回 /m2/view1 (没有返回值)"),
               onPressed: () {
-                RouteCenter.maybePop();
+                RouteCenter.pop();
               },
             ),
           ],

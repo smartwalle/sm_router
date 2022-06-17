@@ -73,7 +73,7 @@ class M3View2 extends StatelessWidget {
             TextButton(
               child: const Text("返回 /m3/view1"),
               onPressed: () {
-                RouteCenter.maybePop();
+                RouteCenter.pop();
               },
             ),
             message != null ? Text("收到参数: $message") : const Text("没有收到参数"),

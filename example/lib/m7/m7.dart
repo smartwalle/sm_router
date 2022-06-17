@@ -82,7 +82,7 @@ class M7View2 extends StatelessWidget {
             TextButton(
               child: const Text("返回 /m7/view1"),
               onPressed: () {
-                RouteCenter.maybePop();
+                RouteCenter.pop();
               },
             ),
           ],

@@ -126,7 +126,7 @@ class M5View4 extends StatelessWidget {
               child:
                   RouteCenter.canPop() ? const Text("返回") : const Text("无法返回"),
               onPressed: () {
-                RouteCenter.maybePop().then((value) {});
+                RouteCenter.pop().then((value) {});
               },
             ),
           ],

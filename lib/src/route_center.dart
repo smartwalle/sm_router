@@ -123,10 +123,6 @@ class RouteCenter {
     return _delegate.canPop();
   }
 
-  static Future<bool> maybePop<T extends Object?>([T? result]) {
-    return _delegate.maybePop(result);
-  }
-
   static Future<bool> pop<T extends Object?>([T? result]) {
     return _delegate.pop(result);
   }
