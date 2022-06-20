@@ -24,38 +24,36 @@ RouteNode _defaultErrorNode = RouteNode(builder: (ctx) {
     appBar: AppBar(
       title: const Text("Error"),
     ),
-    backgroundColor: Colors.white,
-    body: Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: SelectableText(
+    backgroundColor: Colors.redAccent,
+    body: Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Column(
+        children: [
+          SelectableText(
             ctx.error!.error.toString(),
             style: const TextStyle(
-              color: Colors.black87,
-              fontSize: 22,
+              color: Colors.white,
+              fontSize: 30,
               fontWeight: FontWeight.w600,
             ),
           ),
-        ),
-        Expanded(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+          const Padding(padding: EdgeInsets.only(top: 10)),
+          Expanded(
+            child: SingleChildScrollView(
               child: SizedBox(
                 width: double.infinity,
                 child: SelectableText(
                   ctx.error!.stack.toString(),
                   style: const TextStyle(
-                    color: Colors.black87,
+                    color: Colors.white,
                     fontSize: 18,
                   ),
                 ),
               ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     ),
   );
 });
@@ -121,10 +119,7 @@ class Registry {
     RouterPageBuilder? pageBuilder,
     NavigatorWrapper? navigatorWrapper,
   }) {
-    var route = RouteNode(
-        builder: builder,
-        pageBuilder: pageBuilder,
-        navigatorWrapper: navigatorWrapper);
+    var route = RouteNode(builder: builder, pageBuilder: pageBuilder, navigatorWrapper: navigatorWrapper);
     _routes[routeName] = route;
     return route;
   }
