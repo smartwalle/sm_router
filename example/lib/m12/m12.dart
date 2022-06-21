@@ -59,7 +59,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Navigator Wrapper 1"),
+        title: const Text("Home"),
       ),
       body: Row(
         children: [
