@@ -1,5 +1,4 @@
 import 'package:flutter/widgets.dart';
-import 'package:sm_router/sm_router.dart';
 import 'package:sm_router/src/context.dart';
 
 typedef RouterWidgetBuilder = Widget Function(Context ctx);

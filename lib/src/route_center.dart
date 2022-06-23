@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sm_router/sm_router.dart';
+import 'package:sm_router/src/context.dart';
 import 'package:sm_router/src/route_information_parser.dart';
+import 'package:sm_router/src/route_name.dart';
+import 'package:sm_router/src/route_node.dart';
+import 'package:sm_router/src/router_delegate.dart';
 
 class RouteCenter {
   RouteCenter._internal();
@@ -11,8 +14,7 @@ class RouteCenter {
 
   static RouterDelegate<String> get routerDelegate => _delegate;
 
-  static RouteInformationParser<String> get routeInformationParser =>
-      _routeParser;
+  static RouteInformationParser<String> get routeInformationParser => _routeParser;
 
   /// 注册未知路由提示页面.
   static void setUnknownBuilder(RouterWidgetBuilder builder) {
@@ -41,8 +43,7 @@ class RouteCenter {
     RouterPageBuilder? pageBuilder,
     NavigatorWrapper? navigatorWrapper,
   }) {
-    return _delegate.registry.handle(routeName, builder,
-        pageBuilder: pageBuilder, navigatorWrapper: navigatorWrapper);
+    return _delegate.registry.handle(routeName, builder, pageBuilder: pageBuilder, navigatorWrapper: navigatorWrapper);
   }
 
   /// 移除路由.
@@ -62,8 +63,7 @@ class RouteCenter {
     _delegate.routerNeglect = value;
   }
 
-  static Future<T?> push<T extends Object?>(String routeName,
-      {Object? arguments}) {
+  static Future<T?> push<T extends Object?>(String routeName, {Object? arguments}) {
     return _delegate.push(routeName, arguments);
   }
 
@@ -71,32 +71,24 @@ class RouteCenter {
     return _delegate.pushRoutes(routeNames);
   }
 
-  static Future<T?> pushReplacement<T extends Object?, TO extends Object?>(
-      String routeName,
-      {TO? result,
-      Object? arguments}) {
+  static Future<T?> pushReplacement<T extends Object?, TO extends Object?>(String routeName,
+      {TO? result, Object? arguments}) {
     return _delegate.pushReplacement(routeName, result, arguments);
   }
 
-  static void pushRoutesReplacement<T extends Object?>(
-      List<RouteName> routeNames,
-      {T? result}) {
+  static void pushRoutesReplacement<T extends Object?>(List<RouteName> routeNames, {T? result}) {
     return _delegate.pushRoutesReplacement(routeNames, result);
   }
 
-  static Future<T?> pushAndRemoveUntil<T extends Object?>(
-      String routeName, Predicate predicate,
-      {Object? arguments}) {
+  static Future<T?> pushAndRemoveUntil<T extends Object?>(String routeName, Predicate predicate, {Object? arguments}) {
     return _delegate.pushAndRemoveUntil(routeName, predicate, arguments);
   }
 
-  static void pushRoutesAndRemoveUntil(
-      List<RouteName> routeNames, Predicate predicate) {
+  static void pushRoutesAndRemoveUntil(List<RouteName> routeNames, Predicate predicate) {
     return _delegate.pushRoutesAndRemoveUntil(routeNames, predicate);
   }
 
-  static void pushAndRemoveAll<T extends Object?>(String routeName,
-      {Object? arguments}) {
+  static void pushAndRemoveAll<T extends Object?>(String routeName, {Object? arguments}) {
     return _delegate.pushAndRemoveAll(routeName, arguments);
   }
 
@@ -104,10 +96,7 @@ class RouteCenter {
     return _delegate.pushRoutesAndRemoveAll(routeNames);
   }
 
-  static Future<T?> replace<T extends Object?, TO extends Object?>(
-      String routeName,
-      {TO? result,
-      Object? arguments}) {
+  static Future<T?> replace<T extends Object?, TO extends Object?>(String routeName, {TO? result, Object? arguments}) {
     return _delegate.pushReplacement(routeName, result, arguments);
   }
 
@@ -127,8 +116,7 @@ class RouteCenter {
     return _delegate.pop(result);
   }
 
-  static Future<bool> popMatched<T extends Object?>(Predicate predicate,
-      [T? result]) {
+  static Future<bool> popMatched<T extends Object?>(Predicate predicate, [T? result]) {
     return _delegate.popMatched(predicate, result);
   }
 
@@ -136,15 +124,12 @@ class RouteCenter {
     _delegate.popUntil(predicate);
   }
 
-  static Future<T?> popAndPush<T extends Object?, TO extends Object?>(
-      String routeName,
-      {TO? result,
-      Object? arguments}) {
+  static Future<T?> popAndPush<T extends Object?, TO extends Object?>(String routeName,
+      {TO? result, Object? arguments}) {
     return _delegate.popAndPush(routeName, result, arguments);
   }
 
-  static void popAndPushRoutes<T extends Object?>(List<RouteName> routeNames,
-      [T? result]) {
+  static void popAndPushRoutes<T extends Object?>(List<RouteName> routeNames, [T? result]) {
     return _delegate.popAndPushRoutes(routeNames, result);
   }
 

@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:sm_router/sm_router.dart';
+import 'package:sm_router/src/context.dart';
+import 'package:sm_router/src/route_name.dart';
+import 'package:sm_router/src/route_node.dart';
 import 'package:sm_router/src/route_registry.dart';
 
 typedef Predicate = bool Function(Context ctx);

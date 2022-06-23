@@ -1,7 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:sm_router/sm_router.dart';
+import 'package:sm_router/src/query_param.dart';
+import 'package:sm_router/src/route_node.dart';
 
 abstract class Context {
   Context(Uri uri, Object? arguments, RouteError? error) {
