@@ -75,6 +75,9 @@ build/
 !**/ios/**/default.pbxuser
 !**/ios/**/default.perspectivev3
 
-**/macos/**
-**/web/**
-**/ios/**
+**/macos
+**/web
+**/ios
+**/android
+**/linux
+**/windows
