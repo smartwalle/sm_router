@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sm_router/sm_router.dart';
 
-// setKeyBuilder 和 show
+// bottomNavigationBar、setKeyBuilder 和 show
 void main() {
   RouteCenter.handle("/", (ctx) => const Text("Redirect"))
       .use((ctx) => const Redirect("/m11/view1"));
