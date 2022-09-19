@@ -116,10 +116,16 @@ class Registry {
   RouteNode handle(
     String routeName,
     RouterWidgetBuilder builder, {
+    KeyBuilder? keyBuilder,
     RouterPageBuilder? pageBuilder,
     NavigatorWrapper? navigatorWrapper,
   }) {
-    var route = RouteNode(builder: builder, pageBuilder: pageBuilder, navigatorWrapper: navigatorWrapper);
+    var route = RouteNode(
+      builder: builder,
+      keyBuilder: keyBuilder,
+      pageBuilder: pageBuilder,
+      navigatorWrapper: navigatorWrapper,
+    );
     _routes[routeName] = route;
     return route;
   }

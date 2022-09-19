@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:sm_router/sm_router.dart';
 import 'package:sm_router/src/context.dart';
 
 typedef RouterWidgetBuilder = Widget Function(Context ctx);
@@ -10,10 +11,12 @@ typedef KeyBuilder = LocalKey? Function(Context ctx);
 class RouteNode {
   RouteNode({
     required RouterWidgetBuilder builder,
+    KeyBuilder? keyBuilder,
     RouterPageBuilder? pageBuilder,
     NavigatorWrapper? navigatorWrapper,
   }) {
     _builder = builder;
+    _keyBuilder = keyBuilder;
     _pageBuilder = pageBuilder;
     _navigatorWrapper = navigatorWrapper;
   }
