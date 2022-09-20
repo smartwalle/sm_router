@@ -40,10 +40,17 @@ class RouteCenter {
   static RouteNode handle(
     String routeName,
     RouterWidgetBuilder builder, {
+    KeyBuilder? keyBuilder,
     RouterPageBuilder? pageBuilder,
     NavigatorWrapper? navigatorWrapper,
   }) {
-    return _delegate.registry.handle(routeName, builder, pageBuilder: pageBuilder, navigatorWrapper: navigatorWrapper);
+    return _delegate.registry.handle(
+      routeName,
+      builder,
+      keyBuilder: keyBuilder,
+      pageBuilder: pageBuilder,
+      navigatorWrapper: navigatorWrapper,
+    );
   }
 
   /// 移除路由.
