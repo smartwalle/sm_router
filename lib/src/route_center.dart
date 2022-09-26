@@ -66,10 +66,6 @@ class RouteCenter {
     _delegate.registry.keyBuilder = builder;
   }
 
-  static void setRouterNeglect(bool value) {
-    _delegate.routerNeglect = value;
-  }
-
   static Future<T?> push<T extends Object?>(String routeName, {Object? arguments}) {
     return _delegate.push(routeName, arguments);
   }

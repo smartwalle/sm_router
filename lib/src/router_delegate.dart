@@ -17,8 +17,6 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
 
   final List<RouteContext> _stack = [];
 
-  bool routerNeglect = false;
-
   bool _disposed = false;
 
   @override
@@ -49,15 +47,7 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     assert(!_disposed);
     assert(_stack.isNotEmpty, "Router stack must not be empty");
 
-    List<Page<dynamic>> pages = [];
-
-    if (routerNeglect) {
-      Router.neglect(context, () {
-        pages = [for (var ctx in _stack) ctx.page];
-      });
-    } else {
-      pages = [for (var route in _stack) route.page];
-    }
+    List<Page<dynamic>> pages = [for (var route in _stack) route.page];
 
     var navigator = Navigator(
       key: navigatorKey,
