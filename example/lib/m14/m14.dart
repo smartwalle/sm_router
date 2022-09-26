@@ -3,17 +3,10 @@ import 'package:sm_router/sm_router.dart';
 
 // Hero
 void main() {
-  RouteCenter.handle("/", (ctx) => const Text("Redirect"))
-      .use((ctx) => const Redirect("/m14/view1"));
+  RouteCenter.handle("/", (ctx) => const Text("Redirect")).use((ctx) => const Redirect("/m14/view1"));
   RouteCenter.handle("/m14/view1", (ctx) => const M14View1());
-  RouteCenter.handle(
-          "/m14/view2", (ctx) => M14View2(tag: ctx.queryParam.get("tag")!))
-      .setPageBuilder((ctx, child) => TransitionPage(
-            child,
-            key: ctx.key,
-            name: ctx.requestName,
-            arguments: ctx.arguments,
-          ));
+  RouteCenter.handle("/m14/view2", (ctx) => M14View2(tag: ctx.queryParam.get("tag")!));
+  RouteCenter.setPageBuilder((ctx, child) => FadeTransitionPage(child: child));
   runApp(const MainApp());
 }
 
@@ -106,33 +99,6 @@ class M14View2 extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class TransitionPage extends Page {
-  final Widget child;
-
-  const TransitionPage(
-    this.child, {
-    LocalKey? key,
-    String? name,
-    Object? arguments,
-  }) : super(key: key, name: name, arguments: arguments);
-
-  @override
-  Route createRoute(BuildContext context) {
-    return PageRouteBuilder(
-      settings: this,
-      pageBuilder: (context, animation, secondaryAnimation) {
-        return child;
-      },
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      },
     );
   }
 }

@@ -29,6 +29,8 @@ void main() {
     return Redirect("/m16/login?r=${ctx.requestName}");
   });
 
+  RouteCenter.setPageBuilder((ctx, child) => FadeTransitionPage(child: child));
+
   runApp(const MainApp());
 }
 
