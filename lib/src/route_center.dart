@@ -145,4 +145,12 @@ class RouteCenter {
   }
 
   static Context? get top => _delegate.top;
+
+  static void navigate(BuildContext context, VoidCallback callback) {
+    Router.navigate(context, callback);
+  }
+
+  static void neglect(BuildContext context, VoidCallback callback) {
+    Router.neglect(context, callback);
+  }
 }

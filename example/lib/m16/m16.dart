@@ -143,7 +143,7 @@ class M16Login extends StatelessWidget {
         onPressed: () {
           share.token = "good";
 
-          Router.neglect(context, () {
+          RouteCenter.neglect(context, () {
             RouteCenter.replace(from);
           });
         },
