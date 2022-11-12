@@ -4,6 +4,7 @@ import 'package:sm_router/src/route_information_parser.dart';
 import 'package:sm_router/src/route_name.dart';
 import 'package:sm_router/src/route_node.dart';
 import 'package:sm_router/src/router_delegate.dart';
+import 'package:sm_router/src/route_information_provider.dart';
 
 class RouteCenter {
   RouteCenter._internal();
@@ -15,6 +16,10 @@ class RouteCenter {
   static RouterDelegate<String> get routerDelegate => _delegate;
 
   static RouteInformationParser<String> get routeInformationParser => _routeParser;
+
+  static RouteInformationProvider routeInformationProvider(String initialLocation) {
+    return RouteProvider(initialLocation: initialLocation);
+  }
 
   /// 注册未知路由提示页面.
   static void setUnknownBuilder(RouterWidgetBuilder builder) {

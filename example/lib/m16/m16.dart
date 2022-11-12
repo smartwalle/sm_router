@@ -46,7 +46,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp.router(
       routeInformationParser: RouteCenter.routeInformationParser,
       routerDelegate: RouteCenter.routerDelegate,
-      routeInformationProvider: RouteProvider(initialLocation: "/"),
+      routeInformationProvider: RouteCenter.routeInformationProvider("/m16/view1"),
     );
   }
 }
