@@ -1,21 +1,21 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
-import 'package:sm_router/src/context.dart';
+import 'package:sm_router/src/router_context.dart';
 import 'package:sm_router/src/route_name.dart';
-import 'package:sm_router/src/route_node.dart';
+import 'package:sm_router/src/route.dart';
 import 'package:sm_router/src/route_registry.dart';
 
-typedef Predicate = bool Function(Context ctx);
+typedef KIRoutePredicate = bool Function(KIRouterContext ctx);
 
-/// RouterDelegate
-class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMixin<String>, ChangeNotifier {
-  Delegate();
+/// KIRouterDelegate
+class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMixin<String>, ChangeNotifier {
+  KIRouterDelegate();
 
-  final _registry = Registry();
+  final _registry = KIRouteRegistry();
 
-  Registry get registry => _registry;
+  KIRouteRegistry get registry => _registry;
 
-  final List<RouteContext> _stack = [];
+  final List<KIRouterState> _stack = [];
 
   bool _disposed = false;
 
@@ -35,9 +35,9 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
 
   @override
   Future<void> setNewRoutePath(String configuration) {
-    var route = _buildContext(configuration, null);
+    var state = _buildState(configuration, null);
     _stack.clear();
-    _stack.add(route);
+    _stack.add(state);
     _update();
     return SynchronousFuture(null);
   }
@@ -55,8 +55,8 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
       onPopPage: _onPopPage,
     );
 
-    var ctx = _stack.last;
-    return ctx.navigatorWrapper(ctx, navigator);
+    var state = _stack.last;
+    return state.navigatorWrapper(state, navigator);
   }
 
   bool _onPopPage(Route<dynamic> route, dynamic result) {
@@ -70,8 +70,8 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
 
   void _pop(dynamic result) {
     if (_stack.isNotEmpty) {
-      var route = _stack.removeLast();
-      route.result.complete(result);
+      var state = _stack.removeLast();
+      state.result.complete(result);
     }
   }
 
@@ -80,11 +80,11 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     notifyListeners();
   }
 
-  RouteContext _buildContext(String routeName, Object? arguments) {
+  KIRouterState _buildState(String routeName, Object? arguments) {
     var uri = Uri.parse(routeName);
 
     var route = _registry.route(uri.path);
-    return __buildContext(
+    return __buildState(
       uri,
       arguments,
       null,
@@ -96,35 +96,35 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     );
   }
 
-  RouteContext __buildContext(
+  KIRouterState __buildState(
     Uri uri,
     Object? arguments,
-    RouteError? error,
-    List<RouterInterceptor> interceptors,
-    RouterWidgetBuilder builder,
-    KeyBuilder keyBuilder,
-    RouterPageBuilder pageBuilder,
-    NavigatorWrapper navigatorWrapper,
+    KIRouterError? error,
+    List<KIRouterInterceptor> interceptors,
+    KIRouterWidgetBuilder builder,
+    KIRouteKeyBuilder keyBuilder,
+    KIRouterPageBuilder pageBuilder,
+    KINavigatorWrapper navigatorWrapper,
   ) {
-    var ctx = RouteContext(uri, arguments, error);
+    var state = KIRouterState(uri, arguments, error);
 
     try {
-      ctx.key = keyBuilder(ctx);
-      ctx.navigatorWrapper = navigatorWrapper;
+      state.key = keyBuilder(state);
+      state.navigatorWrapper = navigatorWrapper;
 
       for (var interceptor in interceptors) {
-        var redirect = interceptor(ctx);
+        var redirect = interceptor(state);
         if (redirect != null) {
-          return _buildContext(redirect.name!, redirect.arguments);
+          return _buildState(redirect.name!, redirect.arguments);
         }
       }
 
-      ctx.page = pageBuilder(ctx, builder(ctx));
+      state.page = pageBuilder(state, builder(state));
     } catch (error, stack) {
-      return __buildContext(
+      return __buildState(
         uri,
         arguments,
-        RouteError(error, stack),
+        KIRouterError(error, stack),
         _registry.interceptors,
         _registry.errorRoute.builder,
         _registry.errorRoute.keyBuilder ?? _registry.keyBuilder,
@@ -133,23 +133,23 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
       );
     }
 
-    return ctx;
+    return state;
   }
 
   Future<T?> push<T extends Object?>(String routeName, Object? arguments) async {
-    var route = _buildContext(routeName, arguments);
-    _stack.add(route);
+    var state = _buildState(routeName, arguments);
+    _stack.add(state);
     _update();
-    return await route.result.future;
+    return await state.result.future;
   }
 
-  void _pushRoutes(List<RouteName> routeNames) {
-    var routes = [for (var name in routeNames) _buildContext(name.name, name.arguments)];
-    _stack.addAll(routes);
+  void _pushRoutes(List<KIRouteName> routeNames) {
+    var states = [for (var name in routeNames) _buildState(name.name, name.arguments)];
+    _stack.addAll(states);
     _update();
   }
 
-  void pushRoutes(List<RouteName> routeNames) {
+  void pushRoutes(List<KIRouteName> routeNames) {
     assert(routeNames.isNotEmpty, "pushRoutes: routeNames must not be empty");
     return _pushRoutes(routeNames);
   }
@@ -159,13 +159,13 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     return push(routeName, arguments);
   }
 
-  void pushRoutesReplacement<T extends Object?>(List<RouteName> routeNames, T? result) {
+  void pushRoutesReplacement<T extends Object?>(List<KIRouteName> routeNames, T? result) {
     assert(routeNames.isNotEmpty, "pushRoutesReplacement: routeNames must not be empty");
     _pop(result);
     return _pushRoutes(routeNames);
   }
 
-  Future<T?> pushAndRemoveUntil<T extends Object?>(String routeName, Predicate predicate, Object? arguments) {
+  Future<T?> pushAndRemoveUntil<T extends Object?>(String routeName, KIRoutePredicate predicate, Object? arguments) {
     var index = _stack.lastIndexWhere(predicate);
     if (index != -1) {
       _stack.removeRange(index + 1, _stack.length);
@@ -173,7 +173,7 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     return push(routeName, arguments);
   }
 
-  void pushRoutesAndRemoveUntil(List<RouteName> routeNames, Predicate predicate) {
+  void pushRoutesAndRemoveUntil(List<KIRouteName> routeNames, KIRoutePredicate predicate) {
     assert(routeNames.isNotEmpty, "pushRoutesAndRemoveUntil: routeNames must not be empty");
     var index = _stack.lastIndexWhere(predicate);
     if (index != -1) {
@@ -187,7 +187,7 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     push(routeName, arguments);
   }
 
-  void pushRoutesAndRemoveAll(List<RouteName> routeNames) {
+  void pushRoutesAndRemoveAll(List<KIRouteName> routeNames) {
     assert(routeNames.isNotEmpty, "pushRoutesAndRemoveAll: routeNames must not be empty");
     _stack.removeRange(0, _stack.length);
     return _pushRoutes(routeNames);
@@ -197,7 +197,7 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     return pushAndRemoveAll(routeName, arguments);
   }
 
-  void showRoutes(List<RouteName> routeNames) {
+  void showRoutes(List<KIRouteName> routeNames) {
     assert(routeNames.isNotEmpty, "showRoutes: routeNames must not be empty");
     _stack.removeRange(0, _stack.length);
     return _pushRoutes(routeNames);
@@ -224,20 +224,20 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     return SynchronousFuture(true);
   }
 
-  Future<bool> popMatched<T extends Object?>(Predicate predicate, T? result) {
+  Future<bool> popMatched<T extends Object?>(KIRoutePredicate predicate, T? result) {
     if (_stack.length <= 1) {
       return SynchronousFuture(false);
     }
 
-    var route = _stack.last;
-    if (predicate(route) == false) {
+    var state = _stack.last;
+    if (predicate(state) == false) {
       return SynchronousFuture(false);
     }
 
     return pop(result);
   }
 
-  void popUntil(Predicate predicate) {
+  void popUntil(KIRoutePredicate predicate) {
     var index = _stack.lastIndexWhere(predicate);
     if (index == -1) {
       return;
@@ -255,7 +255,7 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     return push(routeName, arguments);
   }
 
-  void popAndPushRoutes<T extends Object?>(List<RouteName> routeNames, T? result) async {
+  void popAndPushRoutes<T extends Object?>(List<KIRouteName> routeNames, T? result) async {
     assert(routeNames.isNotEmpty, "popAndPushRoutes: routeNames must not be empty");
     final NavigatorState? state = navigatorKey.currentState;
     if (state != null) {
@@ -273,10 +273,10 @@ class Delegate extends RouterDelegate<String> with PopNavigatorRouterDelegateMix
     return SynchronousFuture(true);
   }
 
-  bool contains(Predicate predicate) {
+  bool contains(KIRoutePredicate predicate) {
     var index = _stack.lastIndexWhere(predicate);
     return index != -1;
   }
 
-  Context? get top => _stack.last;
+  KIRouterContext? get top => _stack.last;
 }

@@ -3,10 +3,10 @@ import 'package:sm_router/sm_router.dart';
 
 /// pushRoutes 和 pushRoutesReplacement
 void main() {
-  RouteCenter.handle("/", (ctx) => const M7View1());
-  RouteCenter.handle("/m7/view2", (ctx) => const M7View2());
-  RouteCenter.handle("/m7/view3", (ctx) => const M7View3());
-  RouteCenter.handle("/m7/view4", (ctx) => const M7View4());
+  KIRouter.handle("/", (ctx) => const M7View1());
+  KIRouter.handle("/m7/view2", (ctx) => const M7View2());
+  KIRouter.handle("/m7/view3", (ctx) => const M7View3());
+  KIRouter.handle("/m7/view4", (ctx) => const M7View4());
 
   runApp(const MainApp());
 }
@@ -17,8 +17,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: RouteCenter.routeInformationParser,
-      routerDelegate: RouteCenter.routerDelegate,
+      routeInformationParser: KIRouter.routeInformationParser,
+      routerDelegate: KIRouter.routerDelegate,
     );
   }
 }
@@ -39,12 +39,12 @@ class M7View1 extends StatelessWidget {
               child: const Text("pushRoutes: /m7/view2、/m7/view3、/m7/view4"),
               onPressed: () {
                 var routes = [
-                  RouteName("/m7/view2"),
-                  RouteName("/m7/view3"),
-                  RouteName("/m7/view4"),
+                  KIRouteName("/m7/view2"),
+                  KIRouteName("/m7/view3"),
+                  KIRouteName("/m7/view4"),
                 ];
 
-                RouteCenter.pushRoutes(routes);
+                KIRouter.pushRoutes(routes);
               },
             ),
             TextButton(
@@ -52,12 +52,12 @@ class M7View1 extends StatelessWidget {
                   "pushRoutesReplacement: /m7/view2、/m7/view3、/m7/view4"),
               onPressed: () {
                 var routes = [
-                  RouteName("/m7/view2"),
-                  RouteName("/m7/view3"),
-                  RouteName("/m7/view4"),
+                  KIRouteName("/m7/view2"),
+                  KIRouteName("/m7/view3"),
+                  KIRouteName("/m7/view4"),
                 ];
 
-                RouteCenter.pushRoutesReplacement(routes);
+                KIRouter.pushRoutesReplacement(routes);
               },
             ),
           ],
@@ -82,7 +82,7 @@ class M7View2 extends StatelessWidget {
             TextButton(
               child: const Text("返回 /m7/view1"),
               onPressed: () {
-                RouteCenter.pop();
+                KIRouter.pop();
               },
             ),
           ],
@@ -107,7 +107,7 @@ class M7View3 extends StatelessWidget {
             TextButton(
               child: const Text("返回 /m7/view2"),
               onPressed: () {
-                RouteCenter.pop();
+                KIRouter.pop();
               },
             ),
           ],
@@ -132,7 +132,7 @@ class M7View4 extends StatelessWidget {
             TextButton(
               child: const Text("返回 /m7/view3"),
               onPressed: () {
-                RouteCenter.pop();
+                KIRouter.pop();
               },
             ),
           ],

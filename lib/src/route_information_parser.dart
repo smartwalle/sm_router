@@ -1,8 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 
-/// RouteInformationParser
-class RouteParser extends RouteInformationParser<String> {
+/// KIRouteInformationParser
+class KIRouteInformationParser extends RouteInformationParser<String> {
   @override
   Future<String> parseRouteInformation(RouteInformation routeInformation) {
     String routeName = routeInformation.location ?? "/";

@@ -3,15 +3,15 @@ import 'package:sm_router/sm_router.dart';
 
 // bottomNavigationBar、setKeyBuilder 和 show
 void main() {
-  RouteCenter.handle("/", (ctx) => const Text("Redirect"))
-      .use((ctx) => const Redirect("/m11/view1"));
-  RouteCenter.handle("/m11/view1", (ctx) => const Home(currentIndex: 0))
+  KIRouter.handle("/", (ctx) => const Text("Redirect"))
+      .use((ctx) => const KIRedirect("/m11/view1"));
+  KIRouter.handle("/m11/view1", (ctx) => const Home(currentIndex: 0))
       .setKeyBuilder((ctx) => const ValueKey("home"));
-  RouteCenter.handle("/m11/view2", (ctx) => const Home(currentIndex: 1))
+  KIRouter.handle("/m11/view2", (ctx) => const Home(currentIndex: 1))
       .setKeyBuilder((ctx) => const ValueKey("home"));
-  RouteCenter.handle("/m11/view3", (ctx) => const Home(currentIndex: 2))
+  KIRouter.handle("/m11/view3", (ctx) => const Home(currentIndex: 2))
       .setKeyBuilder((ctx) => const ValueKey("home"));
-  RouteCenter.handle("/m11/view4", (ctx) => const M11View4());
+  KIRouter.handle("/m11/view4", (ctx) => const M11View4());
 
   runApp(const MainApp());
 }
@@ -22,8 +22,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: RouteCenter.routeInformationParser,
-      routerDelegate: RouteCenter.routerDelegate,
+      routeInformationParser: KIRouter.routeInformationParser,
+      routerDelegate: KIRouter.routerDelegate,
     );
   }
 }
@@ -61,13 +61,13 @@ class _HomeState extends State<Home> {
         onTap: (index) {
           switch (index) {
             case 0:
-              RouteCenter.show("/m11/view1");
+              KIRouter.show("/m11/view1");
               break;
             case 1:
-              RouteCenter.show("/m11/view2");
+              KIRouter.show("/m11/view2");
               break;
             case 2:
-              RouteCenter.show("/m11/view3");
+              KIRouter.show("/m11/view3");
               break;
           }
         },
@@ -99,7 +99,7 @@ class _M11ViewState extends State<M11View> {
       child: Center(
         child: TextButton(
           onPressed: () {
-            RouteCenter.push("/m11/view4");
+            KIRouter.push("/m11/view4");
           },
           child: const Text(
             "进入 /m11/view4",

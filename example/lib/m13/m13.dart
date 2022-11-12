@@ -4,33 +4,33 @@ import 'package:sm_router/sm_router.dart';
 
 // setKeyBuilder 和 PageView
 void main() {
-  RouteCenter.handle("/", (ctx) => const Text(""))
-      .use((ctx) => const Redirect("/m13/view1"));
+  KIRouter.handle("/", (ctx) => const Text(""))
+      .use((ctx) => const KIRedirect("/m13/view1"));
 
-  RouteCenter.handle("/m13/view1", (ctx) => const Home(initialPage: 0))
+  KIRouter.handle("/m13/view1", (ctx) => const Home(initialPage: 0))
       .setKeyBuilder(
     (ctx) => const ValueKey("home"),
   );
-  RouteCenter.handle("/m13/view2", (ctx) => const Home(initialPage: 1))
+  KIRouter.handle("/m13/view2", (ctx) => const Home(initialPage: 1))
       .setKeyBuilder(
     (ctx) => const ValueKey("home"),
   );
-  RouteCenter.handle("/m13/view3", (ctx) => const Home(initialPage: 2))
+  KIRouter.handle("/m13/view3", (ctx) => const Home(initialPage: 2))
       .setKeyBuilder(
     (ctx) => const ValueKey("home"),
   );
 
-  RouteCenter.handle("/m13/view4", (ctx) => const Text(""))
-      .use((ctx) => const Redirect("/m13/view41"));
-  RouteCenter.handle("/m13/view41", (ctx) => const M13View4(initialPage: 0))
+  KIRouter.handle("/m13/view4", (ctx) => const Text(""))
+      .use((ctx) => const KIRedirect("/m13/view41"));
+  KIRouter.handle("/m13/view41", (ctx) => const M13View4(initialPage: 0))
       .setKeyBuilder(
     (ctx) => const ValueKey("m13view4"),
   );
-  RouteCenter.handle("/m13/view42", (ctx) => const M13View4(initialPage: 1))
+  KIRouter.handle("/m13/view42", (ctx) => const M13View4(initialPage: 1))
       .setKeyBuilder(
     (ctx) => const ValueKey("m13view4"),
   );
-  RouteCenter.handle("/m13/view43", (ctx) => const M13View4(initialPage: 2))
+  KIRouter.handle("/m13/view43", (ctx) => const M13View4(initialPage: 2))
       .setKeyBuilder(
     (ctx) => const ValueKey("m13view4"),
   );
@@ -52,8 +52,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: RouteCenter.routeInformationParser,
-      routerDelegate: RouteCenter.routerDelegate,
+      routeInformationParser: KIRouter.routeInformationParser,
+      routerDelegate: KIRouter.routerDelegate,
       scrollBehavior: AppScrollBehavior(),
     );
   }
@@ -87,7 +87,7 @@ class _HomeState extends State<Home> {
         ),
         children: views,
         onPageChanged: (index) {
-          RouteCenter.show("/m13/view${index + 1}");
+          KIRouter.show("/m13/view${index + 1}");
         },
       ),
     );
@@ -118,7 +118,7 @@ class M13View extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                RouteCenter.push("/m13/view4");
+                KIRouter.push("/m13/view4");
               },
               child: const Text(
                 "进入 /m13/view4",
@@ -162,7 +162,7 @@ class _M13View4State extends State<M13View4> {
         ),
         children: views,
         onPageChanged: (index) {
-          RouteCenter.pushReplacement("/m13/view4${index + 1}");
+          KIRouter.pushReplacement("/m13/view4${index + 1}");
         },
       ),
     );

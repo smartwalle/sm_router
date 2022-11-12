@@ -1,25 +1,25 @@
-import 'package:sm_router/src/query_param.dart';
+import 'package:sm_router/src/route_param.dart';
 
-class RouteName {
-  RouteName(this.name, [this.arguments]) {
-    _param = QueryParam();
+class KIRouteName {
+  KIRouteName(this.name, [this.arguments]) {
+    _param = KIRouteParam();
   }
 
-  RouteName.decode(String value) {
+  KIRouteName.decode(String value) {
     var uri = Uri.parse(value);
     name = uri.path;
-    _param = QueryParam(uri.queryParametersAll);
+    _param = KIRouteParam(uri.queryParametersAll);
   }
 
-  RouteName.from(this.name, Map<String, List<String>> param) {
-    _param = QueryParam(param);
+  KIRouteName.from(this.name, Map<String, List<String>> param) {
+    _param = KIRouteParam(param);
   }
 
   late String name;
 
   Object? arguments;
 
-  late QueryParam _param;
+  late KIRouteParam _param;
 
   Map<String, List<String>> all() {
     return _param.all();
@@ -33,22 +33,22 @@ class RouteName {
     return _param.values(key);
   }
 
-  RouteName add(String key, String value) {
+  KIRouteName add(String key, String value) {
     _param.add(key, value);
     return this;
   }
 
-  RouteName addAll(String key, List<String> values) {
+  KIRouteName addAll(String key, List<String> values) {
     _param.addAll(key, values);
     return this;
   }
 
-  RouteName set(String key, String value) {
+  KIRouteName set(String key, String value) {
     _param.set(key, value);
     return this;
   }
 
-  RouteName setAll(String key, List<String> values) {
+  KIRouteName setAll(String key, List<String> values) {
     _param.setAll(key, values);
     return this;
   }

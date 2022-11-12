@@ -3,8 +3,8 @@ import 'package:sm_router/sm_router.dart';
 
 /// 带有 URL 参数的 push
 void main() {
-  RouteCenter.handle("/", (ctx) => const M3View1());
-  RouteCenter.handle("/m3/view2", (ctx) {
+  KIRouter.handle("/", (ctx) => const M3View1());
+  KIRouter.handle("/m3/view2", (ctx) {
     var message = ctx.queryParam.get("message");
     return M3View2(message: message);
   });
@@ -18,8 +18,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: RouteCenter.routeInformationParser,
-      routerDelegate: RouteCenter.routerDelegate,
+      routeInformationParser: KIRouter.routeInformationParser,
+      routerDelegate: KIRouter.routerDelegate,
     );
   }
 }
@@ -39,13 +39,13 @@ class M3View1 extends StatelessWidget {
             TextButton(
               child: const Text("进入 /m3/view2 (有参数)"),
               onPressed: () {
-                RouteCenter.push("/m3/view2?message=这是来自 /m3/view1 的参数");
+                KIRouter.push("/m3/view2?message=这是来自 /m3/view1 的参数");
               },
             ),
             TextButton(
               child: const Text("进入 /m3/view2 (没有参数)"),
               onPressed: () {
-                RouteCenter.push("/m3/view2");
+                KIRouter.push("/m3/view2");
               },
             ),
           ],
@@ -73,7 +73,7 @@ class M3View2 extends StatelessWidget {
             TextButton(
               child: const Text("返回 /m3/view1"),
               onPressed: () {
-                RouteCenter.pop();
+                KIRouter.pop();
               },
             ),
             message != null ? Text("收到参数: $message") : const Text("没有收到参数"),

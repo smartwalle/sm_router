@@ -4,11 +4,11 @@ import 'package:sm_router/sm_router.dart';
 void main() {
   var share = Share();
 
-  RouteCenter.handle("/", (ctx) => const M16Home());
-  RouteCenter.handle("/m16/view1", (ctx) => const M16View1());
-  RouteCenter.handle("/m16/view2", (ctx) => const M16View2());
-  RouteCenter.handle("/m16/view3", (ctx) => const M16View3());
-  RouteCenter.handle(
+  KIRouter.handle("/", (ctx) => const M16Home());
+  KIRouter.handle("/m16/view1", (ctx) => const M16View1());
+  KIRouter.handle("/m16/view2", (ctx) => const M16View2());
+  KIRouter.handle("/m16/view3", (ctx) => const M16View3());
+  KIRouter.handle(
     "/m16/login",
     (ctx) => M16Login(
       share: share,
@@ -17,19 +17,19 @@ void main() {
   ).use((ctx) {
     if (share.token != null) {
       var r = ctx.queryParam.get("r") ?? "/";
-      return Redirect(r);
+      return KIRedirect(r);
     }
     return null;
   });
 
-  RouteCenter.use((ctx) {
+  KIRouter.use((ctx) {
     if (share.token != null || ctx.routeName == "/" || ctx.routeName == "/m16/view1" || ctx.routeName == "/m16/login") {
       return null;
     }
-    return Redirect("/m16/login?r=${ctx.requestName}");
+    return KIRedirect("/m16/login?r=${ctx.requestName}");
   });
 
-  RouteCenter.setPageBuilder((ctx, child) => FadeTransitionPage(child: child));
+  KIRouter.setPageBuilder((ctx, child) => KIFadeTransitionPage(child: child));
 
   runApp(const MainApp());
 }
@@ -44,9 +44,9 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: RouteCenter.routeInformationParser,
-      routerDelegate: RouteCenter.routerDelegate,
-      routeInformationProvider: RouteCenter.routeInformationProvider("/m16/view1"),
+      routeInformationParser: KIRouter.routeInformationParser,
+      routerDelegate: KIRouter.routerDelegate,
+      routeInformationProvider: KIRouter.routeInformationProvider("/m16/view1"),
     );
   }
 }
@@ -63,7 +63,7 @@ class M16Home extends StatelessWidget {
       body: TextButton(
         child: const Text("M16View1"),
         onPressed: () {
-          RouteCenter.push("/m16/view1");
+          KIRouter.push("/m16/view1");
         },
       ),
     );
@@ -83,13 +83,13 @@ class M16View1 extends StatelessWidget {
         children: [
           TextButton(
             onPressed: () {
-              RouteCenter.push("/m16/view2");
+              KIRouter.push("/m16/view2");
             },
             child: const Text("M16View2"),
           ),
           TextButton(
             onPressed: () {
-              RouteCenter.push("/m16/view3");
+              KIRouter.push("/m16/view3");
             },
             child: const Text("M16View3"),
           ),
@@ -145,8 +145,8 @@ class M16Login extends StatelessWidget {
         onPressed: () {
           share.token = "good";
 
-          RouteCenter.neglect(context, () {
-            RouteCenter.replace(from);
+          KIRouter.neglect(context, () {
+            KIRouter.replace(from);
           });
         },
         child: const Text("Login"),

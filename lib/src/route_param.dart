@@ -1,5 +1,5 @@
-class QueryParam {
-  QueryParam([Map<String, List<String>>? data]) {
+class KIRouteParam {
+  KIRouteParam([Map<String, List<String>>? data]) {
     _data = data ?? <String, List<String>>{};
   }
 
@@ -21,11 +21,11 @@ class QueryParam {
     return _data[key];
   }
 
-  QueryParam add(String key, String value) {
+  KIRouteParam add(String key, String value) {
     return addAll(key, [value]);
   }
 
-  QueryParam addAll(String key, List<String> values) {
+  KIRouteParam addAll(String key, List<String> values) {
     var nValues = _data[key];
     if (nValues == null) {
       _data[key] = values;
@@ -35,11 +35,11 @@ class QueryParam {
     return this;
   }
 
-  QueryParam set(String key, String value) {
+  KIRouteParam set(String key, String value) {
     return setAll(key, [value]);
   }
 
-  QueryParam setAll(String key, List<String> values) {
+  KIRouteParam setAll(String key, List<String> values) {
     _data[key] = values;
     return this;
   }

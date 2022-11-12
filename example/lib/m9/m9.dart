@@ -3,11 +3,11 @@ import 'package:sm_router/sm_router.dart';
 
 /// Redirect
 void main() {
-  RouteCenter.handle("/", (ctx) => const M1View1());
-  RouteCenter.handle("/m9/view2", (ctx) => const M1View2()).use((ctx) {
-    return const Redirect("/m9/view3");
+  KIRouter.handle("/", (ctx) => const M1View1());
+  KIRouter.handle("/m9/view2", (ctx) => const M1View2()).use((ctx) {
+    return const KIRedirect("/m9/view3");
   });
-  RouteCenter.handle("/m9/view3", (ctx) => const M1View3());
+  KIRouter.handle("/m9/view3", (ctx) => const M1View3());
 
   runApp(const MainApp());
 }
@@ -18,8 +18,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: RouteCenter.routeInformationParser,
-      routerDelegate: RouteCenter.routerDelegate,
+      routeInformationParser: KIRouter.routeInformationParser,
+      routerDelegate: KIRouter.routerDelegate,
     );
   }
 }
@@ -39,7 +39,7 @@ class M1View1 extends StatelessWidget {
             TextButton(
               child: const Text("进入 /m9/view2 (会重定向到 /m9/view3)"),
               onPressed: () {
-                RouteCenter.push("/m9/view2").then((value) {
+                KIRouter.push("/m9/view2").then((value) {
                   print(value);
                 });
               },
@@ -86,7 +86,7 @@ class M1View3 extends StatelessWidget {
             TextButton(
               child: const Text("返回"),
               onPressed: () {
-                RouteCenter.pop("from view3");
+                KIRouter.pop("from view3");
               },
             ),
           ],

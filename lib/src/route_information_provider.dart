@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
-class RouteProvider extends PlatformRouteInformationProvider {
+/// KIRouteInformationProvider
+class KIRouteInformationProvider extends PlatformRouteInformationProvider {
   static String effectiveInitialLocation(String? initialLocation) {
     WidgetsFlutterBinding.ensureInitialized();
     final String platformDefault = WidgetsBinding.instance.platformDispatcher.defaultRouteName;
@@ -13,7 +14,7 @@ class RouteProvider extends PlatformRouteInformationProvider {
     }
   }
 
-  RouteProvider({
+  KIRouteInformationProvider({
     required String initialLocation,
   }) : super(initialRouteInformation: RouteInformation(location: effectiveInitialLocation(initialLocation)));
 }

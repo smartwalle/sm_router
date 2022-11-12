@@ -3,27 +3,27 @@ import 'package:sm_router/sm_router.dart';
 
 // setKeyBuilder 和 show
 void main() {
-  RouteCenter.handle("/", (ctx) => const Text("Redirect"))
-      .use((ctx) => const Redirect("/m12/view1"));
-  RouteCenter.handle(
+  KIRouter.handle("/", (ctx) => const Text("Redirect"))
+      .use((ctx) => const KIRedirect("/m12/view1"));
+  KIRouter.handle(
           "/m12/view1",
           (ctx) => Home(
               ctx: ctx,
               child: const M12View(title: "title", color: Colors.red)))
       .setKeyBuilder((ctx) => const ValueKey("home"));
-  RouteCenter.handle(
+  KIRouter.handle(
           "/m12/view2",
           (ctx) => Home(
               ctx: ctx,
               child: const M12View(title: "title", color: Colors.green)))
       .setKeyBuilder((ctx) => const ValueKey("home"));
-  RouteCenter.handle(
+  KIRouter.handle(
           "/m12/view3",
           (ctx) => Home(
               ctx: ctx,
               child: const M12View(title: "title", color: Colors.purple)))
       .setKeyBuilder((ctx) => const ValueKey("home"));
-  RouteCenter.handle("/m12/view4", (ctx) => const M12View4());
+  KIRouter.handle("/m12/view4", (ctx) => const M12View4());
 
   runApp(const MainApp());
 }
@@ -34,8 +34,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: RouteCenter.routeInformationParser,
-      routerDelegate: RouteCenter.routerDelegate,
+      routeInformationParser: KIRouter.routeInformationParser,
+      routerDelegate: KIRouter.routerDelegate,
     );
   }
 }
@@ -48,7 +48,7 @@ class Home extends StatefulWidget {
   }) : super(key: key);
 
   final Widget child;
-  final Context ctx;
+  final KIRouterContext ctx;
 
   @override
   State<Home> createState() => _HomeState();
@@ -104,7 +104,7 @@ class MenuButton extends StatelessWidget {
     required this.title,
   }) : super(key: key);
 
-  final Context ctx;
+  final KIRouterContext ctx;
   final String routeName;
   final String title;
 
@@ -114,7 +114,7 @@ class MenuButton extends StatelessWidget {
       onPressed: ctx.routeName == routeName
           ? null
           : () {
-              RouteCenter.show(routeName);
+              KIRouter.show(routeName);
             },
       child: Text(
         title,
@@ -149,7 +149,7 @@ class _M12ViewState extends State<M12View> {
       child: Center(
         child: TextButton(
           onPressed: () {
-            RouteCenter.push("/m12/view4");
+            KIRouter.push("/m12/view4");
           },
           child: const Text(
             "进入 /m12/view4",

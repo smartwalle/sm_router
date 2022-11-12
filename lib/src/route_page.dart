@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class TransitionPage<T> extends Page<T> {
-  const TransitionPage({
+class KIRoutePage<T> extends Page<T> {
+  const KIRoutePage({
     super.key,
     super.name,
     super.arguments,
@@ -40,14 +41,14 @@ class TransitionPage<T> extends Page<T> {
 
   @override
   Route<T> createRoute(BuildContext context) {
-    return _TransitionPageRoute<T>(page: this);
+    return _KIPageRoute<T>(page: this);
   }
 }
 
-class _TransitionPageRoute<T> extends PageRoute<T> {
-  _TransitionPageRoute({required TransitionPage<T> page}) : super(settings: page);
+class _KIPageRoute<T> extends PageRoute<T> {
+  _KIPageRoute({required KIRoutePage<T> page}) : super(settings: page);
 
-  TransitionPage<T> get _page => settings as TransitionPage<T>;
+  KIRoutePage<T> get _page => settings as KIRoutePage<T>;
 
   @override
   Duration get transitionDuration => _page.transitionDuration;
@@ -92,8 +93,8 @@ class _TransitionPageRoute<T> extends PageRoute<T> {
   }
 }
 
-class NoTransitionPage<T> extends TransitionPage<T> {
-  NoTransitionPage({
+class KINoTransitionPage<T> extends KIRoutePage<T> {
+  KINoTransitionPage({
     super.key,
     super.name,
     super.arguments,
@@ -104,8 +105,8 @@ class NoTransitionPage<T> extends TransitionPage<T> {
         });
 }
 
-class FadeTransitionPage<T> extends TransitionPage<T> {
-  FadeTransitionPage({
+class KIFadeTransitionPage<T> extends KIRoutePage<T> {
+  KIFadeTransitionPage({
     super.key,
     super.name,
     super.arguments,

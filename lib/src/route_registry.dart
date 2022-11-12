@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sm_router/src/route_node.dart';
+import 'package:sm_router/src/route.dart';
 
-RouteNode _defaultUnknownNode = RouteNode(builder: (ctx) {
+KIRoute _defaultUnknownRoute = KIRoute(builder: (ctx) {
   return Scaffold(
     appBar: AppBar(
       title: const Text("Page Not Found"),
@@ -19,7 +19,7 @@ RouteNode _defaultUnknownNode = RouteNode(builder: (ctx) {
   );
 });
 
-RouteNode _defaultErrorNode = RouteNode(builder: (ctx) {
+KIRoute _defaultErrorRoute = KIRoute(builder: (ctx) {
   return Scaffold(
     appBar: AppBar(
       title: const Text("Error"),
@@ -58,7 +58,7 @@ RouteNode _defaultErrorNode = RouteNode(builder: (ctx) {
   );
 });
 
-RouterPageBuilder _defaultPageBuilder = (ctx, child) {
+KIRouterPageBuilder _defaultPageBuilder = (ctx, child) {
   return MaterialPage(
     key: ctx.key,
     child: child,
@@ -67,60 +67,60 @@ RouterPageBuilder _defaultPageBuilder = (ctx, child) {
   );
 };
 
-NavigatorWrapper _defaultNavigatorWrapper = (ctx, navigator) {
+KINavigatorWrapper _defaultNavigatorWrapper = (ctx, navigator) {
   return navigator;
 };
 
-KeyBuilder _defaultKeyBuilder = (ctx) {
+KIRouteKeyBuilder _defaultKeyBuilder = (ctx) {
   return UniqueKey();
 };
 
-/// RouteRegistry
-class Registry {
-  Registry();
+/// KIRouteRegistry
+class KIRouteRegistry {
+  KIRouteRegistry();
 
-  final List<RouterInterceptor> _interceptors = <RouterInterceptor>[];
+  final List<KIRouterInterceptor> _interceptors = <KIRouterInterceptor>[];
 
-  List<RouterInterceptor> get interceptors => _interceptors;
+  List<KIRouterInterceptor> get interceptors => _interceptors;
 
-  RouteNode _unknown = _defaultUnknownNode;
+  KIRoute _unknown = _defaultUnknownRoute;
 
-  RouteNode _error = _defaultErrorNode;
+  KIRoute _error = _defaultErrorRoute;
 
-  RouterPageBuilder pageBuilder = _defaultPageBuilder;
+  KIRouterPageBuilder pageBuilder = _defaultPageBuilder;
 
-  NavigatorWrapper navigatorWrapper = _defaultNavigatorWrapper;
+  KINavigatorWrapper navigatorWrapper = _defaultNavigatorWrapper;
 
-  KeyBuilder keyBuilder = _defaultKeyBuilder;
+  KIRouteKeyBuilder keyBuilder = _defaultKeyBuilder;
 
-  final Map<String, RouteNode> _routes = <String, RouteNode>{};
+  final Map<String, KIRoute> _routes = <String, KIRoute>{};
 
-  RouteNode route(String routeName) {
+  KIRoute route(String routeName) {
     return _routes[routeName] ?? _unknown;
   }
 
-  void setUnknownBuilder(RouterWidgetBuilder builder) {
-    _unknown = RouteNode(builder: builder);
+  void setUnknownBuilder(KIRouterWidgetBuilder builder) {
+    _unknown = KIRoute(builder: builder);
   }
 
-  void setErrorBuilder(RouterWidgetBuilder builder) {
-    _error = RouteNode(builder: builder);
+  void setErrorBuilder(KIRouterWidgetBuilder builder) {
+    _error = KIRoute(builder: builder);
   }
 
-  RouteNode get errorRoute => _error;
+  KIRoute get errorRoute => _error;
 
-  void use(RouterInterceptor interceptor) {
+  void use(KIRouterInterceptor interceptor) {
     _interceptors.add(interceptor);
   }
 
-  RouteNode handle(
+  KIRoute handle(
     String routeName,
-    RouterWidgetBuilder builder, {
-    KeyBuilder? keyBuilder,
-    RouterPageBuilder? pageBuilder,
-    NavigatorWrapper? navigatorWrapper,
+    KIRouterWidgetBuilder builder, {
+    KIRouteKeyBuilder? keyBuilder,
+    KIRouterPageBuilder? pageBuilder,
+    KINavigatorWrapper? navigatorWrapper,
   }) {
-    var route = RouteNode(
+    var route = KIRoute(
       builder: builder,
       keyBuilder: keyBuilder,
       pageBuilder: pageBuilder,

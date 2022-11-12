@@ -3,19 +3,19 @@ import 'package:sm_router/sm_router.dart';
 
 /// NavigatorWrapper
 void main() {
-  RouteCenter.handle(
+  KIRouter.handle(
       "/", (ctx) => const M10View(title: "M10 View1", color: Colors.red));
-  RouteCenter.handle("/m10/view2",
+  KIRouter.handle("/m10/view2",
       (ctx) => const M10View(title: "M10 View2", color: Colors.yellow));
-  RouteCenter.handle("/m10/view3",
+  KIRouter.handle("/m10/view3",
       (ctx) => const M10View(title: "M10 View3", color: Colors.green));
-  RouteCenter.handle(
+  KIRouter.handle(
           "/m10/view4",
           (ctx) =>
               const M10View(title: "M10 View4", color: Colors.purpleAccent))
       .setNavigatorWrapper((ctx, navigator) => NavWrapper2(child: navigator));
 
-  RouteCenter.setNavigatorWrapper((ctx, navigator) {
+  KIRouter.setNavigatorWrapper((ctx, navigator) {
     return NavWrapper1(
       ctx: ctx,
       child: navigator,
@@ -31,8 +31,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: RouteCenter.routeInformationParser,
-      routerDelegate: RouteCenter.routerDelegate,
+      routeInformationParser: KIRouter.routeInformationParser,
+      routerDelegate: KIRouter.routerDelegate,
     );
   }
 }
@@ -45,7 +45,7 @@ class NavWrapper1 extends StatefulWidget {
   }) : super(key: key);
 
   final Widget child;
-  final Context ctx;
+  final KIRouterContext ctx;
 
   @override
   State<NavWrapper1> createState() {
@@ -112,7 +112,7 @@ class MenuButton extends StatelessWidget {
     required this.title,
   }) : super(key: key);
 
-  final Context ctx;
+  final KIRouterContext ctx;
   final String routeName;
   final String title;
 
@@ -122,7 +122,7 @@ class MenuButton extends StatelessWidget {
       onPressed: ctx.routeName == routeName
           ? null
           : () {
-              RouteCenter.push(routeName);
+              KIRouter.push(routeName);
             },
       child: Text(
         title,

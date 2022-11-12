@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:sm_router/src/query_param.dart';
-import 'package:sm_router/src/route_node.dart';
+import 'package:sm_router/src/route_param.dart';
+import 'package:sm_router/src/route.dart';
 
-abstract class Context {
-  Context(Uri uri, Object? arguments, RouteError? error) {
+abstract class KIRouterContext {
+  KIRouterContext(Uri uri, Object? arguments, KIRouterError? error) {
     _uri = uri;
     _requestName = _uri.toString();
-    _queryParam = QueryParam(_uri.queryParametersAll);
+    _queryParam = KIRouteParam(_uri.queryParametersAll);
     _arguments = arguments;
     _error = error;
   }
@@ -30,9 +30,9 @@ abstract class Context {
   String get requestName => _requestName;
 
   // 路由查询参数
-  late final QueryParam _queryParam;
+  late final KIRouteParam _queryParam;
 
-  QueryParam get queryParam => _queryParam;
+  KIRouteParam get queryParam => _queryParam;
 
   // 路由参数，建议只在在非 web 应用中使用
   late final Object? _arguments;
@@ -57,17 +57,17 @@ abstract class Context {
   }
 
   // 错误信息
-  RouteError? _error;
+  KIRouterError? _error;
 
-  RouteError? get error => _error;
+  KIRouterError? get error => _error;
 }
 
-class RouteContext extends Context {
-  RouteContext(super.uri, super.arguments, super.error) : result = Completer();
+class KIRouterState extends KIRouterContext {
+  KIRouterState(super.uri, super.arguments, super.error) : result = Completer();
 
   late final Page<dynamic> page;
 
-  late final NavigatorWrapper navigatorWrapper;
+  late final KINavigatorWrapper navigatorWrapper;
 
   final Completer result;
 
@@ -76,8 +76,8 @@ class RouteContext extends Context {
   }
 }
 
-class RouteError {
-  RouteError(this.error, this.stack);
+class KIRouterError {
+  KIRouterError(this.error, this.stack);
 
   // 错误信息
   final Object error;

@@ -3,11 +3,11 @@ import 'package:sm_router/sm_router.dart';
 
 /// NavigatorWrapper
 void main() {
-  RouteCenter.handle("/", (ctx) => const M6View1());
-  RouteCenter.handle("/m6/view2", (ctx) => const M6View2());
-  RouteCenter.handle("/m6/view3", (ctx) => const M6View3());
+  KIRouter.handle("/", (ctx) => const M6View1());
+  KIRouter.handle("/m6/view2", (ctx) => const M6View2());
+  KIRouter.handle("/m6/view3", (ctx) => const M6View3());
 
-  RouteCenter.setNavigatorWrapper((ctx, navigator) {
+  KIRouter.setNavigatorWrapper((ctx, navigator) {
     return MainWrapper(
       routeName: ctx.routeName,
       child: navigator,
@@ -23,8 +23,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: RouteCenter.routeInformationParser,
-      routerDelegate: RouteCenter.routerDelegate,
+      routeInformationParser: KIRouter.routeInformationParser,
+      routerDelegate: KIRouter.routerDelegate,
     );
   }
 }
@@ -66,7 +66,7 @@ class _MainWrapperState extends State<MainWrapper> {
                 onPressed: widget.routeName == "/"
                     ? null
                     : () {
-                        RouteCenter.pushReplacement("/");
+                        KIRouter.pushReplacement("/");
                       },
                 child: const Text(
                   "进入 /m6/view1",
@@ -79,7 +79,7 @@ class _MainWrapperState extends State<MainWrapper> {
                 onPressed: widget.routeName == "/m6/view2"
                     ? null
                     : () {
-                        RouteCenter.pushReplacement("/m6/view2");
+                        KIRouter.pushReplacement("/m6/view2");
                       },
                 child: const Text(
                   "进入 /m6/view2",
@@ -92,7 +92,7 @@ class _MainWrapperState extends State<MainWrapper> {
                 onPressed: widget.routeName == "/m6/view3"
                     ? null
                     : () {
-                        RouteCenter.pushReplacement("/m6/view3");
+                        KIRouter.pushReplacement("/m6/view3");
                       },
                 child: const Text(
                   "进入 /m6/view3",

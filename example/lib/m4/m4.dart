@@ -3,15 +3,15 @@ import 'package:sm_router/sm_router.dart';
 
 /// 自定义动画
 void main() {
-  RouteCenter.setPageBuilder((ctx, child) => TransitionPage(
+  KIRouter.setPageBuilder((ctx, child) => TransitionPage(
         child,
         key: ctx.key,
         name: ctx.requestName,
         arguments: ctx.arguments,
       ));
 
-  RouteCenter.handle("/", (ctx) => const M4View1());
-  RouteCenter.handle("/m4/view2", (ctx) => const M4View2());
+  KIRouter.handle("/", (ctx) => const M4View1());
+  KIRouter.handle("/m4/view2", (ctx) => const M4View2());
   runApp(const MainApp());
 }
 
@@ -21,8 +21,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: RouteCenter.routeInformationParser,
-      routerDelegate: RouteCenter.routerDelegate,
+      routeInformationParser: KIRouter.routeInformationParser,
+      routerDelegate: KIRouter.routerDelegate,
     );
   }
 }
@@ -43,7 +43,7 @@ class M4View1 extends StatelessWidget {
             TextButton(
               child: const Text("进入 /m4/view2"),
               onPressed: () {
-                RouteCenter.push("/m4/view2");
+                KIRouter.push("/m4/view2");
               },
             ),
           ],
@@ -70,7 +70,7 @@ class M4View2 extends StatelessWidget {
             TextButton(
               child: const Text("返回 /m4/view1"),
               onPressed: () {
-                RouteCenter.pop();
+                KIRouter.pop();
               },
             ),
           ],

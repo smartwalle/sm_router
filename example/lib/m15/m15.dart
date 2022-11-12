@@ -6,11 +6,11 @@ import 'package:sm_router/sm_router.dart';
 void main() {
   var share = Share();
 
-  RouteCenter.handle("/", (ctx) => const M15Home());
-  RouteCenter.handle("/m15/view1", (ctx) => const M15View1());
-  RouteCenter.handle("/m15/view2", (ctx) => const M15View2());
-  RouteCenter.handle("/m15/view3", (ctx) => const M15View3());
-  RouteCenter.handle(
+  KIRouter.handle("/", (ctx) => const M15Home());
+  KIRouter.handle("/m15/view1", (ctx) => const M15View1());
+  KIRouter.handle("/m15/view2", (ctx) => const M15View2());
+  KIRouter.handle("/m15/view3", (ctx) => const M15View3());
+  KIRouter.handle(
     "/m15/login",
     (ctx) => M15Login(
       share: share,
@@ -19,16 +19,16 @@ void main() {
   ).use((ctx) {
     if (share.token != null) {
       var r = ctx.queryParam.get("r") ?? "/";
-      return Redirect(r);
+      return KIRedirect(r);
     }
     return null;
   });
 
-  RouteCenter.use((ctx) {
+  KIRouter.use((ctx) {
     if (share.token != null || ctx.routeName == "/" || ctx.routeName == "/m15/view1" || ctx.routeName == "/m15/login") {
       return null;
     }
-    return Redirect("/m15/login?r=${ctx.requestName}");
+    return KIRedirect("/m15/login?r=${ctx.requestName}");
   });
 
   runApp(const MainApp());
@@ -44,8 +44,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: RouteCenter.routeInformationParser,
-      routerDelegate: RouteCenter.routerDelegate,
+      routeInformationParser: KIRouter.routeInformationParser,
+      routerDelegate: KIRouter.routerDelegate,
     );
   }
 }
@@ -62,7 +62,7 @@ class M15Home extends StatelessWidget {
       body: TextButton(
         child: const Text("M15View1"),
         onPressed: () {
-          RouteCenter.push("/m15/view1");
+          KIRouter.push("/m15/view1");
         },
       ),
     );
@@ -82,13 +82,13 @@ class M15View1 extends StatelessWidget {
         children: [
           TextButton(
             onPressed: () {
-              RouteCenter.push("/m15/view2");
+              KIRouter.push("/m15/view2");
             },
             child: const Text("M15View2"),
           ),
           TextButton(
             onPressed: () {
-              RouteCenter.push("/m15/view3");
+              KIRouter.push("/m15/view3");
             },
             child: const Text("M15View3"),
           ),
@@ -147,7 +147,7 @@ class M15Login extends StatelessWidget {
           if (KIDevice.isBrowser) {
             KIBrowser.location.replace("${KIBrowser.location.origin}#$from");
           } else {
-            RouteCenter.replace(from);
+            KIRouter.replace(from);
           }
         },
         child: const Text("Login"),

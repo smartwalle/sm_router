@@ -3,10 +3,10 @@ import 'package:sm_router/sm_router.dart';
 
 // Hero
 void main() {
-  RouteCenter.handle("/", (ctx) => const Text("Redirect")).use((ctx) => const Redirect("/m14/view1"));
-  RouteCenter.handle("/m14/view1", (ctx) => const M14View1());
-  RouteCenter.handle("/m14/view2", (ctx) => M14View2(tag: ctx.queryParam.get("tag")!));
-  RouteCenter.setPageBuilder((ctx, child) => FadeTransitionPage(child: child));
+  KIRouter.handle("/", (ctx) => const Text("Redirect")).use((ctx) => const KIRedirect("/m14/view1"));
+  KIRouter.handle("/m14/view1", (ctx) => const M14View1());
+  KIRouter.handle("/m14/view2", (ctx) => M14View2(tag: ctx.queryParam.get("tag")!));
+  KIRouter.setPageBuilder((ctx, child) => KIFadeTransitionPage(child: child));
   runApp(const MainApp());
 }
 
@@ -16,8 +16,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      routeInformationParser: RouteCenter.routeInformationParser,
-      routerDelegate: RouteCenter.routerDelegate,
+      routeInformationParser: KIRouter.routeInformationParser,
+      routerDelegate: KIRouter.routerDelegate,
     );
   }
 }
@@ -44,7 +44,7 @@ class M14View1 extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                RouteCenter.push("/m14/view2?tag=tag1");
+                KIRouter.push("/m14/view2?tag=tag1");
               },
             ),
             TextButton(
@@ -56,7 +56,7 @@ class M14View1 extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                RouteCenter.push("/m14/view2?tag=tag2");
+                KIRouter.push("/m14/view2?tag=tag2");
               },
             ),
             TextButton(
@@ -68,7 +68,7 @@ class M14View1 extends StatelessWidget {
                 ),
               ),
               onPressed: () {
-                RouteCenter.push("/m14/view2?tag=tag3");
+                KIRouter.push("/m14/view2?tag=tag3");
               },
             ),
           ],

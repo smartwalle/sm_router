@@ -1,53 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:sm_router/src/context.dart';
+import 'package:sm_router/src/router_context.dart';
 import 'package:sm_router/src/route_information_parser.dart';
 import 'package:sm_router/src/route_name.dart';
-import 'package:sm_router/src/route_node.dart';
+import 'package:sm_router/src/route.dart';
 import 'package:sm_router/src/router_delegate.dart';
 import 'package:sm_router/src/route_information_provider.dart';
 
-class RouteCenter {
-  RouteCenter._internal();
+class KIRouter {
+  KIRouter._internal();
 
-  static final _delegate = Delegate();
+  static final _delegate = KIRouterDelegate();
 
-  static final _routeParser = RouteParser();
+  static final _routeParser = KIRouteInformationParser();
 
   static RouterDelegate<String> get routerDelegate => _delegate;
 
   static RouteInformationParser<String> get routeInformationParser => _routeParser;
 
   static RouteInformationProvider routeInformationProvider(String initialLocation) {
-    return RouteProvider(initialLocation: initialLocation);
+    return KIRouteInformationProvider(initialLocation: initialLocation);
   }
 
   /// 注册未知路由提示页面.
-  static void setUnknownBuilder(RouterWidgetBuilder builder) {
+  static void setUnknownBuilder(KIRouterWidgetBuilder builder) {
     _delegate.registry.setUnknownBuilder(builder);
   }
 
   /// 注册错误提示页面.
-  static void setErrorBuilder(RouterWidgetBuilder builder) {
+  static void setErrorBuilder(KIRouterWidgetBuilder builder) {
     _delegate.registry.setErrorBuilder(builder);
   }
 
   /// 注册 Page 生成器.
-  static void setPageBuilder(RouterPageBuilder pageBuilder) {
+  static void setPageBuilder(KIRouterPageBuilder pageBuilder) {
     _delegate.registry.pageBuilder = pageBuilder;
   }
 
   /// 注册全局拦截器.
-  static void use(RouterInterceptor interceptor) {
+  static void use(KIRouterInterceptor interceptor) {
     _delegate.registry.use(interceptor);
   }
 
   /// 注册路由.
-  static RouteNode handle(
+  static KIRoute handle(
     String routeName,
-    RouterWidgetBuilder builder, {
-    KeyBuilder? keyBuilder,
-    RouterPageBuilder? pageBuilder,
-    NavigatorWrapper? navigatorWrapper,
+    KIRouterWidgetBuilder builder, {
+    KIRouteKeyBuilder? keyBuilder,
+    KIRouterPageBuilder? pageBuilder,
+    KINavigatorWrapper? navigatorWrapper,
   }) {
     return _delegate.registry.handle(
       routeName,
@@ -63,11 +63,11 @@ class RouteCenter {
     _delegate.registry.remove(routeName);
   }
 
-  static void setNavigatorWrapper(NavigatorWrapper wrapper) {
+  static void setNavigatorWrapper(KINavigatorWrapper wrapper) {
     _delegate.registry.navigatorWrapper = wrapper;
   }
 
-  static void setKeyBuilder(KeyBuilder builder) {
+  static void setKeyBuilder(KIRouteKeyBuilder builder) {
     _delegate.registry.keyBuilder = builder;
   }
 
@@ -75,7 +75,7 @@ class RouteCenter {
     return _delegate.push(routeName, arguments);
   }
 
-  static void pushRoutes(List<RouteName> routeNames) {
+  static void pushRoutes(List<KIRouteName> routeNames) {
     return _delegate.pushRoutes(routeNames);
   }
 
@@ -84,15 +84,15 @@ class RouteCenter {
     return _delegate.pushReplacement(routeName, result, arguments);
   }
 
-  static void pushRoutesReplacement<T extends Object?>(List<RouteName> routeNames, {T? result}) {
+  static void pushRoutesReplacement<T extends Object?>(List<KIRouteName> routeNames, {T? result}) {
     return _delegate.pushRoutesReplacement(routeNames, result);
   }
 
-  static Future<T?> pushAndRemoveUntil<T extends Object?>(String routeName, Predicate predicate, {Object? arguments}) {
+  static Future<T?> pushAndRemoveUntil<T extends Object?>(String routeName, KIRoutePredicate predicate, {Object? arguments}) {
     return _delegate.pushAndRemoveUntil(routeName, predicate, arguments);
   }
 
-  static void pushRoutesAndRemoveUntil(List<RouteName> routeNames, Predicate predicate) {
+  static void pushRoutesAndRemoveUntil(List<KIRouteName> routeNames, KIRoutePredicate predicate) {
     return _delegate.pushRoutesAndRemoveUntil(routeNames, predicate);
   }
 
@@ -100,7 +100,7 @@ class RouteCenter {
     return _delegate.pushAndRemoveAll(routeName, arguments);
   }
 
-  static void pushRoutesAndRemoveAll(List<RouteName> routeNames) {
+  static void pushRoutesAndRemoveAll(List<KIRouteName> routeNames) {
     return _delegate.pushRoutesAndRemoveAll(routeNames);
   }
 
@@ -112,7 +112,7 @@ class RouteCenter {
     return _delegate.show(routeName, arguments);
   }
 
-  static void showRoutes(List<RouteName> routeNames) {
+  static void showRoutes(List<KIRouteName> routeNames) {
     return _delegate.showRoutes(routeNames);
   }
 
@@ -124,11 +124,11 @@ class RouteCenter {
     return _delegate.pop(result);
   }
 
-  static Future<bool> popMatched<T extends Object?>(Predicate predicate, [T? result]) {
+  static Future<bool> popMatched<T extends Object?>(KIRoutePredicate predicate, [T? result]) {
     return _delegate.popMatched(predicate, result);
   }
 
-  static void popUntil(Predicate predicate) {
+  static void popUntil(KIRoutePredicate predicate) {
     _delegate.popUntil(predicate);
   }
 
@@ -137,7 +137,7 @@ class RouteCenter {
     return _delegate.popAndPush(routeName, result, arguments);
   }
 
-  static void popAndPushRoutes<T extends Object?>(List<RouteName> routeNames, [T? result]) {
+  static void popAndPushRoutes<T extends Object?>(List<KIRouteName> routeNames, [T? result]) {
     return _delegate.popAndPushRoutes(routeNames, result);
   }
 
@@ -145,11 +145,11 @@ class RouteCenter {
     return _delegate.popToRoot();
   }
 
-  static bool contains(Predicate predicate) {
+  static bool contains(KIRoutePredicate predicate) {
     return _delegate.contains(predicate);
   }
 
-  static Context? get top => _delegate.top;
+  static KIRouterContext? get top => _delegate.top;
 
   static void navigate(BuildContext context, VoidCallback callback) {
     Router.navigate(context, callback);
