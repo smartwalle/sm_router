@@ -4,7 +4,6 @@ import 'package:sm_router/src/route_information_parser.dart';
 import 'package:sm_router/src/route_name.dart';
 import 'package:sm_router/src/route.dart';
 import 'package:sm_router/src/router_delegate.dart';
-import 'package:sm_router/src/route_information_provider.dart';
 
 class KIRouter {
   KIRouter._internal();
