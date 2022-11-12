@@ -17,10 +17,6 @@ class KIRouter {
 
   static RouteInformationParser<String> get routeInformationParser => _routeParser;
 
-  static RouteInformationProvider routeInformationProvider(String initialLocation) {
-    return KIRouteInformationProvider(initialLocation: initialLocation);
-  }
-
   /// 注册未知路由提示页面.
   static void setUnknownBuilder(KIRouterWidgetBuilder builder) {
     _delegate.registry.setUnknownBuilder(builder);
@@ -88,7 +84,8 @@ class KIRouter {
     return _delegate.pushRoutesReplacement(routeNames, result);
   }
 
-  static Future<T?> pushAndRemoveUntil<T extends Object?>(String routeName, KIRoutePredicate predicate, {Object? arguments}) {
+  static Future<T?> pushAndRemoveUntil<T extends Object?>(String routeName, KIRoutePredicate predicate,
+      {Object? arguments}) {
     return _delegate.pushAndRemoveUntil(routeName, predicate, arguments);
   }
 

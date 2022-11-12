@@ -46,7 +46,6 @@ class MainApp extends StatelessWidget {
     return MaterialApp.router(
       routeInformationParser: KIRouter.routeInformationParser,
       routerDelegate: KIRouter.routerDelegate,
-      routeInformationProvider: KIRouter.routeInformationProvider("/m16/view1"),
     );
   }
 }
