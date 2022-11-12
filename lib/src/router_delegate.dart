@@ -53,6 +53,7 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
       key: navigatorKey,
       pages: pages,
       onPopPage: _onPopPage,
+      observers: _registry.observers,
     );
 
     var state = _stack.last;

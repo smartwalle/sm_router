@@ -29,7 +29,8 @@ void main() {
     return KIRedirect("/m16/login?r=${ctx.requestName}");
   });
 
-  KIRouter.setPageBuilder((ctx, child) => KIFadeTransitionPage(child: child));
+  KIRouter.setPageBuilder(
+      (ctx, child) => KIFadeTransitionPage(name: ctx.routeName, arguments: ctx.arguments, child: child));
 
   runApp(const MainApp());
 }

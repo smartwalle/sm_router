@@ -36,6 +36,14 @@ class KIRouter {
     _delegate.registry.use(interceptor);
   }
 
+  static void addObserver(NavigatorObserver observer) {
+    _delegate.registry.addObserver(observer);
+  }
+
+  static void removeObserver(NavigatorObserver observer) {
+    _delegate.registry.removeObserver(observer);
+  }
+
   /// 注册路由.
   static KIRoute handle(
     String routeName,

@@ -83,6 +83,10 @@ class KIRouteRegistry {
 
   List<KIRouterInterceptor> get interceptors => _interceptors;
 
+  final List<NavigatorObserver> _observers = <NavigatorObserver>[];
+
+  List<NavigatorObserver> get observers => _observers;
+
   KIRoute _unknown = _defaultUnknownRoute;
 
   KIRoute _error = _defaultErrorRoute;
@@ -111,6 +115,18 @@ class KIRouteRegistry {
 
   void use(KIRouterInterceptor interceptor) {
     _interceptors.add(interceptor);
+  }
+
+  void addObserver(NavigatorObserver observer) {
+    if (!observers.contains(observer)) {
+      observers.add(observer);
+    }
+  }
+
+  void removeObserver(NavigatorObserver observer) {
+    if (observers.contains(observer)) {
+      observers.remove(observer);
+    }
   }
 
   KIRoute handle(
