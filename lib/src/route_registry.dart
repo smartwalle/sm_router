@@ -1,80 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sm_router/src/route.dart';
 
-KIRoute _defaultUnknownRoute = KIRoute(builder: (ctx) {
-  return Scaffold(
-    appBar: AppBar(
-      title: const Text("Page Not Found"),
-    ),
-    backgroundColor: Colors.white,
-    body: Center(
-      child: SelectableText(
-        "\"${ctx.routeName}\" not found.",
-        style: const TextStyle(
-          color: Colors.black87,
-          fontSize: 18,
-        ),
-      ),
-    ),
-  );
-});
-
-KIRoute _defaultErrorRoute = KIRoute(builder: (ctx) {
-  return Scaffold(
-    appBar: AppBar(
-      title: const Text("Error"),
-    ),
-    backgroundColor: Colors.redAccent,
-    body: Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Column(
-        children: [
-          SelectableText(
-            ctx.error!.error.toString(),
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 30,
-              fontWeight: FontWeight.w600,
-            ),
-          ),
-          const Padding(padding: EdgeInsets.only(top: 10)),
-          Expanded(
-            child: SingleChildScrollView(
-              child: SizedBox(
-                width: double.infinity,
-                child: SelectableText(
-                  ctx.error!.stack.toString(),
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                  ),
-                ),
-              ),
-            ),
-          )
-        ],
-      ),
-    ),
-  );
-});
-
-KIRouterPageBuilder _defaultPageBuilder = (ctx, child) {
-  return MaterialPage(
-    key: ctx.key,
-    child: child,
-    name: ctx.requestName,
-    arguments: ctx.arguments,
-  );
-};
-
-KINavigatorWrapper _defaultNavigatorWrapper = (ctx, navigator) {
-  return navigator;
-};
-
-KIRouteKeyBuilder _defaultKeyBuilder = (ctx) {
-  return UniqueKey();
-};
-
 /// KIRouteRegistry
 class KIRouteRegistry {
   KIRouteRegistry();
@@ -87,15 +13,79 @@ class KIRouteRegistry {
 
   List<NavigatorObserver> get observers => _observers;
 
-  KIRoute _unknown = _defaultUnknownRoute;
+  KIRoute _unknown = KIRoute(builder: (ctx) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Page Not Found"),
+      ),
+      backgroundColor: Colors.white,
+      body: Center(
+        child: SelectableText(
+          "\"${ctx.routeName}\" not found.",
+          style: const TextStyle(
+            color: Colors.black87,
+            fontSize: 18,
+          ),
+        ),
+      ),
+    );
+  });
 
-  KIRoute _error = _defaultErrorRoute;
+  KIRoute _error = KIRoute(builder: (ctx) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Error"),
+      ),
+      backgroundColor: Colors.redAccent,
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: Column(
+          children: [
+            SelectableText(
+              ctx.error!.error.toString(),
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 30,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const Padding(padding: EdgeInsets.only(top: 10)),
+            Expanded(
+              child: SingleChildScrollView(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: SelectableText(
+                    ctx.error!.stack.toString(),
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  });
 
-  KIRouterPageBuilder pageBuilder = _defaultPageBuilder;
+  KIRouterPageBuilder pageBuilder = (ctx, child) {
+    return MaterialPage(
+      key: ctx.key,
+      child: child,
+      name: ctx.requestName,
+      arguments: ctx.arguments,
+    );
+  };
 
-  KINavigatorWrapper navigatorWrapper = _defaultNavigatorWrapper;
+  KINavigatorWrapper navigatorWrapper = (ctx, navigator) {
+    return navigator;
+  };
 
-  KIRouteKeyBuilder keyBuilder = _defaultKeyBuilder;
+  KIRouteKeyBuilder keyBuilder = (ctx) {
+    return UniqueKey();
+  };
 
   final Map<String, KIRoute> _routes = <String, KIRoute>{};
 
