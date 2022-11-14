@@ -4,28 +4,18 @@ Flutter Navigator 2.0 路由管理。
 
 #### 注册路由
 
-```dart
-KIRouter.handle("
-/
-"
-,
-(
-ctx) =>
-const Home()
+```dart 
+KIRouter.handle("/", (ctx) =>
+  const Home();
 );
-KIRouter.handle("
-/test
-"
-,
-(
-ctx) =>
-const TestView()
+KIRouter.handle("/test", (ctx) =>
+  const TestView();
 );
 ```
 
 #### 设置 MaterialApp 的 routeInformationParser 和 routerDelegate
 
-```dart
+```dart 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -41,11 +31,8 @@ class MyApp extends StatelessWidget {
 
 #### 跳转到指定路由
 
-```dart
-KIRouter.push("
-/test?a=10
-"
-);
+```dart 
+KIRouter.push("/test?a=10");
 ```
 
 ## KIRouterContext
