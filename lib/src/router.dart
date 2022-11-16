@@ -6,7 +6,7 @@ import 'package:sm_router/src/route.dart';
 import 'package:sm_router/src/router_delegate.dart';
 
 class KIRouter {
-  KIRouter._internal();
+  KIRouter._();
 
   static final _delegate = KIRouterDelegate();
 
