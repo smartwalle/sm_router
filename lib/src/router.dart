@@ -16,6 +16,8 @@ class KIRouter {
 
   static RouteInformationParser<String> get routeInformationParser => _routeParser;
 
+  static GlobalKey<NavigatorState> get navigatorKey => _delegate.navigatorKey;
+
   /// 注册未知路由提示页面.
   static void setUnknownBuilder(KIRouterWidgetBuilder builder) {
     _delegate.registry.setUnknownBuilder(builder);
