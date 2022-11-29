@@ -100,9 +100,13 @@ class KINoTransitionPage<T> extends KIRoutePage<T> {
     super.arguments,
     super.restorationId,
     required super.child,
-  }) : super(transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return child;
-        });
+  }) : super(
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+            return child;
+          },
+          transitionDuration: Duration.zero,
+          reverseTransitionDuration: Duration.zero,
+        );
 }
 
 class KIFadeTransitionPage<T> extends KIRoutePage<T> {
