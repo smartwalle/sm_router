@@ -42,6 +42,24 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
     return SynchronousFuture(null);
   }
 
+  // 备用方案
+  // @override
+  // Future<void> setNewRoutePath(String configuration) {
+  //   if (_stack.length >= 2) {
+  //     var prev = _stack[_stack.length-2];
+  //     if (prev.requestName == configuration) {
+  //       _stack.removeLast();
+  //       _update();
+  //       return SynchronousFuture(null);
+  //     }
+  //   }
+  //
+  //   var state = _buildState(configuration, null);
+  //   _stack.add(state);
+  //   _update();
+  //   return SynchronousFuture(null);
+  // }
+
   @override
   Widget build(BuildContext context) {
     assert(!_disposed);
