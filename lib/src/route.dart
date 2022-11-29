@@ -6,12 +6,12 @@ typedef KIRouterWidgetBuilder = Widget Function(KIRouterContext ctx);
 typedef KIRouterInterceptor = KIRedirect? Function(KIRouterContext ctx);
 typedef KIRouterPageBuilder = Page<dynamic> Function(KIRouterContext ctx, Widget child);
 typedef KINavigatorWrapper = Widget Function(KIRouterContext ctx, Navigator navigator);
-typedef KIRouteKeyBuilder = LocalKey? Function(KIRouterContext ctx);
+typedef KIPageKeyBuilder = LocalKey? Function(KIRouterContext ctx);
 
 class KIRoute {
   KIRoute({
     required KIRouterWidgetBuilder builder,
-    KIRouteKeyBuilder? keyBuilder,
+    KIPageKeyBuilder? keyBuilder,
     KIRouterPageBuilder? pageBuilder,
     KINavigatorWrapper? navigatorWrapper,
   }) {
@@ -57,11 +57,11 @@ class KIRoute {
   }
 
   // key 生成器
-  KIRouteKeyBuilder? _keyBuilder;
+  KIPageKeyBuilder? _keyBuilder;
 
-  KIRouteKeyBuilder? get keyBuilder => _keyBuilder;
+  KIPageKeyBuilder? get keyBuilder => _keyBuilder;
 
-  KIRoute setKeyBuilder(KIRouteKeyBuilder builder) {
+  KIRoute setKeyBuilder(KIPageKeyBuilder builder) {
     _keyBuilder = builder;
     return this;
   }

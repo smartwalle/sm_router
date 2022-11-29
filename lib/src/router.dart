@@ -50,7 +50,7 @@ class KIRouter {
   static KIRoute handle(
     String routeName,
     KIRouterWidgetBuilder builder, {
-    KIRouteKeyBuilder? keyBuilder,
+    KIPageKeyBuilder? keyBuilder,
     KIRouterPageBuilder? pageBuilder,
     KINavigatorWrapper? navigatorWrapper,
   }) {
@@ -72,7 +72,7 @@ class KIRouter {
     _delegate.registry.navigatorWrapper = wrapper;
   }
 
-  static void setKeyBuilder(KIRouteKeyBuilder builder) {
+  static void setKeyBuilder(KIPageKeyBuilder builder) {
     _delegate.registry.keyBuilder = builder;
   }
 

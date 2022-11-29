@@ -83,7 +83,7 @@ class KIRouteRegistry {
     return navigator;
   };
 
-  KIRouteKeyBuilder keyBuilder = (ctx) {
+  KIPageKeyBuilder keyBuilder = (ctx) {
     return UniqueKey();
   };
 
@@ -122,7 +122,7 @@ class KIRouteRegistry {
   KIRoute handle(
     String routeName,
     KIRouterWidgetBuilder builder, {
-    KIRouteKeyBuilder? keyBuilder,
+    KIPageKeyBuilder? keyBuilder,
     KIRouterPageBuilder? pageBuilder,
     KINavigatorWrapper? navigatorWrapper,
   }) {

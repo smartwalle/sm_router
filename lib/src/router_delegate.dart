@@ -103,7 +103,7 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
     KIRouterError? error,
     List<KIRouterInterceptor> interceptors,
     KIRouterWidgetBuilder builder,
-    KIRouteKeyBuilder keyBuilder,
+    KIPageKeyBuilder keyBuilder,
     KIRouterPageBuilder pageBuilder,
     KINavigatorWrapper navigatorWrapper,
   ) {
