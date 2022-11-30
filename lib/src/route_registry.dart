@@ -108,14 +108,14 @@ class KIRouteRegistry {
   }
 
   void addObserver(NavigatorObserver observer) {
-    if (!observers.contains(observer)) {
-      observers.add(observer);
+    if (!_observers.contains(observer)) {
+      _observers.add(observer);
     }
   }
 
   void removeObserver(NavigatorObserver observer) {
-    if (observers.contains(observer)) {
-      observers.remove(observer);
+    if (_observers.contains(observer)) {
+      _observers.remove(observer);
     }
   }
 
