@@ -4,7 +4,8 @@ import 'package:sm_router/src/route_param.dart';
 import 'package:sm_router/src/route.dart';
 
 abstract class KIRouterContext {
-  KIRouterContext(Uri uri, Object? arguments, KIRouterError? error) {
+  KIRouterContext(Uri uri, String? title, Object? arguments, KIRouterError? error) {
+    _title = title;
     _uri = uri;
     _requestName = _uri.toString();
     _queryParam = KIRouteParam(_uri.queryParametersAll);
@@ -17,6 +18,11 @@ abstract class KIRouterContext {
   LocalKey? get key => _key;
 
   late final Uri _uri;
+
+  // 浏览器标签 title
+  late String? _title;
+
+  String? get title => _title;
 
   // 路由名称
   String get routeName => _uri.path;
@@ -63,7 +69,7 @@ abstract class KIRouterContext {
 }
 
 class KIRouterState extends KIRouterContext {
-  KIRouterState(super.uri, super.arguments, super.error) : result = Completer();
+  KIRouterState(super.uri, super.title, super.arguments, super.error) : result = Completer();
 
   late final Page<dynamic> page;
 

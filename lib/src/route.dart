@@ -11,15 +11,22 @@ typedef KIPageKeyBuilder = LocalKey? Function(KIRouterContext ctx);
 class KIRoute {
   KIRoute({
     required KIRouterWidgetBuilder builder,
+    String? title,
     KIPageKeyBuilder? keyBuilder,
     KIRouterPageBuilder? pageBuilder,
     KINavigatorWrapper? navigatorWrapper,
   }) {
     _builder = builder;
+    _title = title;
     _keyBuilder = keyBuilder;
     _pageBuilder = pageBuilder;
     _navigatorWrapper = navigatorWrapper;
   }
+
+  // 浏览器标签 title
+  String? _title;
+
+  String? get title => _title;
 
   // Widget 生成器
   late final KIRouterWidgetBuilder _builder;

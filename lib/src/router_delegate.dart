@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sm_router/src/router_context.dart';
 import 'package:sm_router/src/route_name.dart';
@@ -18,6 +19,9 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
   final List<KIRouterState> _stack = [];
 
   bool _disposed = false;
+
+  // 浏览器标签默认 title
+  String? defaultTitle;
 
   @override
   void dispose() {
@@ -46,7 +50,7 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
   // @override
   // Future<void> setNewRoutePath(String configuration) {
   //   if (_stack.length >= 2) {
-  //     var prev = _stack[_stack.length-2];
+  //     var prev = _stack[_stack.length - 2];
   //     if (prev.requestName == configuration) {
   //       _stack.removeLast();
   //       _update();
@@ -75,7 +79,18 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
     );
 
     var state = _stack.last;
+
+    title = state.title ?? defaultTitle;
+
     return state.navigatorWrapper(state, navigator);
+  }
+
+  set title(String? title) {
+    if (kIsWeb) {
+      SystemChrome.setApplicationSwitcherDescription(ApplicationSwitcherDescription(
+        label: title,
+      ));
+    }
   }
 
   bool _onPopPage(Route<dynamic> route, dynamic result) {
@@ -104,6 +119,7 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
 
     var route = _registry.route(uri.path);
     return __buildState(
+      route.title,
       uri,
       arguments,
       null,
@@ -116,6 +132,7 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
   }
 
   KIRouterState __buildState(
+    String? title,
     Uri uri,
     Object? arguments,
     KIRouterError? error,
@@ -125,7 +142,7 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
     KIRouterPageBuilder pageBuilder,
     KINavigatorWrapper navigatorWrapper,
   ) {
-    var state = KIRouterState(uri, arguments, error);
+    var state = KIRouterState(uri, title, arguments, error);
 
     try {
       state.key = keyBuilder(state);
@@ -141,6 +158,7 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
       state.page = pageBuilder(state, builder(state));
     } catch (error, stack) {
       return __buildState(
+        title,
         uri,
         arguments,
         KIRouterError(error, stack),

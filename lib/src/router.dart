@@ -18,6 +18,16 @@ class KIRouter {
 
   static GlobalKey<NavigatorState> get navigatorKey => _delegate.navigatorKey;
 
+  static set defaultTitle(String? title) {
+    _delegate.defaultTitle = title;
+  }
+
+  static String? get defaultTitle => _delegate.defaultTitle;
+
+  static set title(String? title) {
+    _delegate.title = title;
+  }
+
   /// 注册未知路由提示页面.
   static void setUnknownBuilder(KIRouterWidgetBuilder builder) {
     _delegate.registry.setUnknownBuilder(builder);
@@ -50,6 +60,7 @@ class KIRouter {
   static KIRoute handle(
     String routeName,
     KIRouterWidgetBuilder builder, {
+    String? title,
     KIPageKeyBuilder? keyBuilder,
     KIRouterPageBuilder? pageBuilder,
     KINavigatorWrapper? navigatorWrapper,
@@ -57,6 +68,7 @@ class KIRouter {
     return _delegate.registry.handle(
       routeName,
       builder,
+      title: title,
       keyBuilder: keyBuilder,
       pageBuilder: pageBuilder,
       navigatorWrapper: navigatorWrapper,

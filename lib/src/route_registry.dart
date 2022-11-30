@@ -122,12 +122,14 @@ class KIRouteRegistry {
   KIRoute handle(
     String routeName,
     KIRouterWidgetBuilder builder, {
+    String? title,
     KIPageKeyBuilder? keyBuilder,
     KIRouterPageBuilder? pageBuilder,
     KINavigatorWrapper? navigatorWrapper,
   }) {
     var route = KIRoute(
       builder: builder,
+      title: title,
       keyBuilder: keyBuilder,
       pageBuilder: pageBuilder,
       navigatorWrapper: navigatorWrapper,
