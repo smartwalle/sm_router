@@ -74,9 +74,17 @@ class KIRoute {
   }
 }
 
+/// KIRouter.handle("/redirect", (ctx) => const Text("会重定向到路由 /test")).use((ctx) => KIRedirect("/test));
 class KIRedirect extends RouteSettings {
+  /// 路由重定向
   const KIRedirect(
     String name, {
     Object? arguments,
   }) : super(name: name, arguments: arguments);
+}
+
+/// KIRouter.handle("/discard", (ctx) => const Text("不会跳转到路由 /discard")).use((ctx) => KIDiscard());
+class KIDiscard extends KIRedirect {
+  /// 取消路由跳转
+  KIDiscard() : super("discard");
 }

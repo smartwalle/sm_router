@@ -40,9 +40,11 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
   @override
   Future<void> setNewRoutePath(String configuration) {
     var state = _buildState(configuration, null);
-    _stack.clear();
-    _stack.add(state);
-    _update();
+    if (state != null) {
+      _stack.clear();
+      _stack.add(state);
+      _update();
+    }
     return SynchronousFuture(null);
   }
 
@@ -114,7 +116,7 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
     notifyListeners();
   }
 
-  KIRouterState _buildState(String routeName, Object? arguments) {
+  KIRouterState? _buildState(String routeName, Object? arguments) {
     var uri = Uri.parse(routeName);
 
     var route = _registry.route(uri.path);
@@ -131,7 +133,7 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
     );
   }
 
-  KIRouterState __buildState(
+  KIRouterState? __buildState(
     String? title,
     Uri uri,
     Object? arguments,
@@ -151,6 +153,9 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
       for (var interceptor in interceptors) {
         var redirect = interceptor(state);
         if (redirect != null) {
+          if (redirect is KIDiscard) {
+            return null;
+          }
           return _buildState(redirect.name!, redirect.arguments);
         }
       }
@@ -175,15 +180,27 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
 
   Future<T?> push<T extends Object?>(String routeName, Object? arguments) async {
     var state = _buildState(routeName, arguments);
-    _stack.add(state);
-    _update();
-    return await state.result.future;
+    if (state != null) {
+      _stack.add(state);
+      _update();
+      return await state.result.future;
+    }
   }
 
   void _pushRoutes(List<KIRouteName> routeNames) {
-    var states = [for (var name in routeNames) _buildState(name.name, name.arguments)];
-    _stack.addAll(states);
-    _update();
+    List<KIRouterState> states = <KIRouterState>[];
+
+    for (var name in routeNames) {
+      var state = _buildState(name.name, name.arguments);
+      if (state != null) {
+        states.add(state);
+      }
+    }
+
+    if (states.isNotEmpty) {
+      _stack.addAll(states);
+      _update();
+    }
   }
 
   void pushRoutes(List<KIRouteName> routeNames) {
