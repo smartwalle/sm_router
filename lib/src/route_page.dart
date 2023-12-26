@@ -104,8 +104,8 @@ class KINoTransitionPage<T> extends KIRoutePage<T> {
           transitionsBuilder: (context, animation, secondaryAnimation, child) {
             return child;
           },
-          transitionDuration: Duration.zero,
-          reverseTransitionDuration: Duration.zero,
+          transitionDuration: const Duration(milliseconds: 1),
+          reverseTransitionDuration: const Duration(milliseconds: 1),
         );
 }
 
