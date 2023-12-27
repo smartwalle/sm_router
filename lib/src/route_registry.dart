@@ -93,14 +93,6 @@ class KIRouteRegistry {
     return _routes[routeName] ?? _unknown;
   }
 
-  void setUnknownBuilder(KIRouterWidgetBuilder builder) {
-    _unknown = KIRoute(builder: builder);
-  }
-
-  void setErrorBuilder(KIRouterWidgetBuilder builder) {
-    _error = KIRoute(builder: builder);
-  }
-
   KIRoute get errorRoute => _error;
 
   void use(KIRouterInterceptor interceptor) {
@@ -136,6 +128,40 @@ class KIRouteRegistry {
     );
     _routes[routeName] = route;
     return route;
+  }
+
+  KIRoute handleUnknownRoute(
+    KIRouterWidgetBuilder builder, {
+    String? title,
+    KIPageKeyBuilder? keyBuilder,
+    KIRouterPageBuilder? pageBuilder,
+    KINavigatorWrapper? navigatorWrapper,
+  }) {
+    _unknown = KIRoute(
+      builder: builder,
+      title: title,
+      keyBuilder: keyBuilder,
+      pageBuilder: pageBuilder,
+      navigatorWrapper: navigatorWrapper,
+    );
+    return _unknown;
+  }
+
+  KIRoute handleError(
+    KIRouterWidgetBuilder builder, {
+    String? title,
+    KIPageKeyBuilder? keyBuilder,
+    KIRouterPageBuilder? pageBuilder,
+    KINavigatorWrapper? navigatorWrapper,
+  }) {
+    _error = KIRoute(
+      builder: builder,
+      title: title,
+      keyBuilder: keyBuilder,
+      pageBuilder: pageBuilder,
+      navigatorWrapper: navigatorWrapper,
+    );
+    return _error;
   }
 
   void remove(String routeName) {

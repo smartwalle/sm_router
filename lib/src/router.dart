@@ -28,21 +28,6 @@ class KIRouter {
     _delegate.title = title;
   }
 
-  /// 注册未知路由提示页面.
-  static void setUnknownBuilder(KIRouterWidgetBuilder builder) {
-    _delegate.registry.setUnknownBuilder(builder);
-  }
-
-  /// 注册错误提示页面.
-  static void setErrorBuilder(KIRouterWidgetBuilder builder) {
-    _delegate.registry.setErrorBuilder(builder);
-  }
-
-  /// 注册 Page 生成器.
-  static void setPageBuilder(KIRouterPageBuilder pageBuilder) {
-    _delegate.registry.pageBuilder = pageBuilder;
-  }
-
   /// 注册全局拦截器.
   static void use(KIRouterInterceptor interceptor) {
     _delegate.registry.use(interceptor);
@@ -75,9 +60,48 @@ class KIRouter {
     );
   }
 
+  /// 注册未知路由提示页面.
+  static KIRoute handleUnknownRoute(
+    KIRouterWidgetBuilder builder, {
+    String? title,
+    KIPageKeyBuilder? keyBuilder,
+    KIRouterPageBuilder? pageBuilder,
+    KINavigatorWrapper? navigatorWrapper,
+  }) {
+    return _delegate.registry.handleUnknownRoute(
+      builder,
+      title: title,
+      keyBuilder: keyBuilder,
+      pageBuilder: pageBuilder,
+      navigatorWrapper: navigatorWrapper,
+    );
+  }
+
+  /// 注册错误提示页面.
+  static KIRoute handleError(
+    KIRouterWidgetBuilder builder, {
+    String? title,
+    KIPageKeyBuilder? keyBuilder,
+    KIRouterPageBuilder? pageBuilder,
+    KINavigatorWrapper? navigatorWrapper,
+  }) {
+    return _delegate.registry.handleError(
+      builder,
+      title: title,
+      keyBuilder: keyBuilder,
+      pageBuilder: pageBuilder,
+      navigatorWrapper: navigatorWrapper,
+    );
+  }
+
   /// 移除路由.
   static void remove(String routeName) {
     _delegate.registry.remove(routeName);
+  }
+
+  /// 注册 Page 生成器.
+  static void setPageBuilder(KIRouterPageBuilder pageBuilder) {
+    _delegate.registry.pageBuilder = pageBuilder;
   }
 
   static void setNavigatorWrapper(KINavigatorWrapper wrapper) {
