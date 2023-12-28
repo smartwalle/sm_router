@@ -116,6 +116,10 @@ class KIRouter {
     return _delegate.push(routeName, arguments);
   }
 
+  static Future<T?> pushRoute<T extends Object?>(KIRouteName routeName) {
+    return _delegate.push(routeName.encode(), routeName.arguments);
+  }
+
   static void pushRoutes(List<KIRouteName> routeNames) {
     return _delegate.pushRoutes(routeNames);
   }

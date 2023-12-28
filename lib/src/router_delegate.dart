@@ -191,7 +191,7 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
     List<KIRouterState> states = <KIRouterState>[];
 
     for (var name in routeNames) {
-      var state = _buildState(name.name, name.arguments);
+      var state = _buildState(name.encode(), name.arguments);
       if (state != null) {
         states.add(state);
       }
