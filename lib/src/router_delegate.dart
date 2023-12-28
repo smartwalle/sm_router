@@ -37,7 +37,7 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
     return _stack.isNotEmpty ? _stack.last.requestName : null;
   }
 
-  // @override
+  @override
   Future<void> setNewRoutePath(String configuration) {
     var state = _buildState(configuration, null);
     if (state != null) {
@@ -176,7 +176,6 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
         _registry.errorRoute.navigatorWrapper ?? _registry.navigatorWrapper,
       );
     }
-
     return state;
   }
 
