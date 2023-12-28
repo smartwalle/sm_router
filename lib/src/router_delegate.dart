@@ -37,7 +37,7 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
     return _stack.isNotEmpty ? _stack.last.requestName : null;
   }
 
-  @override
+  // @override
   Future<void> setNewRoutePath(String configuration) {
     var state = _buildState(configuration, null);
     if (state != null) {
@@ -51,9 +51,9 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
   // 备用方案
   // @override
   // Future<void> setNewRoutePath(String configuration) {
-  //   if (_stack.length >= 2) {
-  //     var prev = _stack[_stack.length - 2];
-  //     if (prev.requestName == configuration) {
+  //   if (_stack.length > 2) {
+  //     var previous = _stack[_stack.length - 2];
+  //     if (previous.requestName == configuration) {
   //       _stack.removeLast();
   //       _update();
   //       return SynchronousFuture(null);
@@ -61,8 +61,10 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
   //   }
   //
   //   var state = _buildState(configuration, null);
-  //   _stack.add(state);
-  //   _update();
+  //   if (state != null) {
+  //     _stack.add(state);
+  //     _update();
+  //   }
   //   return SynchronousFuture(null);
   // }
 
