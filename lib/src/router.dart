@@ -41,6 +41,10 @@ class KIRouter {
     _delegate.registry.removeObserver(observer);
   }
 
+  static KIRoute route(String routeName) {
+    return _delegate.registry.route(routeName);
+  }
+
   /// 注册路由.
   static KIRoute handle(
     String routeName,
