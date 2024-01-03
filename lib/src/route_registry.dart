@@ -70,6 +70,10 @@ class KIRouteRegistry {
     );
   });
 
+  KIRouterWidgetWrapper widgetWrapper = (ctx, widget) {
+    return widget;
+  };
+
   KIRouterPageBuilder pageBuilder = (ctx, child) {
     return MaterialPage(
       key: ctx.key,
@@ -115,6 +119,7 @@ class KIRouteRegistry {
     String routeName,
     KIRouterWidgetBuilder builder, {
     String? title,
+    KIRouterWidgetWrapper? widgetWrapper,
     KIPageKeyBuilder? keyBuilder,
     KIRouterPageBuilder? pageBuilder,
     KINavigatorWrapper? navigatorWrapper,
@@ -122,6 +127,7 @@ class KIRouteRegistry {
     var route = KIRoute(
       builder: builder,
       title: title,
+      widgetWrapper: widgetWrapper,
       keyBuilder: keyBuilder,
       pageBuilder: pageBuilder,
       navigatorWrapper: navigatorWrapper,
@@ -133,6 +139,7 @@ class KIRouteRegistry {
   KIRoute handleUnknownRoute(
     KIRouterWidgetBuilder builder, {
     String? title,
+    KIRouterWidgetWrapper? widgetWrapper,
     KIPageKeyBuilder? keyBuilder,
     KIRouterPageBuilder? pageBuilder,
     KINavigatorWrapper? navigatorWrapper,
@@ -140,6 +147,7 @@ class KIRouteRegistry {
     _unknown = KIRoute(
       builder: builder,
       title: title,
+      widgetWrapper: widgetWrapper,
       keyBuilder: keyBuilder,
       pageBuilder: pageBuilder,
       navigatorWrapper: navigatorWrapper,
@@ -150,6 +158,7 @@ class KIRouteRegistry {
   KIRoute handleError(
     KIRouterWidgetBuilder builder, {
     String? title,
+    KIRouterWidgetWrapper? widgetWrapper,
     KIPageKeyBuilder? keyBuilder,
     KIRouterPageBuilder? pageBuilder,
     KINavigatorWrapper? navigatorWrapper,
@@ -157,6 +166,7 @@ class KIRouteRegistry {
     _error = KIRoute(
       builder: builder,
       title: title,
+      widgetWrapper: widgetWrapper,
       keyBuilder: keyBuilder,
       pageBuilder: pageBuilder,
       navigatorWrapper: navigatorWrapper,

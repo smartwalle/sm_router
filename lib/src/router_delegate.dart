@@ -129,6 +129,7 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
       null,
       [..._registry.interceptors, ...route.interceptors],
       route.builder,
+      route.widgetWrapper ?? _registry.widgetWrapper,
       route.keyBuilder ?? _registry.keyBuilder,
       route.pageBuilder ?? _registry.pageBuilder,
       route.navigatorWrapper ?? _registry.navigatorWrapper,
@@ -142,6 +143,7 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
     KIRouterError? error,
     List<KIRouterInterceptor> interceptors,
     KIRouterWidgetBuilder builder,
+    KIRouterWidgetWrapper widgetWrapper,
     KIPageKeyBuilder keyBuilder,
     KIRouterPageBuilder pageBuilder,
     KINavigatorWrapper navigatorWrapper,
@@ -162,7 +164,7 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
         }
       }
 
-      state.page = pageBuilder(state, builder(state));
+      state.page = pageBuilder(state, widgetWrapper(state, builder(state)));
     } catch (error, stack) {
       return __buildState(
         title,
@@ -171,6 +173,7 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
         KIRouterError(error, stack),
         _registry.interceptors,
         _registry.errorRoute.builder,
+        _registry.errorRoute.widgetWrapper ?? _registry.widgetWrapper,
         _registry.errorRoute.keyBuilder ?? _registry.keyBuilder,
         _registry.errorRoute.pageBuilder ?? _registry.pageBuilder,
         _registry.errorRoute.navigatorWrapper ?? _registry.navigatorWrapper,

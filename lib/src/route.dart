@@ -3,6 +3,7 @@ import 'package:sm_router/sm_router.dart';
 import 'package:sm_router/src/router_context.dart';
 
 typedef KIRouterWidgetBuilder = Widget Function(KIRouterContext ctx);
+typedef KIRouterWidgetWrapper = Widget Function(KIRouterContext ctx, Widget widget);
 typedef KIRouterInterceptor = KIRedirect? Function(KIRouterContext ctx);
 typedef KIRouterPageBuilder = Page<dynamic> Function(KIRouterContext ctx, Widget child);
 typedef KINavigatorWrapper = Widget Function(KIRouterContext ctx, Navigator navigator);
@@ -12,12 +13,14 @@ class KIRoute {
   KIRoute({
     required KIRouterWidgetBuilder builder,
     String? title,
+    KIRouterWidgetWrapper? widgetWrapper,
     KIPageKeyBuilder? keyBuilder,
     KIRouterPageBuilder? pageBuilder,
     KINavigatorWrapper? navigatorWrapper,
   }) {
     _builder = builder;
     _title = title;
+    _widgetWrapper = widgetWrapper;
     _keyBuilder = keyBuilder;
     _pageBuilder = pageBuilder;
     _navigatorWrapper = navigatorWrapper;
@@ -32,6 +35,16 @@ class KIRoute {
   late final KIRouterWidgetBuilder _builder;
 
   KIRouterWidgetBuilder get builder => _builder;
+
+  // Widget Wrapper
+  KIRouterWidgetWrapper? _widgetWrapper;
+
+  KIRouterWidgetWrapper? get widgetWrapper => _widgetWrapper;
+
+  KIRoute setWidgetWrapper(KIRouterWidgetWrapper wrapper) {
+    _widgetWrapper = wrapper;
+    return this;
+  }
 
   // 拦截器
   final List<KIRouterInterceptor> _interceptors = <KIRouterInterceptor>[];

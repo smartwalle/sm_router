@@ -50,6 +50,7 @@ class KIRouter {
     String routeName,
     KIRouterWidgetBuilder builder, {
     String? title,
+    KIRouterWidgetWrapper? widgetWrapper,
     KIPageKeyBuilder? keyBuilder,
     KIRouterPageBuilder? pageBuilder,
     KINavigatorWrapper? navigatorWrapper,
@@ -58,6 +59,7 @@ class KIRouter {
       routeName,
       builder,
       title: title,
+      widgetWrapper: widgetWrapper,
       keyBuilder: keyBuilder,
       pageBuilder: pageBuilder,
       navigatorWrapper: navigatorWrapper,
@@ -68,6 +70,7 @@ class KIRouter {
   static KIRoute handleUnknownRoute(
     KIRouterWidgetBuilder builder, {
     String? title,
+    KIRouterWidgetWrapper? widgetWrapper,
     KIPageKeyBuilder? keyBuilder,
     KIRouterPageBuilder? pageBuilder,
     KINavigatorWrapper? navigatorWrapper,
@@ -75,6 +78,7 @@ class KIRouter {
     return _delegate.registry.handleUnknownRoute(
       builder,
       title: title,
+      widgetWrapper: widgetWrapper,
       keyBuilder: keyBuilder,
       pageBuilder: pageBuilder,
       navigatorWrapper: navigatorWrapper,
@@ -85,6 +89,7 @@ class KIRouter {
   static KIRoute handleError(
     KIRouterWidgetBuilder builder, {
     String? title,
+    KIRouterWidgetWrapper? widgetWrapper,
     KIPageKeyBuilder? keyBuilder,
     KIRouterPageBuilder? pageBuilder,
     KINavigatorWrapper? navigatorWrapper,
@@ -92,6 +97,7 @@ class KIRouter {
     return _delegate.registry.handleError(
       builder,
       title: title,
+      widgetWrapper: widgetWrapper,
       keyBuilder: keyBuilder,
       pageBuilder: pageBuilder,
       navigatorWrapper: navigatorWrapper,
@@ -101,6 +107,10 @@ class KIRouter {
   /// 移除路由.
   static void remove(String routeName) {
     _delegate.registry.remove(routeName);
+  }
+
+  static void setWidgetWrapper(KIRouterWidgetWrapper wrapper) {
+    _delegate.registry.widgetWrapper = wrapper;
   }
 
   /// 注册 Page 生成器.
