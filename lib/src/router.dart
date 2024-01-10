@@ -211,6 +211,10 @@ class KIRouter {
 
   static KIRouterContext? get top => _delegate.top;
 
+  static bool get isEmpty => _delegate.isEmpty;
+
+  static bool get isNotEmpty => _delegate.isNotEmpty;
+
   static void navigate(BuildContext context, VoidCallback callback) {
     Router.navigate(context, callback);
   }

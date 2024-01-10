@@ -337,4 +337,8 @@ class KIRouterDelegate extends RouterDelegate<String> with PopNavigatorRouterDel
   }
 
   KIRouterContext? get top => _stack.last;
+
+  bool get isEmpty => _stack.isEmpty;
+
+  bool get isNotEmpty => _stack.isNotEmpty;
 }
