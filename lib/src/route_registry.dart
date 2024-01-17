@@ -70,8 +70,8 @@ class KIRouteRegistry {
     );
   });
 
-  KIRouterWidgetWrapper widgetWrapper = (ctx, widget) {
-    return widget;
+  KIRouterWidgetWrapper widgetWrapper = (ctx, child) {
+    return child;
   };
 
   KIRouterPageBuilder pageBuilder = (ctx, child) {
